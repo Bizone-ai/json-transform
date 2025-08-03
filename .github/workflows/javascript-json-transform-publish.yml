@@ -30,6 +30,7 @@ jobs:
         run: npm run build
 
       - name: publish json-transform
+        working-directory: ./javascript/json-transform
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
