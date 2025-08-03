@@ -6,9 +6,7 @@ import { isTruthy } from "../JsonHelpers";
 class TransformerFunctionNot extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        style: { type: ArgType.Enum, position: 0, defaultEnum: "JAVA" },
-      },
+      argsSets: [[{ name: "style", type: ArgType.String, defaultValue: "JAVA" }]],
     });
   }
 

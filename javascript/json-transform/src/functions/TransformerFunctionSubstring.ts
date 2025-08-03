@@ -1,15 +1,16 @@
 import TransformerFunction from "./common/TransformerFunction";
 import { ArgType } from "./common/ArgType";
 import FunctionContext from "./common/FunctionContext";
-import JsonElementStreamer from "../JsonElementStreamer";
 
 class TransformerFunctionSubstring extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        begin: { type: ArgType.Integer, position: 0, defaultInteger: 0 },
-        end: { type: ArgType.Integer, position: 1, defaultIsNull: true },
-      },
+      argsSets: [
+        [
+          { name: "begin", type: ArgType.Number, defaultValue: 0 },
+          { name: "end", type: ArgType.Number },
+        ],
+      ],
     });
   }
 

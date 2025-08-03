@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useMemo, useState } from "react";
 import type { editor, Position } from "monaco-editor";
 import Editor, { EditorProps, OnChange, OnMount } from "@monaco-editor/react";
-import { isValidPropertyPath, type TypeSchema } from "@nlighten/json-schema-utils";
-import { transformUtils } from "@nlighten/json-transform-core";
+import { isValidPropertyPath, type TypeSchema } from "@bizone-ai/json-schema-utils";
+import { transformUtils } from "@bizone-ai/json-transform-utils";
 import { getModel, getMonaco } from "./Monaco.init";
 import { getSuggestions } from "./suggestionsProvider";
 
@@ -170,7 +170,7 @@ const MonacoEditor = ({
         }
       }
     }
-    _monaco.editor.setModelMarkers(m, "nlighten", markers);
+    _monaco.editor.setModelMarkers(m, "bizone", markers);
   }, [mounted, rest.value, rest.language, model, editorRef, validateVariables]);
 
   const didMount = useCallback<OnMount>(

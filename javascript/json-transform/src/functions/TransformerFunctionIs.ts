@@ -6,18 +6,22 @@ import { isEqual, isNumberType } from "../JsonHelpers";
 class TransformerFunctionIs extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        op: { type: ArgType.Enum, position: 0, defaultIsNull: true },
-        that: { type: ArgType.Any, position: 1, defaultIsNull: true },
-        in: { type: ArgType.Array, defaultIsNull: true },
-        nin: { type: ArgType.Array, defaultIsNull: true },
-        eq: { type: ArgType.Any, defaultIsNull: true },
-        neq: { type: ArgType.Any, defaultIsNull: true },
-        gt: { type: ArgType.Any, defaultIsNull: true },
-        gte: { type: ArgType.Any, defaultIsNull: true },
-        lt: { type: ArgType.Any, defaultIsNull: true },
-        lte: { type: ArgType.Any, defaultIsNull: true },
-      },
+      argsSets: [
+        [
+          { name: "op", type: ArgType.String, exists: true },
+          { name: "that", type: ArgType.Any },
+        ],
+        [
+          { name: "in", type: ArgType.Array },
+          { name: "nin", type: ArgType.Array },
+          { name: "eq", type: ArgType.Any },
+          { name: "neq", type: ArgType.Any },
+          { name: "gt", type: ArgType.Any },
+          { name: "gte", type: ArgType.Any },
+          { name: "lt", type: ArgType.Any },
+          { name: "lte", type: ArgType.Any },
+        ],
+      ],
     });
   }
 

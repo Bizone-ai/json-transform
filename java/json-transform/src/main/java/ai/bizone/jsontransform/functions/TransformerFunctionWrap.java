@@ -1,7 +1,7 @@
 package ai.bizone.jsontransform.functions;
 
 import ai.bizone.jsontransform.functions.common.*;
-import co.nlighten.jsontransform.functions.common.*;
+import ai.bizone.jsontransform.functions.common.*;
 
 import java.util.Map;
 import java.util.Optional;

@@ -1,11 +1,19 @@
 import TransformerFunction from "./TransformerFunction";
 import { ParameterResolver } from "../../ParameterResolver";
 import { JsonTransformerFunction } from "../../JsonTransformerFunction";
-import { compareTo, isNullOrUndefined, getAsString, getDocumentContext, toObjectFieldPath } from "../../JsonHelpers";
+import {
+  compareTo,
+  isNullOrUndefined,
+  getAsString,
+  getDocumentContext,
+  toObjectFieldPath,
+  isMap,
+} from "../../JsonHelpers";
 import { BigDecimal } from "./FunctionHelpers";
 import JsonElementStreamer from "../../JsonElementStreamer";
 import BigNumber from "bignumber.js";
 import DocumentContext from "../../DocumentContext";
+import { ArgumentsSet } from "./FunctionDescription";
 
 class FunctionContext {
   protected static readonly CONTEXT_KEY = "context";
@@ -17,20 +25,86 @@ class FunctionContext {
   protected readonly alias: string;
   protected readonly function: TransformerFunction;
   protected readonly extractor: JsonTransformerFunction;
-  protected resolver: ParameterResolver;
+  private readonly argsSet: ArgumentsSet | null;
+  private readonly isInline: boolean;
+  private readonly args: Record<string, string | null>;
+  private readonly defaultValues: Record<string, any>;
+  private resolver: ParameterResolver | null;
+  private readonly resolverFactory: (() => Promise<ParameterResolver>) | null;
 
-  protected constructor(
+  private constructor(
+    isInline: boolean,
     path: string,
     alias: string,
     func: TransformerFunction,
-    resolver: ParameterResolver,
+    argsSet: ArgumentsSet | null,
+    args: Record<string, string | null>,
+    resolver: ParameterResolver | (() => Promise<ParameterResolver>),
     extractor: JsonTransformerFunction,
   ) {
+    this.isInline = isInline;
     this.path = path;
     this.alias = alias;
     this.function = func;
+    this.argsSet = argsSet;
+    this.args = args;
+    this.defaultValues =
+      argsSet?.reduce(
+        (a, c) => {
+          a[c.name] = c.defaultValue ?? null;
+          return a;
+        },
+        {} as Record<string, any>,
+      ) ?? {};
     this.extractor = extractor;
-    this.resolver = resolver;
+    if (typeof resolver === "function") {
+      this.resolverFactory = resolver;
+      this.resolver = null;
+    } else {
+      this.resolverFactory = null;
+      this.resolver = resolver;
+    }
+  }
+
+  public static createInline(
+    path: string,
+    input: string | null,
+    args: (string | null)[],
+    functionKey: string,
+    func: any,
+    resolver: any,
+    extractor: any,
+  ) {
+    const argsSet = func.parseArguments(args);
+    const a = {
+      [functionKey]: input,
+    };
+    const argsX = !argsSet
+      ? a
+      : args?.reduce((a, c, i) => {
+          a[argsSet[i].name] = c;
+          return a;
+        }, a) ?? a;
+    return new FunctionContext(true, path, functionKey, func, argsSet, argsX, resolver, extractor);
+  }
+
+  public static createObject(
+    path: string,
+    definition: any,
+    functionKey: string,
+    func: any,
+    resolver: any,
+    extractor: any,
+  ) {
+    const argsSet = func.parseArguments(definition);
+    let objResolver: ParameterResolver | (() => Promise<ParameterResolver>) = resolver;
+    if (definition?.[FunctionContext.CONTEXT_KEY]) {
+      const contextElement = definition[FunctionContext.CONTEXT_KEY];
+      if (isMap(contextElement)) {
+        objResolver = () => FunctionContext.recalcResolver(path, contextElement, resolver, extractor);
+      }
+    }
+    return new FunctionContext(false, path, functionKey, func, argsSet, definition, objResolver, extractor);
   }
 
   protected static async recalcResolver(
@@ -75,20 +149,61 @@ class FunctionContext {
     return this.path;
   }
 
-  public getResolver() {
-    return this.resolver;
+  public getFunction() {
+    return this.function;
+  }
+
+  public getArgumentSet() {
+    return this.argsSet;
+  }
+
+  public getDefaultValue(name: string) {
+    return this.defaultValues[name] ?? null;
+  }
+
+  public apply() {
+    return this.function.apply(this);
+  }
+
+  public async getResolver() {
+    if (this.resolver) {
+      return this.resolver;
+    } else if (this.resolverFactory) {
+      this.resolver = await this.resolverFactory();
+      return this.resolver;
+    }
+    // no resolver, return empty resolver
+    return {
+      get: () => "",
+    };
   }
 
   public has(name: string): boolean {
-    return false;
+    return Object.prototype.hasOwnProperty.call(this.args, name);
+  }
+
+  public getRaw(name: string | null) {
+    if (name != null && !Object.prototype.hasOwnProperty.call(this.args, name)) {
+      return undefined;
+    }
+    return this.args[name == null ? this.alias : name];
   }
 
   public async get(name: string | null, transform: boolean = true): Promise<any> {
-    return null;
+    if (name != null && !Object.prototype.hasOwnProperty.call(this.args, name)) {
+      return this.getDefaultValue(name);
+    }
+    const argValue = this.args[name == null ? this.alias : name];
+    const resolver = await this.getResolver();
+    return !transform ? argValue : await this.extractor.transform(this.getPathFor(name), argValue, resolver, true);
   }
 
   public getPathFor(key: number | string | null) {
-    return this.path + (!key ? "" : typeof key === "number" ? "[" + key + "]" : toObjectFieldPath(key));
+    if (this.isInline) {
+      return this.path + (key == null ? "" : `(${key})`);
+    } else {
+      return this.path + (typeof key === "number" ? `[${key}]` : toObjectFieldPath(!key ? this.getAlias() : key));
+    }
   }
 
   public isNull(value: any) {
@@ -230,7 +345,8 @@ class FunctionContext {
     // in case val is already an array we don't transform it to prevent evaluation of its result values
     // so if is not an array, we must transform it and check after-wards (not lazy anymore)
     if (!Array.isArray(value)) {
-      value = await this.extractor.transform(this.getPathFor(name), value, this.resolver, true);
+      const resolver = await this.getResolver();
+      value = await this.extractor.transform(this.getPathFor(name), value, resolver, true);
       if (value instanceof JsonElementStreamer) {
         return value;
       }
@@ -244,7 +360,8 @@ class FunctionContext {
   }
 
   public async transform(path: string | undefined, definition: any, allowReturningStreams: boolean = false) {
-    return await this.extractor.transform(path ?? this.path, definition, this.resolver, allowReturningStreams);
+    const resolver = await this.getResolver();
+    return await this.extractor.transform(path ?? this.path, definition, resolver, allowReturningStreams);
   }
 
   public async transformItem(
@@ -255,13 +372,14 @@ class FunctionContext {
     additional?: any,
   ) {
     const currentContext = getDocumentContext(current);
+    const resolver = await this.getResolver();
     let itemResolver: ParameterResolver;
     if (typeof index !== "number") {
       itemResolver = {
         get: name =>
           FunctionContext.pathOfVar(FunctionContext.DOUBLE_HASH_CURRENT, name)
             ? currentContext.read(FunctionContext.DOLLAR + name.substring(9))
-            : this.resolver.get(name),
+            : resolver.get(name),
       };
     } else if (!additionalNameOrContext) {
       itemResolver = {
@@ -270,7 +388,7 @@ class FunctionContext {
             ? index
             : FunctionContext.pathOfVar(FunctionContext.DOUBLE_HASH_CURRENT, name)
               ? currentContext.read(FunctionContext.DOLLAR + name.substring(9))
-              : this.resolver.get(name),
+              : resolver.get(name),
       };
     } else if (typeof additionalNameOrContext === "string") {
       const additionalContext = getDocumentContext(additional);
@@ -282,7 +400,7 @@ class FunctionContext {
               ? currentContext.read(FunctionContext.DOLLAR + name.substring(9))
               : FunctionContext.pathOfVar(additionalNameOrContext, name)
                 ? additionalContext.read(FunctionContext.DOLLAR + name.substring(additionalNameOrContext.length))
-                : this.resolver.get(name),
+                : resolver.get(name),
       };
     } else {
       const addCtx = Object.keys(additionalNameOrContext).reduce(
@@ -302,7 +420,7 @@ class FunctionContext {
               return addCtx[key].read(FunctionContext.DOLLAR + name.substring(key.length));
             }
           }
-          return this.resolver.get(name);
+          return resolver.get(name);
         },
       };
     }

@@ -67,14 +67,14 @@ items:
 }""";
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testDeserialize(JsonAdapter<?,?,?> adapter) {
         var result = new YamlFormat(adapter).deserialize(YAML);
         assertEquals(adapter, adapter.parse(JSON), result);
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testSerializeAndDeserializeViaJsonElement(JsonAdapter<?,?,?> adapter) {
         // we check back and forth serialization because the output yaml is not guaranteed to be in the same order
         // so, we convert back to JsonElement to do deep comparison
@@ -89,7 +89,7 @@ items:
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void simpleExample(JsonAdapter<?,?,?> adapter) {
         // get JSON as JsonElement
         var inputJsonElement = adapter.parse("""

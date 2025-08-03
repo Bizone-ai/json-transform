@@ -5,9 +5,7 @@ import FunctionContext from "./common/FunctionContext";
 class TransformerFunctionPartition extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        size: { type: ArgType.Integer, position: 0, defaultInteger: 100 },
-      },
+      argsSets: [[{ name: "size", type: ArgType.Number, defaultValue: 100 }]],
     });
   }
 

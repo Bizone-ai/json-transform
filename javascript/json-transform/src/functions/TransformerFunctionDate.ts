@@ -45,18 +45,43 @@ const toISOString = (date: Date, maxTrimmed?: boolean) => {
 class TransformerFunctionDate extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        scale: { type: ArgType.Integer, position: 0, defaultInteger: -1 },
-        format: { type: ArgType.Enum, position: 0, defaultEnum: "ISO" },
-        digits: { type: ArgType.Integer, position: 1, defaultInteger: -1 },
-        units: { type: ArgType.Enum, position: 1 },
-        amount: { type: ArgType.Long, position: 2, defaultLong: 0 },
-        resolution: { type: ArgType.Enum, position: 1, defaultEnum: "UNIX" },
-        pattern: { type: ArgType.String, position: 1 },
-        timezone: { type: ArgType.String, position: 2, defaultString: "UTC" },
-        zone: { type: ArgType.String, position: 1, defaultString: "UTC" },
-        end: { type: ArgType.String, position: 2 },
-      },
+      argsSets: [
+        [
+          { name: "format", type: ArgType.String, const: "ADD" },
+          { name: "units", type: ArgType.String },
+          { name: "amount", type: ArgType.Number, defaultValue: 0 },
+        ],
+        [
+          { name: "format", type: ArgType.String, const: "SUB" },
+          { name: "units", type: ArgType.String },
+          { name: "amount", type: ArgType.Number, defaultValue: 0 },
+        ],
+        [{ name: "format", type: ArgType.String, const: "GMT" }],
+        [{ name: "format", type: ArgType.String, const: "DATE" }],
+        [
+          { name: "format", type: ArgType.String, const: "DIFF" },
+          { name: "units", type: ArgType.String },
+          { name: "end", type: ArgType.Any },
+        ],
+        [
+          { name: "format", type: ArgType.String, const: "EPOCH" },
+          { name: "resolution", type: ArgType.String, defaultValue: "UNIX" },
+        ],
+        [
+          { name: "format", type: ArgType.String, const: "FORMAT" },
+          { name: "pattern", type: ArgType.String },
+          { name: "timezone", type: ArgType.String, defaultValue: "UTC" },
+        ],
+        [
+          { name: "format", type: ArgType.String, const: "ZONE" },
+          { name: "timezone", type: ArgType.String, defaultValue: "UTC" },
+        ],
+        // default
+        [
+          { name: "format", type: ArgType.String, const: "ISO", defaultValue: "ISO" },
+          { name: "digits", type: ArgType.Number, defaultValue: -1 },
+        ],
+      ],
     });
   }
 
@@ -196,7 +221,7 @@ class TransformerFunctionDate extends TransformerFunction {
         return format(instant, pattern);
       }
       case "ZONE": {
-        const zone = await context.getString("zone");
+        const zone = await context.getString("timezone");
         const iso = toISOString(instant);
         if (!zone) return iso;
         return toISOString(TZDate.tz(zone, instant), true);

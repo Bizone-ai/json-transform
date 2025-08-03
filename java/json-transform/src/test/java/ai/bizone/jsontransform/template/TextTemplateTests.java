@@ -13,7 +13,7 @@ import java.util.Map;
 public class TextTemplateTests extends MultiAdapterBaseTest {
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void runJsonTransformerFunction(JsonAdapter<?,?,?> adapter) {
         var resolver = adapter.createPayloadResolver(adapter.parse("""
 { "n": "NAME" }
@@ -23,7 +23,7 @@ public class TextTemplateTests extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void runJsonTransformerFunction2(JsonAdapter<?,?,?> adapter) {
         var resolver = adapter.createPayloadResolver(adapter.parse("""
 { "a": ["hello", " ", "world"], "u": "cb2aa228-b265-3f99-aae4-73a58f7be18b" }
@@ -33,7 +33,7 @@ public class TextTemplateTests extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void runUnknownJsonTransformerFunction(JsonAdapter<?,?,?> adapter) {
         var resolver = adapter.createPayloadResolver(adapter.parse("""
 { "n": "NAME" }

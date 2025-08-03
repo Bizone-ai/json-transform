@@ -6,9 +6,7 @@ import { isTruthy } from "../JsonHelpers";
 class TransformerFunctionFindIndex extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        by: { type: ArgType.Transformer, position: 0, defaultIsNull: true },
-      },
+      argsSets: [[{ name: "by", type: ArgType.Any }]],
     });
   }
 

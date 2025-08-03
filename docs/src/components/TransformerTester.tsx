@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {} from "@docusaurus/BrowserOnly";
-import { JSONSchemaUtils } from "@nlighten/json-schema-utils";
+import { JSONSchemaUtils } from "@bizone-ai/json-schema-utils";
 import {
   ContextVariablesSchemas,
   convertFunctionsToObjects,
   jsonpathJoin,
+  transformUtils,
   tryConvertFunctionsToInline,
-} from "@nlighten/json-transform-core";
-import { DebuggableTransformerFunctions, JsonTransformer } from "@nlighten/json-transform";
+} from "@bizone-ai/json-transform-utils";
+import { DebuggableTransformerFunctions, JsonTransformer } from "@bizone-ai/json-transform";
 import { useLocation, useHistory } from "@docusaurus/router";
 import MonacoEditor from "./monaco/MonacoEditor";
 import { setSuggestions } from "./monaco/suggestionsProvider";
@@ -60,6 +61,35 @@ const transformAsync = async (input: any, definition: any) => {
 const narrowScreen = window.innerWidth < 996;
 const initialHeight = narrowScreen ? 280 : 450;
 
+function replacer(key: string, value: any): any {
+  if (typeof value === "bigint") {
+    const asNumber = Number(value);
+    if (asNumber.toString() === value.toString()) {
+      return asNumber;
+    }
+    return value.toString();
+  }
+  if (value?._isBigNumber) {
+    const asNumber = value.toNumber();
+    const bigNumberString = value.toFixed();
+    if (asNumber.toString() === bigNumberString) {
+      return asNumber;
+    }
+    return bigNumberString;
+  }
+  // recursive for arrays and objects
+  if (Array.isArray(value)) {
+    return value.map(replacer);
+  }
+  if (value && typeof value === "object") {
+    return Object.entries(value).reduce((a, c) => {
+      a[c[0]] = replacer(c[0], c[1]);
+      return a;
+    }, {} as any);
+  }
+  return value;
+}
+
 const TransformerTester = () => {
   const [inputString, setInputString, parsedInput, inputError] = useJSONString(DEFAULT_INPUT_VALUE);
   const [transformerString, setTransformerString, parsedTransformer, transformerError] =
@@ -73,6 +103,11 @@ const TransformerTester = () => {
 
   const location = useLocation();
   const history = useHistory();
+
+  useEffect(() => {
+    transformUtils.setAdditionalContext(new Set(["$init"]));
+    transformUtils.setSpecialKeys(new Set(["$init"])); // change above to cyan color
+  }, []);
 
   useEffect(() => {
     if (parsedInput) {
@@ -98,13 +133,11 @@ const TransformerTester = () => {
         const isString = typeof data.result === "string";
         setOutputIsString(isString);
         setOutputJSONString(
-          data.result?._isBigNumber
-            ? data.result.toString()
-            : typeof data.result === "bigint"
-              ? `${data.result}`
-              : isString
-                ? data.result
-                : JSON.stringify(data.result, null, 2),
+          isString
+            ? data.result
+            : data.result?._isBigNumber
+              ? data.result.toFixed()
+              : JSON.stringify(data.result, replacer, 2),
         );
         console.log("debug-info:", data.debugInfo);
       })

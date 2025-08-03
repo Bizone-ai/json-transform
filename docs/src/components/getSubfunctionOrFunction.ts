@@ -1,4 +1,4 @@
-import { FunctionDescriptor } from "@nlighten/json-transform-core";
+import { FunctionDescriptor } from "@bizone-ai/json-transform-utils";
 
 export default function getSubfunctionOrFunction(definition: FunctionDescriptor, index?: number): FunctionDescriptor {
   return typeof index === "undefined"

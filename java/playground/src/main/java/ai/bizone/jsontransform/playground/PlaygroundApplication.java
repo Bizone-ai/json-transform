@@ -1,8 +1,5 @@
-package co.nlighten.jsontransform.playground;
+package ai.bizone.jsontransform.playground;
 
-import co.nlighten.jsontransform.JsonTransformerConfiguration;
-import co.nlighten.jsontransform.adapters.gson.GsonJsonTransformerConfiguration;
-import co.nlighten.jsontransform.adapters.jackson.JacksonJsonTransformerConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

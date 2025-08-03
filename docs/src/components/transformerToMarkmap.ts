@@ -1,5 +1,5 @@
 import { IPureNode } from "markmap-common";
-import { functionsParser } from "@nlighten/json-transform-core";
+import { functionsParser } from "@bizone-ai/json-transform-utils";
 
 const valueStringify = (value: any) => {
   return `<b>${JSON.stringify(value)}</b>`;

@@ -6,10 +6,12 @@ import { isMap, mergeInto } from "../JsonHelpers";
 class TransformerFunctionUnflatten extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        target: { type: ArgType.Object, position: 0, defaultIsNull: true },
-        path: { type: ArgType.String, position: 1, defaultIsNull: true },
-      },
+      argsSets: [
+        [
+          { name: "target", type: ArgType.Object },
+          { name: "path", type: ArgType.String },
+        ],
+      ],
     });
   }
 

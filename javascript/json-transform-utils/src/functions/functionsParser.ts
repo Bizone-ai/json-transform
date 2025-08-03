@@ -2,7 +2,7 @@ import { Argument, FunctionDefinition, FunctionDescriptor } from "./types";
 import parseDefinitions from "./parseDefinitions";
 import { HandleFunctionMethod } from "../ParseContext";
 import functions from "./functions";
-import { TokenizedInlineFunction, tokenizeInlineFunction } from "./tokenizeInlineFunction";
+import { InlineFunctionTokenizer, TokenizedInlineFunction } from "@bizone-ai/json-transform";
 
 type ObjectFunctionMatchResult = {
   name: string;
@@ -115,7 +115,7 @@ class FunctionsParser {
         return url;
       }
     }
-    return `https://nlighten-oss.github.io/json-transform/functions/${name}`;
+    return `https://bizone-ai.github.io/json-transform/functions/${name}`;
   }
 
   matchInline(
@@ -124,7 +124,7 @@ class FunctionsParser {
   ) {
     if (typeof data !== "string") return null;
 
-    const m = tokenizeInlineFunction(data);
+    const m = InlineFunctionTokenizer.tokenize(data);
     if (!m) {
       return null;
     }
@@ -194,12 +194,12 @@ class FunctionsParser {
     let match: TokenizedInlineFunction | undefined;
     let indexOffset = line.indexOf("$$");
     line = line.trimEnd();
-    if (line[indexOffset - 1] === '"' && line.at(-1) === '"') {
+    if (line[indexOffset - 1] === '"' && line[line.length - 1] === '"') {
       line = line.slice(0, -1).replace(/\\'/g, "\\\\'");
     }
     let str = line.substring(indexOffset);
 
-    while ((match = tokenizeInlineFunction(str))) {
+    while ((match = InlineFunctionTokenizer.tokenize(str))) {
       if (!functionsParser.get(match.name)) {
         break; // not a known function name (so not a function)
       }

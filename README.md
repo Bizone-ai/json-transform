@@ -1,15 +1,15 @@
 # json-transform
 
-- [Documentation](https://nlighten-oss.github.io/json-transform/)
+- [Documentation](https://bizone-ai.github.io/json-transform/)
 
 ## Packages
 
-| Language   |Name| Description                                             |License|Status|
-|------------|---|---------------------------------------------------------|---|---|
-| Java       |[co.nlighten.json-transform](./java/json-transform)| Java library for transforming JSON objects              |Apache License 2.0|![Maven Central Version](https://img.shields.io/maven-central/v/co.nlighten/json-transform)|
-| JavaScript |[@nlighten/json-transform](./javascript/json-transform)| JSON transformers JavaScript implementation|MIT|![npm](https://img.shields.io/npm/v/@nlighten/json-transform)|
-| JavaScript |[@nlighten/json-transform-core](./javascript/json-transform-core)| Core types and utilities for handling JSON transformers |MIT|![npm](https://img.shields.io/npm/v/@nlighten/json-transform-core)|
-| JavaScript |[@nlighten/monaco-json-transform](./javascript/monaco-json-transform)| Monaco editor extension for JSON transformers |MIT|![npm](https://img.shields.io/npm/v/@nlighten/monaco-json-transform)|
+| Language   | Name                                                                   | Description                                   | License            | Status                                                                                    |
+|------------|------------------------------------------------------------------------|-----------------------------------------------|--------------------|-------------------------------------------------------------------------------------------|
+| Java       | [ai.bizone.json-transform](./java/json-transform)                      | Java library for transforming JSON objects    | Apache License 2.0 | ![Maven Central Version](https://img.shields.io/maven-central/v/ai.bizone/json-transform) |
+| JavaScript | [@bizone-ai/json-transform](./javascript/json-transform)               | JSON transformers JavaScript implementation   | MIT                | ![npm](https://img.shields.io/npm/v/@bizone-ai/json-transform)                            |
+| JavaScript | [@bizone-ai/json-transform-utils](javascript/json-transform-utils)     | Utilities for handling JSON transformers      | MIT                | ![npm](https://img.shields.io/npm/v/@bizone-ai/json-transform-utils)                      |
+| JavaScript | [@bizone-ai/monaco-json-transform](./javascript/monaco-json-transform) | Monaco editor extension for JSON transformers | MIT                | ![npm](https://img.shields.io/npm/v/@bizone-ai/monaco-json-transform)                     |
 
 ## Getting Started
 
@@ -24,7 +24,7 @@
     }
 ```
 
-- See available adapters [here](https://github.com/nlighten-oss/json-transform/tree/main/java/json-transform/src/main/java/co/nlighten/jsontransform/adapters)
+- See available adapters [here](https://github.com/Bizone-ai/json-transform/tree/main/java/json-transform/src/main/java/ai/bizone/jsontransform/adapters)
 
 Then in the code where you want to transform JSON objects:
 

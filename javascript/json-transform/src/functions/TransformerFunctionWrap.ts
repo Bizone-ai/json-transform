@@ -5,10 +5,12 @@ import FunctionContext from "./common/FunctionContext";
 class TransformerFunctionWrap extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        prefix: { type: ArgType.String, position: 0, defaultString: "" },
-        suffix: { type: ArgType.String, position: 1, defaultString: "" },
-      },
+      argsSets: [
+        [
+          { name: "prefix", type: ArgType.String, defaultValue: "" },
+          { name: "suffix", type: ArgType.String, defaultValue: "" },
+        ],
+      ],
     });
   }
 

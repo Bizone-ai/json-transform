@@ -6,9 +6,7 @@ import FunctionContext from "./common/FunctionContext";
 class TransformerFunctionJsonPatch extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        ops: { type: ArgType.Array, position: 0 },
-      },
+      argsSets: [[{ name: "ops", type: ArgType.Array }]],
     });
   }
 

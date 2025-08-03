@@ -5,11 +5,13 @@ import FunctionContext from "./common/FunctionContext";
 class TransformerFunctionPad extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        direction: { type: ArgType.Enum, position: 0, defaultIsNull: true },
-        width: { type: ArgType.Integer, position: 1, defaultIsNull: true },
-        pad_string: { type: ArgType.String, position: 2, defaultString: "0" },
-      },
+      argsSets: [
+        [
+          { name: "direction", type: ArgType.String },
+          { name: "width", type: ArgType.Number, defaultValue: 0 },
+          { name: "pad_string", type: ArgType.String, defaultValue: "0" },
+        ],
+      ],
     });
   }
 

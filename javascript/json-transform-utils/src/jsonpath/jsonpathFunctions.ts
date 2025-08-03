@@ -1,4 +1,4 @@
-import { TypeSchema } from "@nlighten/json-schema-utils";
+import { TypeSchema } from "@bizone-ai/json-schema-utils";
 
 const JsonPathFunctionsResultSchemas: Record<string, TypeSchema> = {
   // fallback type is string (no format)

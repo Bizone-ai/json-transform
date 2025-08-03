@@ -1,9 +1,9 @@
 package ai.bizone.jsontransform.functions;
 
 import ai.bizone.jsontransform.functions.common.*;
-import co.nlighten.jsontransform.functions.common.*;
-import co.nlighten.shortuuid.ShortUuid;
-import co.nlighten.shortuuid.UuidConverter;
+import ai.bizone.jsontransform.functions.common.*;
+import ai.bizone.shortuuid.ShortUuid;
+import ai.bizone.shortuuid.UuidConverter;
 
 import java.util.Map;
 import java.util.UUID;

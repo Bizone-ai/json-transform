@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class JsonTransformerUtilsTest extends MultiAdapterBaseTest {
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void objects(JsonAdapter<?,?,?> adapter) {
         var result = JsonTransformerUtils.findAllVariableUses(adapter, adapter.parse("""
 {
@@ -40,7 +40,7 @@ public class JsonTransformerUtilsTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void objects_destruct(JsonAdapter<?,?,?> adapter) {
         var result = JsonTransformerUtils.findAllVariableUses(adapter, adapter.parse("""
                 {
@@ -54,7 +54,7 @@ public class JsonTransformerUtilsTest extends MultiAdapterBaseTest {
     }
 
         @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void arrays(JsonAdapter<?,?,?> adapter) {
         var result = JsonTransformerUtils.findAllVariableUses(adapter, adapter.parse("""
 [
@@ -78,7 +78,7 @@ public class JsonTransformerUtilsTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void strings(JsonAdapter<?,?,?> adapter) {
         var result = JsonTransformerUtils.findAllVariableUses(adapter, adapter.parse("""
 "$.input0"

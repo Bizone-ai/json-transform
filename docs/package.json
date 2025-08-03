@@ -1,5 +1,5 @@
 {
-  "name": "@nlighten/json-transform-docs",
+  "name": "@bizone-ai/json-transform-docs",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -15,14 +15,14 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "3.7.0",
-    "@docusaurus/preset-classic": "3.7.0",
+    "@docusaurus/core": "3.8.1",
+    "@docusaurus/preset-classic": "3.8.1",
     "@mdx-js/react": "3.1.0",
     "@monaco-editor/react": "4.6.0",
-    "@nlighten/json-schema-utils": "1.1.0",
-    "@nlighten/json-transform": "file://../javascript/json-transform",
-    "@nlighten/json-transform-core": "file://../javascript/json-transform-core",
-    "@nlighten/monaco-json-transform": "file://../javascript/monaco-json-transform",
+    "@bizone-ai/json-schema-utils": "1.1.0",
+    "@bizone-ai/json-transform": "file://../javascript/json-transform",
+    "@bizone-ai/json-transform-utils": "file://../javascript/json-transform-utils",
+    "@bizone-ai/monaco-json-transform": "file://../javascript/monaco-json-transform",
     "buffer": "^6.0.3",
     "clsx": "2.1.0",
     "crypto-browserify": "^3.12.1",
@@ -40,9 +40,9 @@
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.7.0",
-    "@docusaurus/tsconfig": "3.7.0",
-    "@docusaurus/types": "3.7.0",
+    "@docusaurus/module-type-aliases": "3.8.1",
+    "@docusaurus/tsconfig": "3.8.1",
+    "@docusaurus/types": "3.8.1",
     "monaco-editor-webpack-plugin": "7.1.0",
     "prettier": "3.1.1",
     "typescript": "~5.3.3"

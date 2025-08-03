@@ -1,47 +1,35 @@
-name: Test Java json-transform
+name: Publish Java json-transform
 
 on:
   push:
     tags:
-      - 'java-lib-*'  # Match tags starting with 'v'
+      - 'java-lib-*'  # Match tags
+    branches:
+      - main
+    paths:
+      - java/json-transform/**
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
-    
     permissions:
       contents: read
       checks: write
-      
     steps:
     - uses: actions/checkout@v4
     
-    - name: Set up JDK 17
+    - name: Set up JDK
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
         distribution: 'temurin'
-        java-package: jdk
+        java-version: 17
         cache: gradle
-        
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2.4.2
-
-    - name: Run tests with Gradle
-      uses: gradle/gradle-build-action@v2.4.2
-      with:
-        # build includes tests
-        arguments: |
-          :java:json-transform:build
-          --console=plain
-          --parallel
-          -Dorg.gradle.parallel.intra=true
 
     - name: Extract version from tag
       id: get_version
       run: |
         TAG_NAME=${GITHUB_REF#refs/tags/}
-        VERSION=${TAG_NAME#v}
+        VERSION=${TAG_NAME#java-lib-}
         echo "VERSION=$VERSION" >> $GITHUB_ENV
 
     - name: Build and publish to Maven Central

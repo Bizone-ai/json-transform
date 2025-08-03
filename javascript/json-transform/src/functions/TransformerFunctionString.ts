@@ -7,9 +7,7 @@ import { JSONBig } from "./common/FunctionHelpers";
 class TransformerFunctionString extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        json: { type: ArgType.Boolean, position: 0, defaultBoolean: false },
-      },
+      argsSets: [[{ name: "json", type: ArgType.Boolean, defaultValue: false }]],
     });
   }
 

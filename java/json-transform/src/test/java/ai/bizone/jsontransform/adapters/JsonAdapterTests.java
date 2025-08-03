@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 public class JsonAdapterTests extends MultiAdapterBaseTest {
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testAsString_BigDecimal(JsonAdapter<?,?,?> adapter) {
         var x = BigDecimal.valueOf(3);
         assertEquals(adapter, "3", adapter.getAsString(x));
@@ -25,7 +25,7 @@ public class JsonAdapterTests extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testAsString_Float(JsonAdapter<?,?,?> adapter) {
         float f = 3.0f;
         assertEquals(adapter, "3", adapter.getAsString(f));
@@ -36,7 +36,7 @@ public class JsonAdapterTests extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testAsString_Double(JsonAdapter<?,?,?> adapter) {
         double d = 3.0d;
         assertEquals(adapter, "3", adapter.getAsString(d));
@@ -47,7 +47,7 @@ public class JsonAdapterTests extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testMergeIntoGivenMutuallyExclusiveKeysWithDot(JsonAdapter<?,?,?> adapter) {
         var root = adapter.parse("""
 {
@@ -69,7 +69,7 @@ public class JsonAdapterTests extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testMergeIntoGivenNoPath(JsonAdapter<?,?,?> adapter) {
         var root = adapter.parse("""
 {
@@ -90,7 +90,7 @@ public class JsonAdapterTests extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testMergeIntoGivenMutuallyExclusiveKeysAndDollarPath(JsonAdapter<?,?,?> adapter) {
         var root = adapter.parse("""
 {
@@ -114,7 +114,7 @@ public class JsonAdapterTests extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testArraySetOnOutOfBoundsIndex(JsonAdapter<?,?,?> adapter) {
         var array = adapter.createArray(4);
         var el = adapter.wrap("string");
@@ -123,7 +123,7 @@ public class JsonAdapterTests extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testMergeAllNew(JsonAdapter<?,?,?> adapter) {
         assertEquals(adapter, adapter.parse("""
 {
@@ -142,7 +142,7 @@ public class JsonAdapterTests extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testMergeOverrideExisting(JsonAdapter<?,?,?> adapter) {
         assertEquals(adapter, adapter.parse("""
 {
@@ -162,7 +162,7 @@ public class JsonAdapterTests extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testMergeOverrideWithNull(JsonAdapter<?,?,?> adapter) {
         assertEquals(adapter, adapter.parse("""
 {
@@ -182,7 +182,7 @@ public class JsonAdapterTests extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testMergeShallow(JsonAdapter<?,?,?> adapter) {
         assertEquals(adapter, adapter.parse("""
 {
@@ -208,7 +208,7 @@ public class JsonAdapterTests extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testMergeDeep(JsonAdapter<?,?,?> adapter) {
         assertEquals(adapter, adapter.parse("""
 {
@@ -235,7 +235,7 @@ public class JsonAdapterTests extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testMergeDeepAndConcatArrays(JsonAdapter<?,?,?> adapter) {
         assertEquals(adapter, adapter.parse("""
 {
@@ -263,7 +263,7 @@ public class JsonAdapterTests extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testMergeConcatArrays(JsonAdapter<?,?,?> adapter) {
         assertEquals(adapter, adapter.parse("""
 {

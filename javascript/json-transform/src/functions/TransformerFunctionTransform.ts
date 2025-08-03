@@ -5,9 +5,7 @@ import { ArgType } from "./common/ArgType";
 class TransformerFunctionTransform extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        to: { type: ArgType.Transformer, position: 0, defaultIsNull: true },
-      },
+      argsSets: [[{ name: "to", type: ArgType.Any }]],
     });
   }
 

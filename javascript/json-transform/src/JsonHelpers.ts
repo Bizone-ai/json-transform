@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import DocumentContext from "./DocumentContext";
 import { BigDecimal, JSONBig } from "./functions/common/FunctionHelpers";
-import { areSimilar } from "@nlighten/json-schema-utils";
+import { areSimilar } from "@bizone-ai/json-schema-utils";
 import { Comparator, ComparatorFactory } from "@wortise/sequency";
 import BigNumber from "bignumber.js";
 

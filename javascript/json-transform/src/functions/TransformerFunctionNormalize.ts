@@ -66,10 +66,12 @@ class TransformerFunctionNormalize extends TransformerFunction {
 
   constructor() {
     super({
-      arguments: {
-        form: { type: ArgType.Enum, position: 0, defaultEnum: "NFKD" },
-        post_operation: { type: ArgType.Enum, position: 1, defaultEnum: "ROBUST" },
-      },
+      argsSets: [
+        [
+          { name: "form", type: ArgType.String, defaultValue: "NFKD" },
+          { name: "post_operation", type: ArgType.String, defaultValue: "ROBUST" },
+        ],
+      ],
     });
   }
 

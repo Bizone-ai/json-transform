@@ -1,12 +1,12 @@
-# @nlighten/json-transform
+# @bizone-ai/json-transform
 
-![](https://img.shields.io/npm/v/@nlighten/json-transform.svg)
+![](https://img.shields.io/npm/v/@bizone-ai/json-transform.svg)
 
-[JSON transformers](https://nlighten-oss.github.io/json-transform/) JavaScript implementation (~20kB)
+[JSON transformers](https://Bizone-ai.github.io/json-transform/) JavaScript implementation (~20kB)
 
 # Installation
 
-`npm install @nlighten/json-transform`
+`npm install @bizone-ai/json-transform`
 
 # Usage
 

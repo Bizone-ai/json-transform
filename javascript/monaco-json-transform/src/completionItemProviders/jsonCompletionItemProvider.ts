@@ -4,8 +4,8 @@ import {
   functionsParser,
   getFunctionInlineSignature,
   getFunctionObjectSignature,
-} from "@nlighten/json-transform-core";
-import { formatSchemaType, type TypeSchema } from "@nlighten/json-schema-utils";
+} from "@bizone-ai/json-transform-utils";
+import { formatSchemaType, type TypeSchema } from "@bizone-ai/json-schema-utils";
 
 type TypeMap = Record<string, TypeSchema>;
 

@@ -1,5 +1,5 @@
 {
-  "name": "@nlighten/json-transform-test-harness",
+  "name": "@bizone-ai/json-transform-test-harness",
   "description": "Test harness for json-transform implementation",
   "scripts": {
     "test": "vitest"
@@ -7,13 +7,13 @@
   "private": true,
   "devDependencies": {
     "bignumber.js": "^9.1.2",
-    "@nlighten/json-transform-core": "file://../javascript/json-transform-core",
+    "@bizone-ai/json-transform-utils": "file://../javascript/json-transform-utils",
     "@types/json-bigint": "^1.0.4",
     "json-bigint": "^1.0.0",
     "lossless-json": "^4.0.2",
     "nodemon": "3.0.2",
     "ts-node": "10.9.2",
     "typescript": "^5.5.4",
-    "vitest": "2.1.1"
+    "vitest": "3.0.5"
   }
 }

@@ -1,4 +1,4 @@
-name: Deploy JavaScript json-transform-utils
+name: Publish JavaScript json-transform-utils
 
 on:
   push:

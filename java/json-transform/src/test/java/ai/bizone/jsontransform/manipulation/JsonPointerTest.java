@@ -28,7 +28,7 @@ public class JsonPointerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void get_Simple(JsonAdapter<?,?,?> adapter) {
         var source = getEl(adapter);
         var jsonPointer = new JsonPointer(adapter);
@@ -36,7 +36,7 @@ public class JsonPointerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void get_KeyIsNumber(JsonAdapter<?,?,?> adapter) {
         var source = getEl(adapter);
         var jsonPointer = new JsonPointer(adapter);
@@ -44,7 +44,7 @@ public class JsonPointerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void get_NotExists(JsonAdapter<?,?,?> adapter) {
         var source = getEl(adapter);
         var jsonPointer = new JsonPointer(adapter);
@@ -52,7 +52,7 @@ public class JsonPointerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void set_InObject(JsonAdapter<?,?,?> adapter) {
         var source = getEl(adapter);
         var value = adapter.wrap("World");
@@ -62,7 +62,7 @@ public class JsonPointerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void set_InArray(JsonAdapter<?,?,?> adapter) {
         var source = getEl(adapter);
         var value = adapter.wrap("e");
@@ -72,7 +72,7 @@ public class JsonPointerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void set_PushToArray(JsonAdapter<?,?,?> adapter) {
         var source = getEl(adapter);
         var value = adapter.wrap("e");
@@ -82,7 +82,7 @@ public class JsonPointerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void set_CreatePathOneKey(JsonAdapter<?,?,?> adapter) {
         var source = getEl(adapter);
         var value = adapter.wrap("TWO");
@@ -92,7 +92,7 @@ public class JsonPointerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void set_CreatePathComposite(JsonAdapter<?,?,?> adapter) {
         var source = adapter.parse("""
         {"foo": 1, "baz": [{"qux": "hello"}]}
@@ -105,7 +105,7 @@ public class JsonPointerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void set_InsertInside(JsonAdapter<?,?,?> adapter) {
         var source = adapter.parse("""
         ["foo","bar"]
@@ -118,7 +118,7 @@ public class JsonPointerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void set_CreatePathOneKeyEmpty(JsonAdapter<?,?,?> adapter) {
         var source = getEl(adapter);
         var value = adapter.wrap("TWO");
@@ -129,7 +129,7 @@ public class JsonPointerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void set_CreatePath(JsonAdapter<?,?,?> adapter) {
         var source = getEl(adapter);
         var value = adapter.wrap("e");
@@ -139,7 +139,7 @@ public class JsonPointerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void remove(JsonAdapter<?,?,?> adapter) {
         var source = getEl(adapter);
         var jsonPointer = new JsonPointer(adapter);
@@ -152,7 +152,7 @@ public class JsonPointerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void removeReturnDoc(JsonAdapter<?,?,?> adapter) {
         var source = getEl(adapter);
         var jsonPointer = new JsonPointer(adapter);

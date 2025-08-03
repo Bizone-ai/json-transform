@@ -1,5 +1,5 @@
 import { useLocation } from "@docusaurus/router";
-import { definitions, FunctionDescriptor } from "@nlighten/json-transform-core";
+import { definitions, FunctionDescriptor } from "@bizone-ai/json-transform-utils";
 import MDXMarkdown from "@site/src/components/MDXMarkdown";
 import getSubfunctionOrFunction from "@site/src/components/getSubfunctionOrFunction";
 

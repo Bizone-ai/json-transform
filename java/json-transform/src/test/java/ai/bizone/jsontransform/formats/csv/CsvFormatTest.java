@@ -21,7 +21,7 @@ public class CsvFormatTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testCsv(JsonAdapter<?,?,?> adapter) {
         assertOutputFrom(adapter, """
 [{"a":"A","b":1},{"a":"C","b":2}]
@@ -33,7 +33,7 @@ C,2
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testCsv_withNames_reduced(JsonAdapter<?,?,?> adapter) {
         assertOutputFrom(adapter, """
 [{"a":"A","b":1},{"a":"C","b":2}]
@@ -46,7 +46,7 @@ C
 
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testCsv_arrays(JsonAdapter<?,?,?> adapter) {
         assertOutputFrom(adapter, """
 [[1,2],[3,4]]
@@ -57,7 +57,7 @@ C
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testCsv_arrays_withNames(JsonAdapter<?,?,?> adapter) {
         assertOutputFrom(adapter, """
 [[1,2],[3,4]]
@@ -69,7 +69,7 @@ a,b
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testCsv_escape(JsonAdapter<?,?,?> adapter) {
         assertOutputFrom(adapter, """
 [{"a":"Don't","b":1},{"a":"D\\"C\\"","b":"ok,"}]
@@ -90,7 +90,7 @@ t",1
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testCsv_forceQuote(JsonAdapter<?,?,?> adapter) {
         assertOutputFrom(adapter, """
 [{"a":"A","b":1},{"a":"C","b":2}]
@@ -125,20 +125,20 @@ t",1
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testParseCSV_default_noData(JsonAdapter<?,?,?> adapter) {
         assertDeserializationOutputFrom(adapter, "a,b", "[]");
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testParseCSV_default_oneRow(JsonAdapter<?,?,?> adapter) {
         assertDeserializationOutputFrom(adapter, "a,b\nA,B", """
 [{ "a": "A", "b": "B" }]""");
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testParseCSV_default_ignoreSpaces(JsonAdapter<?,?,?> adapter) {
         assertDeserializationOutputFrom(adapter, "a,b\nA,   B", """
 [{ "a": "A", "b": "B" }]""");
@@ -150,13 +150,13 @@ t",1
 
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testParseCSV_default_escapingComma(JsonAdapter<?,?,?> adapter) {
         assertDeserializationOutputFrom(adapter, "a\n\",\"","""
                                                              [{ "a": "," }]""");
     }
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testParseCSV_default_escapingNewline(JsonAdapter<?,?,?> adapter) {
         assertDeserializationOutputFrom(adapter, """
 "aaa","b
@@ -165,7 +165,7 @@ zzz,yyy,xxx""", """
                 [{"aaa":"zzz","b\\nbb":"yyy","ccc":"xxx"}]""");
     }
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testParseCSV_default_extraFields(JsonAdapter<?,?,?> adapter) {
         assertDeserializationOutputFrom(adapter, """
 a,b
@@ -174,7 +174,7 @@ a,b
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testParseCSV_default_escapingQuotes(JsonAdapter<?,?,?> adapter) {
         assertDeserializationOutputFrom(adapter, "a\n\"a\"\"b\"","""
                                                              [{ "a": "a\\"b" }]""");
@@ -187,7 +187,7 @@ a,b
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testParseCSV_default_possibleIssuesAtEndOfRow(JsonAdapter<?,?,?> adapter) {
         assertDeserializationOutputFrom(adapter, "a,b\nA,B\nC","""
                                                              [{ "a": "A", "b": "B" },{ "a": "C" }]""");
@@ -198,27 +198,27 @@ a,b
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testParseCSV_noHeaders_arrays(JsonAdapter<?,?,?> adapter) {
         assertDeserializationOutputFrom(adapter, "a,b\nA,B","""
                                                              [["a","b"],["A","B"]]""", true, null);
     }
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testParseCSV_noHeaders_escapingComma(JsonAdapter<?,?,?> adapter) {
         assertDeserializationOutputFrom(adapter, "\",\",\",\"","""
                                                              [[",",","]]""", true, null);
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testParseCSV_noHeaders_escapingQuotes(JsonAdapter<?,?,?> adapter) {
         assertDeserializationOutputFrom(adapter, "\"'\",\"\"\"\"","""
                                                              [["'","\\""]]""", true, null);
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testParseCSV_noHeaders__names(JsonAdapter<?,?,?> adapter) {
         assertDeserializationOutputFrom(adapter, """
 1,2
@@ -228,7 +228,7 @@ a,b
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testParseCSV_names(JsonAdapter<?,?,?> adapter) {
         assertDeserializationOutputFrom(adapter, """
 a,b,c

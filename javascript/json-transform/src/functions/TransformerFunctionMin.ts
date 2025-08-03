@@ -7,11 +7,13 @@ import CompareBy from "./common/CompareBy";
 class TransformerFunctionMin extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        default: { type: ArgType.Object, position: 0 },
-        by: { type: ArgType.Transformer, position: 2, defaultString: "##current" },
-        type: { type: ArgType.Enum, position: 1, defaultEnum: "AUTO" },
-      },
+      argsSets: [
+        [
+          { name: "default", type: ArgType.Any },
+          { name: "type", type: ArgType.String, defaultValue: "AUTO" },
+          { name: "by", type: ArgType.Any, defaultValue: "##current" },
+        ],
+      ],
     });
   }
 

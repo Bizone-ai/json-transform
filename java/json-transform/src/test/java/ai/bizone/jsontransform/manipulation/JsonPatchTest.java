@@ -34,6 +34,7 @@ public class JsonPatchTest extends MultiAdapterBaseTest {
 
     private record AdapterAndTest(JsonAdapter<?, ?, ?> adapter, Object test) {}
 
+    @SuppressWarnings("unchecked")
     private static Stream<AdapterAndTest> tests() throws FileNotFoundException {
         String json = read("JsonPatchTests.json");
         var streams = MultiAdapterBaseTest.provideJsonAdapters()

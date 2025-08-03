@@ -51,3 +51,6 @@ export const MAX_SCALE = 15;
 export const MAX_SCALE_ROUNDING = BigNumber.ROUND_HALF_UP;
 
 export const DEFAULT_LOCALE = "en-US";
+
+export const BigDecimal_ZERO = new BigDecimal(0);
+export const BigDecimal_ONE = new BigDecimal(1);

@@ -329,11 +329,13 @@ describe("JsonTransformer", () => {
   class TransformerFunctionArgsTest extends TransformerFunction {
     constructor() {
       super({
-        arguments: {
-          a: { type: ArgType.Any, position: 0, defaultIsNull: true },
-          b: { type: ArgType.Any, position: 1, defaultIsNull: true },
-          c: { type: ArgType.Any, position: 2, defaultIsNull: true },
-        },
+        argsSets: [
+          [
+            { name: "a", type: ArgType.Any },
+            { name: "b", type: ArgType.Any },
+            { name: "c", type: ArgType.Any },
+          ],
+        ],
       });
     }
     override async apply(context: FunctionContext) {

@@ -5,12 +5,14 @@ import FunctionContext from "./common/FunctionContext";
 class TransformerFunctionReplace extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        find: { type: ArgType.String, position: 0, defaultString: "" },
-        replacement: { type: ArgType.String, position: 1, defaultString: "" },
-        type: { type: ArgType.Enum, position: 2, defaultEnum: "STRING" },
-        from: { type: ArgType.Integer, position: 3, defaultInteger: 0 },
-      },
+      argsSets: [
+        [
+          { name: "find", type: ArgType.String, defaultValue: "" },
+          { name: "replacement", type: ArgType.String, defaultValue: "" },
+          { name: "type", type: ArgType.String, defaultValue: "STRING" },
+          { name: "from", type: ArgType.Number, defaultValue: 0 },
+        ],
+      ],
     });
   }
 

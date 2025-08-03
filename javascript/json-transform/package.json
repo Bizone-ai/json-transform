@@ -1,7 +1,7 @@
 {
-  "name": "@nlighten/json-transform",
+  "name": "@bizone-ai/json-transform",
   "description": "JSON transformers JavaScript implementation",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "main": "./dist/index.js",
   "source": "src/index.ts",
   "exports": "./dist/index.js",
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nlighten-oss/json-transform.git"
+    "url": "git+https://github.com/Bizone-ai/json-transform.git"
   },
   "files": [
     "dist/"
@@ -32,31 +32,29 @@
   "author": "Eli Sherer",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nlighten-oss/json-transform/issues"
+    "url": "https://github.com/Bizone-ai/json-transform/issues"
   },
-  "homepage": "https://github.com/nlighten-oss/json-transform#readme",
+  "homepage": "https://github.com/Bizone-ai/json-transform#readme",
   "dependencies": {
-    "@date-fns/tz": "^1.2.0",
-    "@nlighten/json-schema-utils": "^1.0.2",
     "@wortise/sequency": "^0.20.0",
     "bignumber.js": "^9.1.2",
-    "date-fns": "^4.1.0",
     "fast-json-stable-stringify": "^2.1.0",
     "jsonpath": "^1.1.1",
-    "lossless-json": "^4.0.2",
-    "uuid": "^10.0.0"
+    "lossless-json": "^4.0.2"
   },
   "peerDependencies": {
-    "@nlighten/json-transform-core": "^1.9.0",
+    "@date-fns/tz": "^1.2.0",
+    "@bizone-ai/json-schema-utils": "^1.1.0",
+    "date-fns": "^4.1.0",
     "fast-json-patch": "^3.1.1",
     "js-yaml": "^4.1.0",
     "json-pointer": "^0.6.2",
-    "xml2js": "^0.6.2"
+    "xml2js": "^0.6.2",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@date-fns/tz": "^1.2.0",
-    "@nlighten/json-schema-utils": "^1.0.2",
-    "@nlighten/json-transform-core": "file://../json-transform-core",
+    "@bizone-ai/json-schema-utils": "^1.1.0",
     "@types/js-yaml": "^4.0.9",
     "@types/json-bigint": "^1.0.4",
     "@types/json-pointer": "^1.0.34",
@@ -78,7 +76,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "uuid": "^10.0.0",
-    "vitest": "1.2.2",
+    "vitest": "3.0.5",
     "xml2js": "^0.6.2"
   }
 }

@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TransformerFunctionsTest extends MultiAdapterBaseTest {
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testMultipleInlineFunctions(JsonAdapter<?,?,?> adapter) {
         var date = Instant.now();
         var now = date.toString();
@@ -30,7 +30,7 @@ public class TransformerFunctionsTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testMultipleObjectFunctions(JsonAdapter<?,?,?> adapter) {
         assertTransformation(adapter, null, adapter.parse("""
 {
@@ -41,14 +41,14 @@ public class TransformerFunctionsTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void inlineInnerFailure(JsonAdapter<?,?,?> adapter) {
         // even though $$partition fails, $$string picks up the null and transforms it
         assertTransformation(adapter, adapter.parse("[1]"), "$$string(true):$$partition(0):$", "null");
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testFunctionContextNesting(JsonAdapter<?,?,?> adapter) {
         assertTransformation(adapter, null, adapter.parse("""
 {
@@ -70,7 +70,7 @@ public class TransformerFunctionsTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testJsonElementStreamsImmediateEvaluation(JsonAdapter<?,?,?> adapter) {
         var funcName = "foo" + Math.abs(adapter.toString().hashCode());
         var callCount = new AtomicInteger();
@@ -191,7 +191,7 @@ public class TransformerFunctionsTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void inlineArgsParsingTest(JsonAdapter<?,?,?> adapter) {
         TransformerFunctions.registerFunctions(Map.entry("argstest", new TransformerFunctionArgsTest()));
         assertTransformation(adapter, null, "$$argstest", "N/A");
@@ -241,7 +241,7 @@ public class TransformerFunctionsTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void inlineValueParsingTest(JsonAdapter<?,?,?> adapter) {
         TransformerFunctions.registerFunctions(Map.entry("valtest", new TransformerFunctionValTest()));
 
@@ -255,7 +255,7 @@ public class TransformerFunctionsTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void internalMacrosTest(JsonAdapter<?,?,?> adapter) {
         var result = transform(adapter, null, adapter.parse("""
                 ["#null"]"""), null);
@@ -277,7 +277,7 @@ public class TransformerFunctionsTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void additionalContextTest(JsonAdapter<?,?,?> adapter) {
         assertTransformation(adapter, null, "$example", adapter.wrap(3), Map.of("$example", 3));
         assertTransformation(adapter, null, "$example[2]", adapter.wrap(4), Map.of("$example", List.of(0,2,4,6)));

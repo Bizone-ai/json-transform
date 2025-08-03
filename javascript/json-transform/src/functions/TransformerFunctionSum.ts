@@ -3,15 +3,17 @@ import TransformerFunction from "./common/TransformerFunction";
 import { ArgType } from "./common/ArgType";
 import FunctionContext from "./common/FunctionContext";
 import { isNullOrUndefined } from "../JsonHelpers";
-import { BigDecimal, MAX_SCALE, MAX_SCALE_ROUNDING } from "./common/FunctionHelpers";
+import { BigDecimal, BigDecimal_ZERO, MAX_SCALE, MAX_SCALE_ROUNDING } from "./common/FunctionHelpers";
 
 class TransformerFunctionSum extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        default: { type: ArgType.BigDecimal, position: 0, defaultBigDecimal: 0 },
-        by: { type: ArgType.Transformer, position: 1, defaultIsNull: true },
-      },
+      argsSets: [
+        [
+          { name: "default", type: ArgType.Number, defaultValue: BigDecimal_ZERO },
+          { name: "by", type: ArgType.Any },
+        ],
+      ],
     });
   }
 

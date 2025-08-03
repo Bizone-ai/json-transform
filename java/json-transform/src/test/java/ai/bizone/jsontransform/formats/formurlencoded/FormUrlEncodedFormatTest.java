@@ -14,7 +14,7 @@ public class FormUrlEncodedFormatTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testSerialize(JsonAdapter<?,?,?> adapter) {
         var xbt = new FormUrlEncodedFormat(adapter);
         var result = xbt.serialize(new FUETest());
@@ -38,7 +38,7 @@ public class FormUrlEncodedFormatTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testDeserialize(JsonAdapter<?,?,?> adapter) {
         var xbt = new FormUrlEncodedFormat(adapter);
         var result = xbt.deserialize("a=1&b=hello&c");

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { parseTransformer } from "../parse";
-import { TypeSchema } from "@nlighten/json-schema-utils";
+import { TypeSchema } from "@bizone-ai/json-schema-utils";
 
 describe("parse", () => {
   test("should parse $name", () => {

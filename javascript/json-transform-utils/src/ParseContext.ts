@@ -1,4 +1,4 @@
-import { TypeSchema } from "@nlighten/json-schema-utils";
+import { TypeSchema } from "@bizone-ai/json-schema-utils";
 import { ContextVariablesSchemas } from "./functions/ContextVariablesSchemas";
 import { FunctionDescriptor } from "./functions/types";
 

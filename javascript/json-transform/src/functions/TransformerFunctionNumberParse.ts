@@ -8,13 +8,18 @@ import { parsePattern } from "./TransformerFunctionNumberFormat";
 class TransformerFunctionNumberParse extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        pattern: { type: ArgType.String, position: 0, defaultString: "#0.00" },
-        locale: { type: ArgType.String, position: 1, defaultIsNull: true },
-        grouping: { type: ArgType.String, position: 2, defaultIsNull: true },
-        decimal: { type: ArgType.String, position: 3, defaultIsNull: true },
-        radix: { type: ArgType.Integer, position: 1, defaultInteger: 10 },
-      },
+      argsSets: [
+        [
+          { name: "pattern", type: ArgType.String, const: "BASE" },
+          { name: "radix", type: ArgType.Number, defaultValue: 10 },
+        ],
+        [
+          { name: "pattern", type: ArgType.String, defaultValue: "#0.00" },
+          { name: "locale", type: ArgType.String, defaultValue: DEFAULT_LOCALE },
+          { name: "grouping", type: ArgType.String },
+          { name: "decimal", type: ArgType.String },
+        ],
+      ],
     });
   }
 

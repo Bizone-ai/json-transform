@@ -6,12 +6,14 @@ import { ArgType } from "./common/ArgType";
 class TransformerFunctionXmlParse extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        keep_strings: { type: ArgType.Boolean, position: 0, defaultBoolean: false },
-        cdata_tag_name: { type: ArgType.String, position: 1, defaultString: "$content" },
-        convert_nil_to_null: { type: ArgType.Boolean, position: 2, defaultBoolean: false },
-        force_list: { type: ArgType.ArrayOfString, position: 3, defaultIsNull: true },
-      },
+      argsSets: [
+        [
+          { name: "keep_strings", type: ArgType.Boolean, defaultValue: false },
+          { name: "cdata_tag_name", type: ArgType.String, defaultValue: "$content" },
+          { name: "convert_nil_to_null", type: ArgType.Boolean, defaultValue: false },
+          { name: "force_list", type: ArgType.Array },
+        ],
+      ],
     });
   }
 

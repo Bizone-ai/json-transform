@@ -8,12 +8,14 @@ import JsonElementStreamer from "../JsonElementStreamer";
 class TransformerFunctionSort extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        by: { type: ArgType.Transformer, position: 0 },
-        order: { type: ArgType.Enum, position: 1, defaultEnum: "ASC" },
-        type: { type: ArgType.Enum, position: 2, defaultEnum: "AUTO" },
-        then: { type: ArgType.Array, position: 3, defaultIsNull: true },
-      },
+      argsSets: [
+        [
+          { name: "by", type: ArgType.Any },
+          { name: "order", type: ArgType.String, defaultValue: "ASC" },
+          { name: "type", type: ArgType.String, defaultValue: "AUTO" },
+          { name: "then", type: ArgType.Array },
+        ],
+      ],
     });
   }
 

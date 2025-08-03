@@ -1,7 +1,7 @@
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 import MonacoWebpackPlugin from "monaco-editor-webpack-plugin";
-import { definitions } from "@nlighten/json-transform-core";
+import { definitions } from "@bizone-ai/json-transform-utils";
 
 import darkCodeTheme from "./code_theme";
 import { generateLanguageFile } from "./plugins/GenerateLanguageFileWebpackPlugin";
@@ -25,7 +25,7 @@ const config: Config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: "nlighten-oss", // Usually your GitHub org/user name.
+  organizationName: "Bizone-ai", // Usually your GitHub org/user name.
   projectName: "json-transform", // Usually your repo name.
   trailingSlash: false,
 
@@ -83,7 +83,7 @@ const config: Config = {
           sidebarPath: "./sidebars.ts",
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: "https://github.com/nlighten-oss/json-transform/tree/main/docs/",
+          editUrl: "https://github.com/Bizone-ai/json-transform/tree/main/docs/",
         },
         theme: {
           customCss: "./src/css/custom.css",
@@ -112,7 +112,7 @@ const config: Config = {
           className: "button button--primary navbar-button",
         },
         {
-          href: "https://github.com/nlighten-oss/json-transform",
+          href: "https://github.com/Bizone-ai/json-transform",
           label: "GitHub",
           position: "right",
         },
@@ -156,12 +156,12 @@ const config: Config = {
           items: [
             {
               label: "GitHub",
-              href: "https://github.com/nlighten-oss/json-transform",
+              href: "https://github.com/Bizone-ai/json-transform",
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} nLighten, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Bizone. Built with Docusaurus.`,
     },
     prism: {
       theme: darkCodeTheme,

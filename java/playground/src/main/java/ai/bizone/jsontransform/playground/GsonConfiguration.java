@@ -1,6 +1,6 @@
-package co.nlighten.jsontransform.playground;
+package ai.bizone.jsontransform.playground;
 
-import co.nlighten.jsontransform.adapters.gson.GsonHelpers;
+import ai.bizone.jsontransform.adapters.gson.GsonHelpers;
 import com.google.gson.GsonBuilder;
 import com.google.gson.ToNumberPolicy;
 import org.springframework.boot.autoconfigure.gson.GsonBuilderCustomizer;

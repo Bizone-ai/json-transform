@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class JsonPathTest extends MultiAdapterBaseTest {
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void pathLeafNotConvertedToNull(JsonAdapter<?,?,?> adapter) {
         var map = adapter.parse("""
             {
@@ -26,7 +26,7 @@ public class JsonPathTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void suppressExceptions(JsonAdapter<?,?,?> adapter) {
         var arr = adapter.parse("""
                 [

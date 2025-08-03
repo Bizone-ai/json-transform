@@ -1,12 +1,12 @@
-# @nlighten/json-transform-core
+# @bizone-ai/json-transform-utils
 
-![](https://img.shields.io/npm/v/@nlighten/json-transform-core.svg)
+![](https://img.shields.io/npm/v/@bizone-ai/json-transform-utils.svg)
 
 Core types and utilities for handling JSON transformers
 
 # Installation
 
-`npm install @nlighten/json-transform-core`
+`npm install @bizone-ai/json-transform-utils`
 
 # API
 

@@ -1,6 +1,6 @@
 {
-  "name": "@nlighten/monaco-json-transform",
-  "version": "1.9.0",
+  "name": "@bizone-ai/monaco-json-transform",
+  "version": "1.10.0",
   "description": "JSON Transform language tokenizer (and syntax highlight), hover provider and more",
   "main": "./dist/index.js",
   "source": "src/index.ts",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nlighten-oss/json-transform.git"
+    "url": "git+https://github.com/Bizone-ai/json-transform.git"
   },
   "files": [
     "dist/"
@@ -37,17 +37,17 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nlighten-oss/json-transform/issues"
+    "url": "https://github.com/Bizone-ai/json-transform/issues"
   },
-  "homepage": "https://github.com/nlighten-oss/json-transform#readme",
+  "homepage": "https://github.com/Bizone-ai/json-transform#readme",
   "peerDependencies": {
-    "@nlighten/json-schema-utils": "^1.0.3",
-    "@nlighten/json-transform-core": "^1.8.1",
+    "@bizone-ai/json-schema-utils": "^1.1.0",
+    "@bizone-ai/json-transform-utils": "^1.8.1",
     "monaco-editor": "*"
   },
   "devDependencies": {
-    "@nlighten/json-schema-utils": "^1.0.3",
-    "@nlighten/json-transform-core": "file://../json-transform-core",
+    "@bizone-ai/json-schema-utils": "^1.1.0",
+    "@bizone-ai/json-transform-utils": "file://../json-transform-utils",
     "monaco-editor": "^0.52.2",
     "prettier": "3.1.1",
     "typescript": "^5.3.3"

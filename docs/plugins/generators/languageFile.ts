@@ -1,6 +1,6 @@
 import path from "node:path";
 import fs from "node:fs";
-import { definitions, examples } from "@nlighten/json-transform-core";
+import { definitions, examples } from "@bizone-ai/json-transform-utils";
 
 export default function () {
   const language: any = {};

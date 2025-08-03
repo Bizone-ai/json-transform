@@ -3,7 +3,7 @@ import path from 'path';
 import {describe, test} from "vitest";
 import {assertTransformation, JSONBig} from "./assertTransformation";
 import {ImplsByLang} from "./implementations";
-import { examples, JsonTransformExample, EmbeddedTransformerFunction } from "@nlighten/json-transform-core"
+import { examples, JsonTransformExample, EmbeddedTransformerFunction } from "@bizone-ai/json-transform-utils"
 
 const language = process.env.IMPL_LANG ?? "java";
 

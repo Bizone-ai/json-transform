@@ -6,12 +6,14 @@ import { getAsString, isNullOrUndefined } from "../JsonHelpers";
 class TransformerFunctionJoin extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        delimiter: { type: ArgType.String, position: 0, defaultString: "", aliases: ["$$delimiter"] },
-        prefix: { type: ArgType.String, position: 1, defaultString: "" },
-        suffix: { type: ArgType.String, position: 2, defaultString: "" },
-        keep_nulls: { type: ArgType.Boolean, position: 3, defaultBoolean: false },
-      },
+      argsSets: [
+        [
+          { name: "delimiter", type: ArgType.String, defaultValue: "", aliases: ["$$delimiter"] },
+          { name: "prefix", type: ArgType.String, defaultValue: "" },
+          { name: "suffix", type: ArgType.String, defaultValue: "" },
+          { name: "keep_nulls", type: ArgType.Boolean, defaultValue: false },
+        ],
+      ],
     });
   }
 

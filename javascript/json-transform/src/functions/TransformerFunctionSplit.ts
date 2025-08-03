@@ -9,10 +9,12 @@ import javaSplit from "./utils/javaSplit";
 class TransformerFunctionSplit extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        delimiter: { type: ArgType.String, position: 0, defaultString: "" },
-        limit: { type: ArgType.Integer, position: 1, defaultInteger: 0 },
-      },
+      argsSets: [
+        [
+          { name: "delimiter", type: ArgType.String, defaultValue: "" },
+          { name: "limit", type: ArgType.Number, defaultValue: 0 },
+        ],
+      ],
     });
   }
 

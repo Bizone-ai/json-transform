@@ -1,6 +1,6 @@
-package co.nlighten.jsontransform.playground;
+package ai.bizone.jsontransform.playground;
 
-import co.nlighten.jsontransform.DebuggableTransformerFunctions;
+import ai.bizone.jsontransform.DebuggableTransformerFunctions;
 
 import java.util.Map;
 

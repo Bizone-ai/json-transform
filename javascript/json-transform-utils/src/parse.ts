@@ -3,7 +3,7 @@ import {
   cleanParsedSchemaProperty,
   inferJSONSchemaType,
   type TypeSchema,
-} from "@nlighten/json-schema-utils";
+} from "@bizone-ai/json-schema-utils";
 import { EmbeddedTransformerFunction } from "./functions/types";
 import { functionsParser } from "./functions/functionsParser";
 import { matchJsonPathFunction } from "./jsonpath/jsonpathFunctions";

@@ -7,7 +7,7 @@ import {
   registerJsonTransformDSTProvider,
   registerJsonTransformHoverProvider,
   defineThemeVsDarkCustom,
-} from "@nlighten/monaco-json-transform";
+} from "@bizone-ai/monaco-json-transform";
 
 const glob = window as unknown as { monaco: Monaco };
 

@@ -3,7 +3,7 @@ import TransformerFunction from "./common/TransformerFunction";
 import { ArgType } from "./common/ArgType";
 import FunctionContext from "./common/FunctionContext";
 import { getAsString, isNullOrUndefined } from "../JsonHelpers";
-import { BigDecimal, MAX_SCALE, MAX_SCALE_ROUNDING } from "./common/FunctionHelpers";
+import { BigDecimal, BigDecimal_ZERO, MAX_SCALE, MAX_SCALE_ROUNDING } from "./common/FunctionHelpers";
 
 enum MathOp {
   ADDITION = 1,
@@ -37,11 +37,20 @@ const toBigInt = (value: BigNumber) => BigInt(BigDecimal(value).toFixed(0, BigNu
 class TransformerFunctionMath extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        op1: { type: ArgType.BigDecimal, position: 0 /* or 1 */, defaultBigDecimal: 0 },
-        op: { type: ArgType.Enum, position: 1 /* or 0 */, defaultEnum: "0" },
-        op2: { type: ArgType.BigDecimal, position: 2, defaultBigDecimal: 0 },
-      },
+      allowsArgumentsAsInput: true,
+      argsSets: [
+        [
+          { name: "op1", type: ArgType.Number, defaultValue: BigDecimal_ZERO },
+          { name: "op", type: ArgType.String, defaultValue: BigDecimal_ZERO },
+          { name: "op2", type: ArgType.Number, defaultValue: BigDecimal_ZERO },
+        ],
+        /* No real value in adding this
+        [
+          { name: "op", type: ArgType.String, defaultValue: BigDecimal_ZERO },
+          { name: "op1", type: ArgType.Number, defaultValue: BigDecimal_ZERO },
+          { name: "op2", type: ArgType.Number, defaultValue: BigDecimal_ZERO },
+        ],*/
+      ],
     });
   }
 
@@ -59,10 +68,12 @@ class TransformerFunctionMath extends TransformerFunction {
       parsedOp = getAsString(arg0);
       op = TransformerFunctionMath.parseMathOp(parsedOp);
       if (size > 2 && op == MathOp.UNKNOWN) {
+        // [ op1, op, [op2] ]
         parsedOp = getAsString(arg1);
         op = TransformerFunctionMath.parseMathOp(parsedOp);
         op1 = BigDecimal(arg0);
       } else {
+        // [ op, op1, [op2] ]
         op1 = BigDecimal(arg1);
       }
       op2 = size < 3 ? BigDecimal(0) : BigDecimal(value[2]);
@@ -78,14 +89,14 @@ class TransformerFunctionMath extends TransformerFunction {
         op1 = await context.getBigDecimal("op1");
         op2 = await context.getBigDecimal("op2");
       } else {
-        var mainArgValue = await context.getUnwrapped(null);
+        const mainArgValue = await context.getUnwrapped(null);
         if (mainArgValue != null) {
           // we set operand 1 as main argument value for the sake of functions with only one operand
           // -> op, [op2] : op1
           op1 = BigDecimal(mainArgValue.toString());
           op2 = await context.getBigDecimal("op");
         } else {
-          // -> op, op1, op2
+          // -> op, op1, [op2]
           op1 = await context.getBigDecimal("op");
           op2 = await context.getBigDecimal("op2");
         }
@@ -96,7 +107,7 @@ class TransformerFunctionMath extends TransformerFunction {
       console.warn("{} was specified with an unknown op ({})", context.getAlias(), parsedOp);
       return null;
     }
-    var result = TransformerFunctionMath.eval(op, op1 ?? BigZero, op2 ?? BigZero);
+    let result = TransformerFunctionMath.eval(op, op1 ?? BigZero, op2 ?? BigZero);
 
     if (result == null) {
       return null;

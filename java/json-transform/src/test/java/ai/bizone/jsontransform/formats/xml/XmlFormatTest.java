@@ -13,7 +13,7 @@ public class XmlFormatTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testJSON2XML(JsonAdapter<?,?,?> adapter) {
         var xbt = new XmlFormat(adapter, """
 <?xml version="1.0" encoding="UTF-8"?>
@@ -62,7 +62,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testJSON2XMLUglify(JsonAdapter<?,?,?> adapter) {
         var xbt = new XmlFormat(adapter, """
 <?xml version="1.0" encoding="UTF-8"?>
@@ -96,7 +96,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testParseXML(JsonAdapter<?,?,?> adapter) {
         var result = new XmlFormat(adapter).deserialize("""
                                                    <root>

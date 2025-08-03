@@ -1,4 +1,4 @@
-import {TypeSchema} from "@nlighten/json-schema-utils";
+import {TypeSchema} from "@bizone-ai/json-schema-utils";
 
 export const ContextVariablesSchemas: Record<string, TypeSchema> = {
   "#uuid": { type: "string", format: "uuid" },

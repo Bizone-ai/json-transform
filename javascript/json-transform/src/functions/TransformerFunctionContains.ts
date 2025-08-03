@@ -6,9 +6,7 @@ import { isEqual } from "../JsonHelpers";
 class TransformerFunctionContains extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        that: { type: ArgType.Any, position: 0, defaultIsNull: true },
-      },
+      argsSets: [[{ name: "that", type: ArgType.Any }]],
     });
   }
 

@@ -15,9 +15,7 @@ const getUnique = (value: any) => {
 class TransformerFunctionDistinct extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        by: { type: ArgType.Transformer, position: 0, defaultIsNull: true },
-      },
+      argsSets: [[{ name: "by", type: ArgType.Any }]],
     });
   }
 

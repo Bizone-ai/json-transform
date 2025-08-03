@@ -1,5 +1,5 @@
 import { useLocation } from "@docusaurus/router";
-import { definitions, FunctionDescriptor } from "@nlighten/json-transform-core";
+import { definitions, FunctionDescriptor } from "@bizone-ai/json-transform-utils";
 import FunctionIntro from "@site/src/components/FunctionIntro";
 import FunctionUsage from "@site/src/components/FunctionUsage";
 import FunctionReturns from "@site/src/components/FunctionReturns";

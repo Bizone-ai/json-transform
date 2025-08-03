@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "@docusaurus/router";
-import { examples, JsonTransformExample } from "@nlighten/json-transform-core";
+import { examples, JsonTransformExample } from "@bizone-ai/json-transform-utils";
 import MDXMarkdown from "@site/src/components/MDXMarkdown";
 import { shareLink } from "@site/src/utils/shareLink";
 

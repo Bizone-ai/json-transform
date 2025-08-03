@@ -1,4 +1,4 @@
-name: Deploy JavaScript monaco-json-transform
+name: Publish JavaScript monaco-json-transform
 
 on:
   push:

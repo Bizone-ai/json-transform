@@ -1,11 +1,10 @@
-package transformers;
+package ai.bizone.jsontransform;
 
 import ai.bizone.jsontransform.adapters.gson.GsonJsonAdapter;
 import ai.bizone.jsontransform.adapters.jackson.JacksonJsonAdapter;
 import ai.bizone.jsontransform.adapters.jsonorg.JsonOrgJsonAdapter;
 import ai.bizone.jsontransform.adapters.jsonsmart.JsonSmartJsonAdapter;
 import ai.bizone.jsontransform.adapters.pojo.PojoJsonAdapter;
-import ai.bizone.jsontransform.JsonTransformerTest;
 import ai.bizone.jsontransform.adapters.JsonAdapter;
 import org.openjdk.jmh.annotations.*;
 

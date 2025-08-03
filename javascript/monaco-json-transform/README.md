@@ -4,7 +4,7 @@
 
 ## Installation
 
-- `npm i -S @nlighten/monaco-json-transform`
+- `npm i -S @bizone-ai/monaco-json-transform`
 
 ## Usage
 
@@ -17,7 +17,7 @@ import {
   registerJsonTransformDSTProvider,
   registerJsonTransformHoverProvider,
   defineThemeVsDarkCustom,
-} from "@nlighten/monaco-json-transform";
+} from "@bizone-ai/monaco-json-transform";
 
 ...
 

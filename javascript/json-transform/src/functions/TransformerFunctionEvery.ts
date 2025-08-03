@@ -6,9 +6,7 @@ import { isTruthy } from "../JsonHelpers";
 class TransformerFunctionEvery extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        by: { type: ArgType.Transformer, position: 0 },
-      },
+      argsSets: [[{ name: "by", type: ArgType.Any }]],
     });
   }
 

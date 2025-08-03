@@ -5,9 +5,7 @@ import FunctionContext from "./common/FunctionContext";
 class TransformerFunctionTest extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        pattern: { type: ArgType.String, position: 0 },
-      },
+      argsSets: [[{ name: "pattern", type: ArgType.String }]],
     });
   }
 

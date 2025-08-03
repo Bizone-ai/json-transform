@@ -105,16 +105,39 @@ class TransformerFunctionNumberFormat extends TransformerFunction {
 
   constructor() {
     super({
-      arguments: {
-        type: { type: ArgType.Enum, position: 0, defaultEnum: "NUMBER" },
-        locale: { type: ArgType.String, position: 1, defaultIsNull: true },
-        compact_style: { type: ArgType.Enum, position: 2, defaultEnum: "SHORT" },
-        pattern: { type: ArgType.String, position: 2, defaultString: "#0.00" },
-        grouping: { type: ArgType.String, position: 3, defaultIsNull: true },
-        decimal: { type: ArgType.String, position: 4, defaultIsNull: true },
-        radix: { type: ArgType.Integer, position: 1, defaultInteger: 10 },
-        currency: { type: ArgType.String, position: 2, defaultIsNull: true },
-      },
+      argsSets: [
+        [
+          { name: "type", type: ArgType.String, const: "DECIMAL" },
+          { name: "locale", type: ArgType.String, defaultValue: DEFAULT_LOCALE },
+          { name: "pattern", type: ArgType.String, defaultValue: "#0.00" },
+          { name: "grouping", type: ArgType.String },
+          { name: "decimal", type: ArgType.String },
+        ],
+        [
+          { name: "type", type: ArgType.String, const: "CURRENCY" },
+          { name: "locale", type: ArgType.String, defaultValue: DEFAULT_LOCALE },
+          { name: "currency", type: ArgType.String },
+        ],
+        [
+          { name: "type", type: ArgType.String, const: "PERCENT" },
+          { name: "locale", type: ArgType.String, defaultValue: DEFAULT_LOCALE },
+        ],
+        [
+          { name: "type", type: ArgType.String, const: "INTEGER" },
+          { name: "locale", type: ArgType.String, defaultValue: DEFAULT_LOCALE },
+        ],
+        [
+          { name: "type", type: ArgType.String, const: "COMPACT" },
+          { name: "locale", type: ArgType.String, defaultValue: DEFAULT_LOCALE },
+          { name: "compact_style", type: ArgType.String, defaultValue: "SHORT" },
+        ],
+        [
+          { name: "type", type: ArgType.String, const: "BASE" },
+          { name: "radix", type: ArgType.Number, defaultValue: 10 },
+        ],
+        // default
+        [{ name: "type", type: ArgType.String, const: "NUMBER", defaultValue: "NUMBER" }],
+      ],
     });
     const [format] = parsePattern("#,##0.000");
     format.decimalSeparator = ".";

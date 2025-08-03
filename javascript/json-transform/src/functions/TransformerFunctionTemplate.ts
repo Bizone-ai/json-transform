@@ -9,11 +9,13 @@ const DOLLAR = "$";
 class TransformerFunctionTemplate extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        payload: { type: ArgType.Any, position: 0, defaultIsNull: true },
-        default_resolve: { type: ArgType.Enum, position: 1, defaultEnum: "UNIQUE" },
-        url_encode: { type: ArgType.Boolean, position: 2, defaultBoolean: false },
-      },
+      argsSets: [
+        [
+          { name: "payload", type: ArgType.Any },
+          { name: "default_resolve", type: ArgType.String, defaultValue: "UNIQUE" },
+          { name: "url_encode", type: ArgType.Boolean, defaultValue: false },
+        ],
+      ],
     });
   }
 
@@ -27,7 +29,7 @@ class TransformerFunctionTemplate extends TransformerFunction {
 
     const urlEncode = await context.getBoolean("url_encode");
 
-    let currentResolver = context.getResolver();
+    const currentResolver = await context.getResolver();
     let resolver = currentResolver;
     const payload = await context.getJsonElement("payload");
     if (payload !== null) {

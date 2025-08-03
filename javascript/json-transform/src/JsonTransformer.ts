@@ -6,18 +6,21 @@ import transformerFunctions, { TransformerFunctionsAdapter } from "./Transformer
 import JsonElementStreamer from "./JsonElementStreamer";
 import BigNumber from "bignumber.js";
 import { BigDecimal } from "./functions/common/FunctionHelpers";
+import { convertFunctionsToObjects } from "./functions/utils/convert";
 
 export class JsonTransformer implements Transformer {
   static readonly OBJ_DESTRUCT_KEY = "*";
   static readonly NULL_VALUE = "#null";
 
   private transformerFunctions: TransformerFunctionsAdapter;
-  private definition: any;
-  private JSON_TRANSFORMER: JsonTransformerFunction;
+  private readonly originalDefinition: any;
+  private readonly definition: any;
+  private readonly JSON_TRANSFORMER: JsonTransformerFunction;
 
   public constructor(definition: any, functionsAdapter?: TransformerFunctionsAdapter) {
     this.transformerFunctions = functionsAdapter ?? transformerFunctions;
-    this.definition = definition;
+    this.originalDefinition = definition;
+    this.definition = definition; // convertFunctionsToObjects(definition);
     this.JSON_TRANSFORMER = {
       transform: this.fromJsonElement.bind(this),
     };
@@ -148,6 +151,6 @@ export class JsonTransformer implements Transformer {
    * Gets the transformer definition
    */
   getDefinition() {
-    return this.definition;
+    return this.originalDefinition;
   }
 }

@@ -1,7 +1,7 @@
 package ai.bizone.jsontransform.functions;
 
 import ai.bizone.jsontransform.functions.common.*;
-import co.nlighten.jsontransform.functions.common.*;
+import ai.bizone.jsontransform.functions.common.*;
 
 import java.text.NumberFormat;
 import java.util.Currency;

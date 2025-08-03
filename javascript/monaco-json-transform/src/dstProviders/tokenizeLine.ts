@@ -1,4 +1,4 @@
-import { functionsParser, JsonPathFunctionRegex, transformUtils } from "@nlighten/json-transform-core";
+import { functionsParser, JsonPathFunctionRegex, transformUtils } from "@bizone-ai/json-transform-utils";
 
 const FunctionContextRegExp = /##([a-z]+[a-z_\d]*)(((\.(?![-\w$]+\()[-\w$]+)|(\[[^\]\n]+]))+|(?=[^\w.]|$))/g;
 const FindCommentsRegex = /"(\/\/|\$comment)":\s*"(\\"|[^"])*"/g;

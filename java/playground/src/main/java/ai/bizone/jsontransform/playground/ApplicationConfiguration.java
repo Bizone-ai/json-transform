@@ -1,4 +1,4 @@
-package co.nlighten.jsontransform.playground;
+package ai.bizone.jsontransform.playground;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

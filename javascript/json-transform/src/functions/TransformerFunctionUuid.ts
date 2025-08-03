@@ -17,10 +17,12 @@ class TransformerFunctionUuid extends TransformerFunction {
 
   constructor() {
     super({
-      arguments: {
-        format: { type: ArgType.Enum, position: 0, defaultEnum: "CANONICAL" },
-        namespace: { type: ArgType.String, position: 1, defaultIsNull: true },
-      },
+      argsSets: [
+        [
+          { name: "format", type: ArgType.String, defaultValue: "CANONICAL" },
+          { name: "namespace", type: ArgType.String },
+        ],
+      ],
     });
   }
 

@@ -7,10 +7,12 @@ import { AsyncSequence, asyncSequenceOf } from "@wortise/sequency";
 class TransformerFunctionMerge extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        deep: { type: ArgType.Boolean, position: 1, defaultBoolean: false },
-        arrays: { type: ArgType.Boolean, position: 2, defaultBoolean: false },
-      },
+      argsSets: [
+        [
+          { name: "deep", type: ArgType.Boolean, defaultValue: false },
+          { name: "arrays", type: ArgType.Boolean, defaultValue: false },
+        ],
+      ],
     });
   }
 

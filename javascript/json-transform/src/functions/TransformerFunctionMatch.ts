@@ -5,10 +5,12 @@ import FunctionContext from "./common/FunctionContext";
 class TransformerFunctionMatch extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        pattern: { type: ArgType.String, position: 0 },
-        group: { type: ArgType.Integer, position: 1, defaultInteger: 0 },
-      },
+      argsSets: [
+        [
+          { name: "pattern", type: ArgType.String },
+          { name: "group", type: ArgType.Number, defaultValue: 0 },
+        ],
+      ],
     });
   }
 

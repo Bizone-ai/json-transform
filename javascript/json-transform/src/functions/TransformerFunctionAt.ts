@@ -5,15 +5,13 @@ import FunctionContext from "./common/FunctionContext";
 class TransformerFunctionAt extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        index: { type: ArgType.Integer, position: 0, defaultIsNull: true },
-      },
+      argsSets: [[{ name: "index", type: ArgType.Number }]],
     });
   }
 
   override async apply(context: FunctionContext): Promise<any> {
     const value = await context.getJsonElementStreamer(null);
-    if (value == null) {
+    if (value == null || value.knownAsEmpty()) {
       return null;
     }
     const index = await context.getInteger("index");

@@ -1,7 +1,7 @@
 package ai.bizone.jsontransform.template;
 
 import ai.bizone.jsontransform.ParameterResolver;
-import co.nlighten.jsontransform.*;
+import ai.bizone.jsontransform.*;
 import ai.bizone.jsontransform.adapters.JsonAdapter;
 
 public class TemplateParameter {

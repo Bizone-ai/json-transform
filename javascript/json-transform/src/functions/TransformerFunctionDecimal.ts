@@ -6,10 +6,12 @@ import { MAX_SCALE, MAX_SCALE_ROUNDING, NO_SCALE, RoundingModes } from "./common
 class TransformerFunctionDecimal extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        scale: { type: ArgType.Integer, position: 0, defaultInteger: -1 },
-        rounding: { type: ArgType.Enum, position: 1, defaultEnum: "HALF_UP" },
-      },
+      argsSets: [
+        [
+          { name: "scale", type: ArgType.Number, defaultValue: -1 },
+          { name: "rounding", type: ArgType.String, defaultValue: "HALF_UP" },
+        ],
+      ],
     });
   }
 

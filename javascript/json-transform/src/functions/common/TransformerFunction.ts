@@ -1,50 +1,43 @@
-import { ArgumentType } from "./ArgumentType";
-import { ArgType } from "./ArgType";
 import FunctionContext from "./FunctionContext";
-import { isNullOrUndefined } from "../../JsonHelpers";
-import { FunctionDescription } from "./FunctionDescription";
-import { BigDecimal } from "./FunctionHelpers";
+import { ArgumentsSet, FunctionDescription } from "./FunctionDescription";
 
+function areSame(a: any, b: any): boolean {
+  if (a === b) return true;
+  if (typeof a !== typeof b) return false;
+  if (typeof a === "string" && typeof b === "string") {
+    return a.toLowerCase() === b.toLowerCase();
+  }
+  return false;
+}
 /**
  * Base class for all transformer functions.
  */
-class TransformerFunction {
-  protected readonly defaultValues: Record<string, any>;
+abstract class TransformerFunction {
   protected readonly description: FunctionDescription;
 
-  constructor(description: FunctionDescription) {
+  protected constructor(description: FunctionDescription) {
     this.description = description;
-    this.defaultValues = {};
-    const args = description.arguments;
-    if (args) {
-      for (const arg in args) {
-        if (args[arg].aliases?.length) {
-          args[arg].aliases?.forEach(alias => {
-            args[alias] = args[arg];
-          });
-        }
-        this.defaultValues[arg] = TransformerFunction.getDefaultValue(args[arg]);
-      }
-    }
   }
 
-  private static getDefaultValue(a: ArgumentType) {
-    if (a == null || a.defaultIsNull) return null;
-    switch (a.type) {
-      case ArgType.Boolean:
-        return a.defaultBoolean ?? null;
-      case ArgType.String:
-        return a.defaultString ?? null;
-      case ArgType.Enum:
-        return a.defaultEnum ?? null;
-      case ArgType.Integer:
-        return a.defaultInteger ?? null;
-      case ArgType.Long:
-        return a.defaultLong ?? null;
-      case ArgType.BigDecimal:
-        return a.defaultBigDecimal ? new BigDecimal(a.defaultBigDecimal) : null;
-    }
-    return null;
+  public parseArguments(args?: Record<string, any> | (string | null)[]): ArgumentsSet | undefined {
+    const argsSets = this.description.argsSets;
+    if (!argsSets) return undefined;
+    if (argsSets.length === 1) return argsSets[0];
+    if (!args) return argsSets.at(-1);
+    const argSet = Array.isArray(args)
+      ? argsSets.find(x =>
+          x.every(
+            (arg, i) => (!arg.const || areSame(arg.const, args[i])) && (!arg.exists || typeof args[i] !== "undefined"),
+          ),
+        )
+      : argsSets.find(x =>
+          x.every(
+            arg =>
+              (!arg.const || areSame(arg.const, args[arg.name])) &&
+              (!arg.exists || typeof args[arg.name] !== "undefined"),
+          ),
+        );
+    return argSet ?? argsSets.at(-1);
   }
 
   /**
@@ -52,36 +45,22 @@ class TransformerFunction {
    * @param context the context
    * @return the result of the function
    */
-  public apply(context: FunctionContext): Promise<any> {
-    return Promise.reject();
+  public abstract apply(context: FunctionContext): Promise<any>;
+
+  /**
+   * Check if the function allows arguments to be used as input.
+   * @return true if arguments can be used as input, false otherwise
+   */
+  public allowsArgumentsAsInput() {
+    return this.description.allowsArgumentsAsInput;
   }
 
   /**
-   * Get the argument type for the given name.
-   * @param name the name of the argument (null will return the primary argument)
-   * @return the argument type or null if not found
+   * Check if the function allows arguments to be used as input.
+   * @return true if arguments can be used as input, false otherwise
    */
-  public getArgument(name: string): ArgumentType | null {
-    if (isNullOrUndefined(name)) return null;
-    return this.description.arguments?.[name] ?? null;
-  }
-
-  /**
-   * Get the arguments for this function.
-   * @return the function arguments
-   */
-  public getArguments() {
-    return this.description.arguments;
-  }
-
-  /**
-   * Get the default value for the given argument name.
-   * @param name the argument name
-   * @return the default value or null if not found
-   */
-  public getDefaultValue(name: string) {
-    if (name == null) return null;
-    return this.defaultValues[name];
+  public inputIsRaw() {
+    return this.description.inputIsRaw;
   }
 }
 

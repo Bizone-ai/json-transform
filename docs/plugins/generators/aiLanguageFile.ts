@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { definitions, examples, FunctionDefinition } from "@nlighten/json-transform-core";
+import { definitions, examples, FunctionDefinition } from "@bizone-ai/json-transform-utils";
 
 const fixType = (arg: any) => {
   const result: any = {

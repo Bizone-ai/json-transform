@@ -23,10 +23,13 @@ function formatHex(a: ArrayBuffer) {
 class TransformerFunctionDigest extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        algorithm: { type: ArgType.Enum, position: 0, defaultEnum: "SHA-1" },
-        format: { type: ArgType.Enum, position: 1, defaultEnum: "BASE64" },
-      },
+      argsSets: [
+        [{ name: "algorithm", type: ArgType.String, const: "JAVA" }],
+        [
+          { name: "algorithm", type: ArgType.String, defaultValue: "SHA-1" },
+          { name: "format", type: ArgType.String, defaultValue: "BASE64" },
+        ],
+      ],
     });
   }
 

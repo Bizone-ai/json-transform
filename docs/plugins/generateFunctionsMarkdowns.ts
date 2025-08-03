@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { definitions } from "@nlighten/json-transform-core";
+import { definitions } from "@bizone-ai/json-transform-utils";
 
 export function generateFunctionsMarkdowns() {
   const functionsDir = path.join(__dirname, "..", "docs", "functions");

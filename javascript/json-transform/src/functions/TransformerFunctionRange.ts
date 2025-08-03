@@ -3,17 +3,20 @@ import { ArgType } from "./common/ArgType";
 import FunctionContext from "./common/FunctionContext";
 import JsonElementStreamer from "../JsonElementStreamer";
 import { createAsyncSequence } from "@wortise/sequency";
-import { RoundingModes } from "./common/FunctionHelpers";
+import { BigDecimal_ONE, RoundingModes } from "./common/FunctionHelpers";
 import BigNumber from "bignumber.js";
 
 class TransformerFunctionRange extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        start: { type: ArgType.BigDecimal, position: 0, defaultIsNull: true },
-        end: { type: ArgType.BigDecimal, position: 1, defaultIsNull: true },
-        step: { type: ArgType.BigDecimal, position: 2, defaultBigDecimal: 1 },
-      },
+      allowsArgumentsAsInput: true,
+      argsSets: [
+        [
+          { name: "start", type: ArgType.Number },
+          { name: "end", type: ArgType.Number },
+          { name: "step", type: ArgType.Number, defaultValue: BigDecimal_ONE },
+        ],
+      ],
     });
   }
 
@@ -24,7 +27,7 @@ class TransformerFunctionRange extends TransformerFunction {
     if (context.has("start")) {
       start = await context.getBigDecimal("start");
       end = await context.getBigDecimal("end");
-      step = (await context.getBigDecimal("step")) ?? BigNumber(1);
+      step = (await context.getBigDecimal("step")) ?? BigDecimal_ONE;
     } else {
       const arr = await context.getJsonArray(null);
       if (!arr) {
@@ -32,7 +35,7 @@ class TransformerFunctionRange extends TransformerFunction {
       }
       start = arr[0];
       end = arr[1];
-      step = arr[2] ?? BigNumber(1);
+      step = arr[2] ?? BigDecimal_ONE;
     }
     // sanity check
     if (

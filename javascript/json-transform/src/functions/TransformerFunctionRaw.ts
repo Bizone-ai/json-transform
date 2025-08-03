@@ -3,7 +3,9 @@ import FunctionContext from "./common/FunctionContext";
 
 class TransformerFunctionRaw extends TransformerFunction {
   constructor() {
-    super({});
+    super({
+      inputIsRaw: true,
+    });
   }
 
   override async apply(context: FunctionContext): Promise<any> {

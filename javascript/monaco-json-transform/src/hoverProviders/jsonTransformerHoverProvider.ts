@@ -1,12 +1,12 @@
 import type { languages, editor } from "monaco-editor";
-import { formatSchemaType, type TypeSchema } from "@nlighten/json-schema-utils";
+import { formatSchemaType, type TypeSchema } from "@bizone-ai/json-schema-utils";
 import {
   ContextVariablesSchemas,
   FunctionDescriptor,
   functionsParser,
   getFunctionInlineSignature,
   getSubfunction,
-} from "@nlighten/json-transform-core";
+} from "@bizone-ai/json-transform-utils";
 
 type TypeMap = Record<string, TypeSchema>;
 

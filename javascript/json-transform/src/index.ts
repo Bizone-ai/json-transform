@@ -16,8 +16,7 @@ import CompareBy from "./functions/common/CompareBy";
 import FunctionContext from "./functions/common/FunctionContext";
 import { FunctionDescription } from "./functions/common/FunctionDescription";
 import * as FunctionHelpers from "./functions/common/FunctionHelpers";
-import InlineFunctionContext from "./functions/common/InlineFunctionContext";
-import ObjectFunctionContext from "./functions/common/ObjectFunctionContext";
+import InlineFunctionTokenizer, { TokenizedInlineFunction } from "./functions/common/InlineFunctionTokenizer";
 import TextEncoding from "./functions/common/TextEncoding";
 import TransformerFunction from "./functions/common/TransformerFunction";
 // Functions Utils
@@ -61,8 +60,8 @@ export {
   FunctionContext,
   FunctionDescription,
   FunctionHelpers,
-  InlineFunctionContext,
-  ObjectFunctionContext,
+  InlineFunctionTokenizer,
+  TokenizedInlineFunction,
   TextEncoding,
   TransformerFunction,
   Base36Or62,

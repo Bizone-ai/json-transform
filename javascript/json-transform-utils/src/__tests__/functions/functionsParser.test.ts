@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { cleanParsedSchemaProperty, type TypeSchema } from "@nlighten/json-schema-utils";
+import { cleanParsedSchemaProperty, type TypeSchema } from "@bizone-ai/json-schema-utils";
 import { EmbeddedTransformerFunction, EmbeddedTransformerFunctions } from "../../functions/types";
 import { parseTransformer } from "../../parse";
 import { functionsParser } from "../../functions/functionsParser";

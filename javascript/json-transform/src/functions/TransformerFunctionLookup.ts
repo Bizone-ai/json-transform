@@ -13,10 +13,12 @@ type UsingEntry = {
 class TransformerFunctionLookup extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        using: { type: ArgType.Array, position: 0 },
-        to: { type: ArgType.Transformer, position: 1, defaultIsNull: true },
-      },
+      argsSets: [
+        [
+          { name: "using", type: ArgType.Array },
+          { name: "to", type: ArgType.Any },
+        ],
+      ],
     });
   }
 

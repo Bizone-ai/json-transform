@@ -1,7 +1,7 @@
 import { useLocation } from "@docusaurus/router";
-import { Argument, definitions, FunctionDescriptor } from "@nlighten/json-transform-core";
+import { Argument, definitions, FunctionDescriptor } from "@bizone-ai/json-transform-utils";
 import MDXMarkdown from "@site/src/components/MDXMarkdown";
-import { TypeSchema } from "@nlighten/json-schema-utils";
+import { TypeSchema } from "@bizone-ai/json-schema-utils";
 import getSubfunctionOrFunction from "@site/src/components/getSubfunctionOrFunction";
 
 const renderType = (schema: TypeSchema) => {

@@ -1,7 +1,7 @@
 package ai.bizone.jsontransform.functions;
 
 import ai.bizone.jsontransform.functions.common.*;
-import co.nlighten.jsontransform.functions.common.*;
+import ai.bizone.jsontransform.functions.common.*;
 
 import java.util.Map;
 
@@ -15,6 +15,9 @@ public class TransformerFunctionAt extends TransformerFunction {
     @Override
     public Object apply(FunctionContext context) {
         var value = context.getJsonElementStreamer(null);
+        if (value == null || value.knownAsEmpty()) {
+            return null;
+        }
         var index = context.getInteger("index");
         if (index == null) {
             return null;

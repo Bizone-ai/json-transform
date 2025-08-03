@@ -1,4 +1,4 @@
-import { JSONSchemaUtils } from "@nlighten/json-schema-utils";
+import { JSONSchemaUtils } from "@bizone-ai/json-schema-utils";
 import { Argument, EmbeddedTransformerFunction, FunctionDefinition, FunctionDescriptor } from "./types";
 
 const getDefaultValues = (args?: Argument[]) => {

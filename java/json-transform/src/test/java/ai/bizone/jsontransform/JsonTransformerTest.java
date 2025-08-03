@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class JsonTransformerTest extends MultiAdapterBaseTest {
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testDontCopyEscaped(JsonAdapter<?,?,?> adapter) {
         var text = "text";
         assertTransformation(adapter, text, "\\$", "$");
@@ -22,14 +22,14 @@ public class JsonTransformerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testDontCopyUnrecognized(JsonAdapter<?,?,?> adapter) {
         assertTransformation(adapter, null, "#unknown", "#unknown");
         assertTransformation(adapter, null, "$$testunknown:#now", "$$testunknown:#now");
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testJsonPathCopy(JsonAdapter<?,?,?> adapter) {
         var val = "test";
         assertTransformation(adapter, val, "$", val);
@@ -38,35 +38,35 @@ public class JsonTransformerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testJsonPathCopyInteger(JsonAdapter<?,?,?> adapter) {
         var val = 123;
         assertTransformation(adapter, val, "$", val);
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testJsonPathCopyBoolean(JsonAdapter<?,?,?> adapter) {
         var val = true;
         assertTransformation(adapter, val, "$", val);
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testJsonPathCopyString(JsonAdapter<?,?,?> adapter) {
         var text = "text";
         assertTransformation(adapter, text, "$", text);
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testJsonPathCopyNull(JsonAdapter<?,?,?> adapter) {
         Object val = null;
         assertTransformation(adapter, val, "$", val);
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testJsonPathCopyFromAdditionalRoot(JsonAdapter<?,?,?> adapter) {
         var val = "text";
         var additionalContext = new HashMap<String, Object>() {{
@@ -85,21 +85,21 @@ public class JsonTransformerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testMacroUUID(JsonAdapter<?,?,?> adapter) {
         var result = transform(adapter, null, "#uuid",  null);
         Assertions.assertDoesNotThrow(() -> UUID.fromString((String)(adapter.unwrap(result))));
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testMacroNow(JsonAdapter<?,?,?> adapter) {
         var result = transform(adapter, null, "#now",  null);
         Assertions.assertDoesNotThrow(() -> DateTimeFormatter.ISO_INSTANT.parse((String)(adapter.unwrap(result))));
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testInputExtractorSpread(JsonAdapter<?,?,?> adapter) {
         var m1 = adapter.parse("""
 {
@@ -126,7 +126,7 @@ public class JsonTransformerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testInputExtractorSpreadRemoveByHashNull(JsonAdapter<?,?,?> adapter) {
         assertTransformation(adapter, adapter.parse("""
 {
@@ -146,7 +146,7 @@ public class JsonTransformerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testInputExtractorSpreadArray(JsonAdapter<?,?,?> adapter) {
         var m1 = adapter.parse("""
 {
@@ -182,7 +182,7 @@ public class JsonTransformerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void testInputExtractorSpreadArray2(JsonAdapter<?,?,?> adapter) {
         var m1 = adapter.parse("""
 {
@@ -217,7 +217,7 @@ public class JsonTransformerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void testInputExtractorTransformObjectInput(JsonAdapter<?,?,?> adapter) {
         assertTransformation(adapter, adapter.parse("""
 {
@@ -229,7 +229,7 @@ public class JsonTransformerTest extends MultiAdapterBaseTest {
     }
 
     @ParameterizedTest()
-    @MethodSource("co.nlighten.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     public void testInputExtractorTransformDefinitionJsonArray(JsonAdapter<?,?,?> adapter) {
         // Given input is an object and InputExtractor definition is an array
         var definition = adapter.createArray();;

@@ -2,7 +2,7 @@ import {expect} from "vitest";
 import BigNumber from "bignumber.js";
 import { parse, stringify } from "lossless-json";
 import {Implementation, ImplUrls} from "./implementations";
-import { JsonTransformExample } from "@nlighten/json-transform-core"
+import { JsonTransformExample } from "@bizone-ai/json-transform-utils"
 
 // export const JSONBig = (JSONBigInt as any).default({
 //   alwaysParseAsBig: true,

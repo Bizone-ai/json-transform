@@ -2,7 +2,6 @@ package ai.bizone.jsontransform;
 
 import ai.bizone.jsontransform.adapters.JsonAdapter;
 import ai.bizone.jsontransform.functions.*;
-import co.nlighten.jsontransform.functions.*;
 import ai.bizone.jsontransform.functions.common.InlineFunctionContext;
 import ai.bizone.jsontransform.functions.common.InlineFunctionTokenizer;
 import ai.bizone.jsontransform.functions.common.ObjectFunctionContext;

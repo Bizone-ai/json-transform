@@ -1,7 +1,7 @@
 package ai.bizone.jsontransform.functions;
 
 import ai.bizone.jsontransform.functions.common.*;
-import co.nlighten.jsontransform.functions.common.*;
+import ai.bizone.jsontransform.functions.common.*;
 
 import java.math.RoundingMode;
 import java.util.Map;

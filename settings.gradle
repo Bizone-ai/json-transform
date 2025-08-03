@@ -1,4 +1,4 @@
-rootProject.name = 'co.nlighten.json-transform'
+rootProject.name = 'ai.bizone.json-transform'
 
 include ':java:json-transform'
 include ':java:playground'

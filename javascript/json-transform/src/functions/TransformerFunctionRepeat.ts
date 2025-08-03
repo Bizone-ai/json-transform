@@ -7,9 +7,7 @@ import JsonElementStreamer from "../JsonElementStreamer";
 class TransformerFunctionRepeat extends TransformerFunction {
   constructor() {
     super({
-      arguments: {
-        count: { type: ArgType.Integer, position: 0 },
-      },
+      argsSets: [[{ name: "count", type: ArgType.Number }]],
     });
   }
 

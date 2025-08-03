@@ -1,8 +1,12 @@
 import { ArgumentType } from "./ArgumentType";
-import { ArgType } from "./ArgType";
+
+type FixedArgumentType = Omit<ArgumentType, "position"> & { name: string };
+
+export type ArgumentsSet = FixedArgumentType[];
 
 export type FunctionDescription = {
+  argsSets?: ArgumentsSet[];
   arguments?: Record<string, ArgumentType>;
-  // should be internally set to `true` if registered by client
-  custom?: boolean;
+  allowsArgumentsAsInput?: boolean; // if true, the function can accept arguments as input
+  inputIsRaw?: boolean; // if true, the function input should not be transformed
 };

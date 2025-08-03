@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { useLocation } from "@docusaurus/router";
-import { Argument, definitions, FunctionDescriptor } from "@nlighten/json-transform-core";
+import { Argument, definitions, FunctionDescriptor } from "@bizone-ai/json-transform-utils";
 import MDXMarkdown from "@site/src/components/MDXMarkdown";
 import getSubfunctionOrFunction from "@site/src/components/getSubfunctionOrFunction";
 

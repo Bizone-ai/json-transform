@@ -1,4 +1,4 @@
-import type { ParsedSchema, TypeSchema } from "@nlighten/json-schema-utils";
+import type { ParsedSchema, TypeSchema } from "@bizone-ai/json-schema-utils";
 
 export enum EmbeddedTransformerFunction {
   and = "and", // boolean
