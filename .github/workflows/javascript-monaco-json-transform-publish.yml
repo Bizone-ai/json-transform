@@ -4,12 +4,6 @@ on:
   push:
     tags:
       - 'js-monaco-*'  # Match tags
-    branches:
-      - main
-    paths:
-      - javascript/json-transform/**
-      - javascript/json-transform-utils/**
-      - javascript/monaco-json-transform/**
 
 jobs:
   publish:

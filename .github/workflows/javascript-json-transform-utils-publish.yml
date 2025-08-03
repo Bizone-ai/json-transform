@@ -4,11 +4,6 @@ on:
   push:
     tags:
       - 'js-utils-*'  # Match tags
-    branches:
-      - main
-    paths:
-      - javascript/json-transform/**
-      - javascript/json-transform-utils/**
 
 jobs:
   publish:

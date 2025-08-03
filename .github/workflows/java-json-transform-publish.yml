@@ -4,10 +4,6 @@ on:
   push:
     tags:
       - 'java-lib-*'  # Match tags
-    branches:
-      - main
-    paths:
-      - java/json-transform/**
 
 jobs:
   publish:
