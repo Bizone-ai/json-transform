@@ -1,7 +1,5 @@
-import { useLocation } from "@docusaurus/router";
-import { Argument, definitions, FunctionDescriptor } from "@bizone-ai/json-transform-utils";
-import MDXMarkdown from "@site/src/components/MDXMarkdown";
-import getSubfunctionOrFunction from "@site/src/components/getSubfunctionOrFunction";
+import { Argument, FunctionDescriptor } from "@bizone-ai/json-transform-utils";
+import getSubfunctionOrFunction from "./getSubfunctionOrFunction";
 
 function compareArgumentPosition(a: Argument, b: Argument) {
   return (a.position ?? Infinity) - (b.position ?? Infinity);
@@ -110,10 +108,8 @@ const getUsageMarkdown = (name: string, definition: FunctionDescriptor) => {
   return obj + inl;
 };
 
-export default function FunctionUsage({ func, sub }: { func: FunctionDescriptor; sub?: number }) {
-  const location = useLocation();
-  const name = location.pathname.split("/").pop();
-  const definition: FunctionDescriptor = getSubfunctionOrFunction(func ?? definitions[name], sub);
+export default function functionUsage(name: string, func: FunctionDescriptor, sub?: number) {
+  const definition: FunctionDescriptor = getSubfunctionOrFunction(func, sub);
 
   let md = getUsageMarkdown(name, definition);
   if (definition.aliases) {
@@ -129,5 +125,5 @@ export default function FunctionUsage({ func, sub }: { func: FunctionDescriptor;
     haveAdmonitions = true;
   }
 
-  return <MDXMarkdown md={md} admonitions={haveAdmonitions} />;
+  return md; //<MDXMarkdown md={md} admonitions={haveAdmonitions} />;
 }

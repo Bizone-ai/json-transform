@@ -1,22 +1,24 @@
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 import MonacoWebpackPlugin from "monaco-editor-webpack-plugin";
-import { definitions } from "@bizone-ai/json-transform-utils";
 
 import darkCodeTheme from "./code_theme";
 import { generateLanguageFile } from "./plugins/GenerateLanguageFileWebpackPlugin";
-import { generateFunctionsMarkdowns } from "./plugins/generateFunctionsMarkdowns";
 import aiLanguageFile from "./plugins/generators/aiLanguageFile";
 
 const icon = "🪄";
 const LOGO = `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${icon}</text></svg>`;
 
-generateFunctionsMarkdowns();
-
 const config: Config = {
   title: "JSON Transform",
   tagline: "JSON transformation library",
   favicon: LOGO,
+
+  // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
+  future: {
+    v4: true,
+    experimental_faster: true
+  },
 
   url: "https://nligthen-oss.github.io",
   // Set the /<baseUrl>/ pathname under which your site is served
@@ -168,22 +170,23 @@ const config: Config = {
       additionalLanguages: ["java"],
     },
   },
-  markdown: {
-    parseFrontMatter: async params => {
-      const result = await params.defaultParseFrontMatter(params);
-      if (/\/functions\/[a-z]/.test(params.filePath)) {
-        const name = params.filePath.split("/").pop().split(".")[0];
-        const definition = definitions[name];
-        if (definition) {
-          result.frontMatter.title = `$$${name}${definition.aliases ? " / $$" + definition.aliases.join(" / $$") : ""}`;
-          result.frontMatter.description = definition.description;
-        } else {
-          console.warn("No definition found for " + params.filePath);
-        }
-      }
-      return result;
-    },
-  },
+  // markdown: {
+  //   format: "detect",
+  //   parseFrontMatter: async params => {
+  //     const result = await params.defaultParseFrontMatter(params);
+  //     if (/\/functions\/[a-z]/.test(params.filePath)) {
+  //       const name = params.filePath.split("/").pop().split(".")[0];
+  //       const definition = definitions[name];
+  //       if (definition) {
+  //         result.frontMatter.title = `$$${name}${definition.aliases ? " / $$" + definition.aliases.join(" / $$") : ""}`;
+  //         result.frontMatter.description = definition.description;
+  //       } else {
+  //         console.warn("No definition found for " + params.filePath);
+  //       }
+  //     }
+  //     return result;
+  //   },
+  // },
 };
 
 export default config;

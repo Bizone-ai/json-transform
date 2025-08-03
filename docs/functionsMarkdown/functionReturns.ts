@@ -1,8 +1,6 @@
-import { useLocation } from "@docusaurus/router";
-import { Argument, definitions, FunctionDescriptor } from "@bizone-ai/json-transform-utils";
-import MDXMarkdown from "@site/src/components/MDXMarkdown";
+import { FunctionDescriptor } from "@bizone-ai/json-transform-utils";
 import { TypeSchema } from "@bizone-ai/json-schema-utils";
-import getSubfunctionOrFunction from "@site/src/components/getSubfunctionOrFunction";
+import getSubfunctionOrFunction from "./getSubfunctionOrFunction";
 
 const renderType = (schema: TypeSchema) => {
   if (schema.type === "array" && schema.items) {
@@ -18,10 +16,8 @@ const renderType = (schema: TypeSchema) => {
   return schema.type ?? "any";
 };
 
-export default function FunctionReturns({ func, sub }: { func: FunctionDescriptor; sub?: number }) {
-  const location = useLocation();
-  const name = location.pathname.split("/").pop();
-  const definition: FunctionDescriptor = getSubfunctionOrFunction(func ?? definitions[name], sub);
+export default function functionReturns(func: FunctionDescriptor, sub?: number) {
+  const definition: FunctionDescriptor = getSubfunctionOrFunction(func, sub);
 
   let returns = "Any";
   const schema: TypeSchema | undefined = definition.outputSchemaTemplate ?? definition.outputSchema;
@@ -39,5 +35,5 @@ export default function FunctionReturns({ func, sub }: { func: FunctionDescripto
     }
   }
 
-  return <MDXMarkdown md={returns} />;
+  return returns;
 }
