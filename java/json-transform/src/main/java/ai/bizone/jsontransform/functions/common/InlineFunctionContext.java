@@ -1,0 +1,49 @@
+package ai.bizone.jsontransform.functions.common;
+
+import ai.bizone.jsontransform.JsonTransformerFunction;
+import ai.bizone.jsontransform.ParameterResolver;
+import ai.bizone.jsontransform.adapters.JsonAdapter;
+
+import java.util.ArrayList;
+
+public class InlineFunctionContext extends FunctionContext {
+    protected final String stringInput;
+    protected final ArrayList<Object> args;
+
+    public InlineFunctionContext(String path, String input, ArrayList<Object> args,
+                                 JsonAdapter<?, ?, ?> jsonAdapter,
+                                 String functionKey,
+                                 TransformerFunction function,
+                                 ParameterResolver resolver, JsonTransformerFunction extractor) {
+        super(path, jsonAdapter, functionKey, function, resolver, extractor, null);
+        this.stringInput = input;
+        this.args = args;
+    }
+
+    @Override
+    public boolean has(String name) {
+        var argument = function.getArgument(name);
+        return name == null || (argument != null && argument.position > -1 && args != null && args.size() > argument.position);
+    }
+
+    @Override
+    public Object get(String name, boolean transform) {
+        var argument = function.getArgument(name);
+        if (name != null && (argument == null || argument.position < 0 || args == null || args.size() <= argument.position)) {
+            return function.getDefaultValue(name);
+        }
+        var argValue = name == null ? stringInput : args.get(argument.position);
+        if (argValue instanceof String s && transform) {
+            return extractor.transform(getPathFor(name), adapter.wrap(s), resolver, true);
+        }
+        if (adapter.is(argValue)) {
+            return transform ? extractor.transform(getPathFor(name), argValue, resolver, true) : argValue;
+        }
+        return argValue;
+    }
+
+    @Override
+    public String getPathFor(String name) {
+        return path + (name == null ? "" : "(" + name + ")");
+    }
+}

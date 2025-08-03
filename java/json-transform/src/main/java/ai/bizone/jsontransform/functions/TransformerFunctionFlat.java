@@ -1,0 +1,31 @@
+package ai.bizone.jsontransform.functions;
+
+import ai.bizone.jsontransform.JsonElementStreamer;
+import ai.bizone.jsontransform.functions.common.FunctionContext;
+import ai.bizone.jsontransform.functions.common.TransformerFunction;
+
+import java.util.Objects;
+import java.util.stream.Stream;
+
+public class TransformerFunctionFlat extends TransformerFunction {
+    public TransformerFunctionFlat() {
+        super();
+    }
+    @Override
+    public Object apply(FunctionContext context) {
+        var streamer = context.getJsonElementStreamer(null);
+        if (streamer == null) return null;
+
+        var adapter = context.getAdapter();
+        return JsonElementStreamer.fromTransformedStream(context, streamer.stream()
+            .flatMap(itm -> {
+                if (adapter.isNull(itm)) {
+                    return Stream.empty();
+                } else if (adapter.isJsonArray(itm)) {
+                    return adapter.stream(itm);
+                }
+                return Stream.of(itm);
+            })
+            .filter(Objects::nonNull));
+    }
+}
