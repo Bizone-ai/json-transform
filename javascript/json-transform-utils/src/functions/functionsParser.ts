@@ -4,6 +4,8 @@ import { HandleFunctionMethod } from "../ParseContext";
 import functions from "./functions";
 import { InlineFunctionTokenizer, TokenizedInlineFunction } from "@bizone-ai/json-transform";
 
+const JSONStringEndFinder = /(?:[^"\\]|\\.)*"/;
+
 type ObjectFunctionMatchResult = {
   name: string;
   func: FunctionDescriptor;
@@ -43,27 +45,14 @@ export const getFunctionObjectSignature = (name: string, func: FunctionDescripto
   }}`;
 };
 
-class FunctionsParser {
+export class FunctionsParser {
   private clientFunctions: Record<string, FunctionDescriptor>;
   private allFunctionsNames: Set<string>;
   private objectFunctionRegex: RegExp;
-  private inlineFunctionRegex: RegExp;
   private clientDocsUrlResolver: ((funcName: string) => string) | undefined;
   public handleClientFunction?: HandleFunctionMethod;
 
-  /**
-   * Match Groups: DO NOT CHANGE
-   * 0 - Everything
-   * 1 - Function name (no $$)
-   * 2 - Args with parenthesis
-   * 3 - Args without parenthesis
-   * 4 - Colon (or something else)
-   * 5 - What comes after the colon (value) -- only when 'noArgs' = false
-   */
-  private inlineFunctionRegexFactory = (names: string[]) =>
-    new RegExp(`\\$\\$(${names.join("|")})(\\((.*?)\\))?(:([^"]*)|$|")`, "g");
-
-  private objectFunctionRegexFactory = (names: string[]) => new RegExp(`(?<=")\\$\\$(${names.join("|")})":`, "g");
+  private objectFunctionRegexFactory = (names: string[]) => new RegExp(`(?<=")\\$\\$(${names.join("|")})"\s*:`, "g");
 
   constructor() {
     this.clientFunctions = {};
@@ -77,7 +66,6 @@ class FunctionsParser {
     this.allFunctionsNames = functionNames;
     const names = Array.from(this.allFunctionsNames);
     this.objectFunctionRegex = this.objectFunctionRegexFactory(names);
-    this.inlineFunctionRegex = this.inlineFunctionRegexFactory(names);
   }
 
   setClientFunctions(
@@ -95,7 +83,6 @@ class FunctionsParser {
     }
     const names = Array.from(this.allFunctionsNames);
     this.objectFunctionRegex = this.objectFunctionRegexFactory(names);
-    this.inlineFunctionRegex = this.inlineFunctionRegexFactory(names);
     this.handleClientFunction = handler;
   }
 
@@ -191,37 +178,76 @@ class FunctionsParser {
   }
   matchAllInlineFunctionsInLine(line: string) {
     const matches: ({ index: number } & TokenizedInlineFunction)[] = [];
-    let match: TokenizedInlineFunction | undefined;
-    let indexOffset = line.indexOf("$$");
-    line = line.trimEnd();
-    if (line[indexOffset - 1] === '"' && line[line.length - 1] === '"') {
-      line = line.slice(0, -1).replace(/\\'/g, "\\\\'");
-    }
-    let str = line.substring(indexOffset);
+    const inputLine = line.trimEnd();
+    let inputLineOffset = 0;
 
-    while ((match = InlineFunctionTokenizer.tokenize(str))) {
-      if (!functionsParser.get(match.name)) {
-        break; // not a known function name (so not a function)
+    while (inputLineOffset < line.length) {
+      let line = inputLine.substring(inputLineOffset);
+      let indexOffset = line.indexOf("$$");
+      if (indexOffset === -1) {
+        break; // no more functions in line
       }
-      (match as any).index = indexOffset; // add index to match
-      match.args?.forEach(arg => {
-        arg.index += indexOffset;
-        const delta = arg.value?.match(/'/g)?.length ?? 0;
-        arg.length -= delta;
-        indexOffset -= delta;
-      });
-      if (match.input) {
-        match.input.index += indexOffset;
-        const delta = match.input.value?.match(/'/g)?.length ?? 0;
-        match.input.length -= delta;
-        indexOffset -= delta;
-      }
-      matches.push(match as any);
-      if (!match.input || !match.input.value?.startsWith("$$")) {
+      if (line[indexOffset - 1] === '"') {
+        // function might be quoted, find next indexOf " (and then cut the quotes and escape apostrophes)
+        const jsonStringEnd = JSONStringEndFinder.exec(line.slice(indexOffset));
+        if (jsonStringEnd?.[0]) {
+          line = line
+            .slice(0, indexOffset + jsonStringEnd[0].length - 1)
+            //
+            .replace(/\\'/g, "\\\\'");
+          //.replace(/(\\)?'/g, "$1\\'");
+        }
+      } else {
+        inputLineOffset += indexOffset + 2; // skip this $$ and find the next one
         break;
       }
-      indexOffset = match.input.index;
-      str = line.substring(match.input.index);
+      let match: TokenizedInlineFunction | undefined;
+
+      let str = line.substring(indexOffset);
+      let newInputOffset = -1;
+      while ((match = InlineFunctionTokenizer.tokenize(str))) {
+        if (!functionsParser.get(match.name)) {
+          break; // not a known function name (so not a function)
+        }
+        (match as any).index = inputLineOffset + indexOffset; // add index to match
+        match.args?.forEach(arg => {
+          arg.index += inputLineOffset + indexOffset;
+          // arg.value = arg.value? ?? null;
+          const delta = arg.value?.match(/(?<=\\)'/g)?.length ?? 0;
+          arg.length -= delta;
+          indexOffset -= delta;
+        });
+        if (match.input) {
+          match.input.index += inputLineOffset + indexOffset;
+          // match.input.value = match.input.value?.replace(/\\'/g, "'") ?? null;
+          const delta = match.input.value?.match(/(?<=\\)'/g)?.length ?? 0;
+          match.input.length -= delta;
+          indexOffset -= delta;
+        }
+        if (matches.length) {
+          const last = matches[matches.length - 1];
+          if (last.index === (match as any).index) {
+            console.warn(`Detected a parsing loop, stopping at (${last.index})`);
+            newInputOffset = inputLine.length;
+            break;
+          }
+        }
+        matches.push(match as any);
+        if (newInputOffset < 0) {
+          newInputOffset = match.input
+            ? match.input.index + match.input.length
+            : match.args
+              ? match.args.reduce((a, c) => a + c.index + c.length + 1, -1)
+              : (match as any).index + match.keyLength;
+        }
+        if (!match.input || !match.input.value?.startsWith("$$")) {
+          break;
+        }
+        indexOffset = match.input.index - inputLineOffset;
+        str = line.substring(indexOffset);
+      }
+      inputLineOffset = newInputOffset;
+      newInputOffset = -1;
     }
     return matches;
   }

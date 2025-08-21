@@ -38,24 +38,24 @@ export type TokenizationState = {
 
 export default function tokenizeLine(line: string, lineNumber: number, ts: TokenizationState) {
   // OBJECT FUNCTIONS
-  let iter: IterableIterator<RegExpMatchArray> = functionsParser.matchAllObjectFunctionsInLine(line);
-  for (
-    let iterResult = iter.next(), match: RegExpMatchArray | null | undefined = iterResult.value;
-    !iterResult.done;
-    iterResult = iter.next(), match = iterResult.value as RegExpMatchArray | null | undefined
-  ) {
-    if (!match || typeof match.index === "undefined") continue;
-    const func = functionsParser.get(match[1]);
-    const deprecated = func?.deprecatedInFavorOf;
-
-    ts.tokens.push({
-      line: lineNumber,
-      char: match.index,
-      length: 2 + match[1].length, // $$ and name
-      type: deprecated ? TokenType.FUNCTION_DEPRECATED : TokenType.FUNCTION,
-      modifier: TokenModifier.DECLARATION,
-    });
-  }
+  // let iter: IterableIterator<RegExpMatchArray> = functionsParser.matchAllObjectFunctionsInLine(line);
+  // for (
+  //   let iterResult = iter.next(), match: RegExpMatchArray | null | undefined = iterResult.value;
+  //   !iterResult.done;
+  //   iterResult = iter.next(), match = iterResult.value as RegExpMatchArray | null | undefined
+  // ) {
+  //   if (!match || typeof match.index === "undefined") continue;
+  //   const func = functionsParser.get(match[1]);
+  //   const deprecated = func?.deprecatedInFavorOf;
+  //
+  //   ts.tokens.push({
+  //     line: lineNumber,
+  //     char: match.index,
+  //     length: 2 + match[1].length, // $$ and name
+  //     type: deprecated ? TokenType.FUNCTION_DEPRECATED : TokenType.FUNCTION,
+  //     modifier: TokenModifier.DECLARATION,
+  //   });
+  // }
 
   // INLINE FUNCTIONS (name and args symbols)
   const inlineMatches = functionsParser.matchAllInlineFunctionsInLine(line);
@@ -103,7 +103,7 @@ export default function tokenizeLine(line: string, lineNumber: number, ts: Token
   }
 
   // FUNCTION CONTEXT (##current)
-  iter = line.matchAll(FunctionContextRegExp);
+  let iter = line.matchAll(FunctionContextRegExp);
   for (
     let iterResult = iter.next(), match: RegExpMatchArray | null | undefined = iterResult.value;
     !iterResult.done;

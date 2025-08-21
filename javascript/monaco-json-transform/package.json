@@ -1,6 +1,6 @@
 {
   "name": "@bizone-ai/monaco-json-transform",
-  "version": "1.10.0",
+  "version": "1.10.1",
   "description": "JSON Transform language tokenizer (and syntax highlight), hover provider and more",
   "main": "./dist/index.js",
   "source": "src/index.ts",
@@ -42,7 +42,7 @@
   "homepage": "https://github.com/Bizone-ai/json-transform#readme",
   "peerDependencies": {
     "@bizone-ai/json-schema-utils": "^1.1.0",
-    "@bizone-ai/json-transform-utils": "^1.8.1",
+    "@bizone-ai/json-transform-utils": "^1.10.1",
     "monaco-editor": "*"
   },
   "devDependencies": {

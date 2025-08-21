@@ -1,8 +1,9 @@
 import { describe, expect, test } from "vitest";
 import { cleanParsedSchemaProperty, type TypeSchema } from "@bizone-ai/json-schema-utils";
-import { EmbeddedTransformerFunction, EmbeddedTransformerFunctions } from "../../functions/types";
+import { EmbeddedTransformerFunction, EmbeddedTransformerFunctions, FunctionDescriptor } from "../../functions/types";
 import { parseTransformer } from "../../parse";
 import { functionsParser } from "../../functions/functionsParser";
+import { functions } from "../../index";
 
 const transformerResult = (
   transformer: Record<string, string | Record<string, any>>,
@@ -809,6 +810,38 @@ describe("functions schema detection", () => {
   }
 });
 
+describe("matchInline", () => {
+  test("simple", () => {
+    expect(functionsParser.matchInline("$$pad(1,2):abc")).toEqual(functions.pad);
+  });
+  test("dont match non existing", () => {
+    expect(functionsParser.matchInline("$$nonexistent1:abc")).toBeNull();
+  });
+  test("setClientFunctions", () => {
+    const clientFuncDescriptor: FunctionDescriptor = { description: "client function" };
+    functionsParser.setClientFunctions({
+      nonexistent2: clientFuncDescriptor,
+    });
+    expect(functionsParser.matchInline("$$nonexistent2:abc")).toEqual({
+      ...clientFuncDescriptor,
+      custom: true,
+      defaultValues: {},
+    });
+  });
+});
+
+describe("matchAllObjectFunctionsInLine", () => {
+  test(`sanity`, () => {
+    expect(functionsParser.matchAllObjectFunctionsInLine('  "$$pad":   ')).toEqual([
+      {
+        name: "pad",
+        keyLength: 5,
+        index: 5,
+      },
+    ]);
+  });
+});
+
 describe("matchAllInlineFunctionsInLine", () => {
   test(`sanity`, () => {
     expect(functionsParser.matchAllInlineFunctionsInLine("  : \"$$pad(1,2):$$wrap(abc,'def'):$$\"   ")).toEqual([
@@ -830,7 +863,7 @@ describe("matchAllInlineFunctionsInLine", () => {
         index: 5,
         input: {
           index: 16,
-          length: 18,
+          length: 20,
           value: "$$wrap(abc,'def'):$$",
         },
       },
@@ -913,5 +946,138 @@ describe("matchAllInlineFunctionsInLine", () => {
         name: "wrap",
       },
     ]);
+  });
+
+  test(`sanity 4`, () => {
+    expect(functionsParser.matchAllInlineFunctionsInLine(`"$$pad:$$wrap:", `)).toEqual([
+      {
+        index: 1,
+        input: {
+          index: 7,
+          length: 7,
+          value: "$$wrap:",
+        },
+        keyLength: 5,
+        name: "pad",
+      },
+      {
+        index: 7,
+        input: {
+          index: 14,
+          length: 0,
+          value: "",
+        },
+        keyLength: 6,
+        name: "wrap",
+      },
+    ]);
+  });
+
+  test(`sanity 5`, () => {
+    expect(functionsParser.matchAllInlineFunctionsInLine(`  "$$pad:a", "$$wrap:" `)).toEqual([
+      {
+        index: 3,
+        input: {
+          index: 9,
+          length: 1,
+          value: "a",
+        },
+        keyLength: 5,
+        name: "pad",
+      },
+      {
+        index: 14,
+        input: {
+          index: 21,
+          length: 0,
+          value: "",
+        },
+        keyLength: 6,
+        name: "wrap",
+      },
+    ]);
+  });
+
+  test(`sanity 6`, () => {
+    expect(functionsParser.matchAllInlineFunctionsInLine(`"$$pad", "$$wrap", "$$wrap"`)).toEqual([
+      {
+        index: 1,
+        keyLength: 5,
+        name: "pad",
+      },
+      {
+        index: 10,
+        keyLength: 6,
+        name: "wrap",
+      },
+      {
+        index: 20,
+        keyLength: 6,
+        name: "wrap",
+      },
+    ]);
+  });
+
+  test(`sanity 7`, () => {
+    expect(functionsParser.matchAllInlineFunctionsInLine(`  "$$pad(1):$$trim:$$", "$$wrap:$$pad('a'):b" `)).toEqual([
+      {
+        args: [
+          {
+            index: 9,
+            length: 1,
+            value: "1",
+          },
+        ],
+        index: 3,
+        input: {
+          index: 12,
+          length: 9,
+          value: "$$trim:$$",
+        },
+        keyLength: 5,
+        name: "pad",
+      },
+      {
+        index: 12,
+        input: {
+          index: 19,
+          length: 2,
+          value: "$$",
+        },
+        keyLength: 6,
+        name: "trim",
+      },
+      {
+        index: 25,
+        input: {
+          index: 32,
+          length: 12,
+          value: "$$pad('a'):b",
+        },
+        keyLength: 6,
+        name: "wrap",
+      },
+      {
+        args: [
+          {
+            index: 38,
+            length: 3,
+            value: "a",
+          },
+        ],
+        index: 32,
+        input: {
+          index: 43,
+          length: 1,
+          value: "b",
+        },
+        keyLength: 5,
+        name: "pad",
+      },
+    ]);
+  });
+
+  test(`sanity 8`, () => {
+    expect(functionsParser.matchAllInlineFunctionsInLine(`      '$$math\n`)).toEqual([]);
   });
 });

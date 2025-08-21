@@ -3,6 +3,7 @@ export {
   getFunctionInlineSignature,
   getFunctionObjectSignature,
   functionsParser,
+  FunctionsParser,
   getSubfunction,
 } from "./functions/functionsParser";
 export { convertFunctionsToObjects, tryConvertFunctionsToInline } from "./utils/convert";
