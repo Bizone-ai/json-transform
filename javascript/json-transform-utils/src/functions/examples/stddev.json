@@ -1,0 +1,90 @@
+[
+  {
+    "name": "inline",
+    "given": {
+      "input": [
+        1345,
+        1301,
+        1368,
+        1322,
+        1310,
+        1370,
+        1318,
+        1350,
+        1303,
+        1299
+      ],
+      "definition": "$$stddev:$"
+    },
+    "expect": {
+      "equal": "27.463915719843496",
+      "format": "big-decimal"
+    }
+  },
+  {
+    "name": "inline",
+    "given": {
+      "input": [
+        1345,
+        1301,
+        1368,
+        1322,
+        1310,
+        1370,
+        1318,
+        1350,
+        1303,
+        1299
+      ],
+      "definition": "$$stddev:$"
+    },
+    "expect": {
+      "equal": "27.463915719843496",
+      "format": "big-decimal"
+    }
+  },
+  {
+    "name": "object (1)",
+    "given": {
+      "input": [
+        { "value": 1345 },
+        { "value": 1301 },
+        { "value": 1368 },
+        { "value": 1322 },
+        { "value": 1310 },
+        { "value": 1370 },
+        { "value": 1318 },
+        { "value": 1350 },
+        { "value": 1303 },
+        { "value": 1299 }
+      ],
+      "definition": { "$$stddev": "$", "by": "##current.value" }
+    },
+    "expect": {
+      "equal": "27.463915719843496",
+      "format": "big-decimal"
+    }
+  },
+  {
+    "name": "object (2)",
+    "given": {
+      "input": [
+        { "value": 1345 },
+        { "value": 1301 },
+        { "value": 1368 },
+        { "value": 1322 },
+        { "value": 1310 },
+        { "value": 1370 },
+        { "value": 1318 },
+        { "value": 1350 },
+        { "value": 1303 },
+        { "value": 1299 }
+      ],
+      "definition": { "$$stddev": "$", "by": "##current.value", "population": true }
+    },
+    "expect": {
+      "equal": "26.054558142482478",
+      "format": "big-decimal"
+    }
+  }
+]

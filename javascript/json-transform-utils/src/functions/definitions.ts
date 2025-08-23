@@ -1761,6 +1761,37 @@ export default {
       },
     ],
   },
+  stddev: {
+    description: "Returns the standard deviation for the values in an array",
+    inputSchema: { type: "array", required: true, description: "Array to calculate standard deviation for" },
+    outputSchema: { type: "number", $comment: "BigDecimal" },
+    arguments: [
+      {
+        name: "default",
+        description: "The default value to use for empty values",
+        type: "BigDecimal",
+        position: 0,
+        default: 0.0,
+      },
+      {
+        name: "by",
+        description:
+          "A transformer to extract a property to get value by (using `##current` to refer to the current item)",
+        type: "transformer",
+        position: 1,
+        default: "##current",
+        transformerArguments: [{ name: "##current", type: "any", position: 0, description: "Current element" }],
+      },
+      {
+        name: "population",
+        description:
+          'Whether the input is the entire population or a sample (it will affect the calculation of variance; "n-1" for sample and "N" for population)',
+        type: "boolean",
+        position: 2,
+        default: false,
+      },
+    ],
+  },
   string: {
     description: "Converts to string (if `json` set to `true`, will convert `null` and strings also as JSON strings)",
     inputSchema: { type: "object", required: true, description: "Value to convert to string" },

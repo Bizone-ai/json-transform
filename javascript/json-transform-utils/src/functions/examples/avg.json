@@ -30,6 +30,19 @@
     }
   },
   {
+    "name": "inline (3)",
+    "given": {
+      "input": [
+        1,3,4
+      ],
+      "definition": "$$avg:$"
+    },
+    "expect": {
+      "equal": "2.666666666666667",
+      "format": "big-decimal"
+    }
+  },
+  {
     "name": "object (1)",
     "given": {
       "input": [

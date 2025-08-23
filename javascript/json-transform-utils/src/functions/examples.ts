@@ -64,6 +64,7 @@ import _slice from "./examples/slice.json";
 import _some from "./examples/some.json";
 import _sort from "./examples/sort.json";
 import _split from "./examples/split.json";
+import _stddev from "./examples/stddev.json";
 import _string from "./examples/string.json";
 import _substring from "./examples/substring.json";
 import _sum from "./examples/sum.json";
@@ -151,6 +152,7 @@ export default {
   some: _some,
   sort: _sort,
   split: _split,
+  stddev: _stddev,
   string: _string,
   substring: _substring,
   sum: _sum,

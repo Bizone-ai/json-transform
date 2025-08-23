@@ -61,7 +61,7 @@ const transformAsync = async (input: any, definition: any) => {
 const narrowScreen = window.innerWidth < 996;
 const initialHeight = narrowScreen ? 280 : 450;
 
-function replacer(key: string, value: any): any {
+function replacer(key: any, value: any): any {
   if (typeof value === "bigint") {
     const asNumber = Number(value);
     if (asNumber.toString() === value.toString()) {
@@ -79,7 +79,7 @@ function replacer(key: string, value: any): any {
   }
   // recursive for arrays and objects
   if (Array.isArray(value)) {
-    return value.map(replacer);
+    return value.map((value, index) => replacer(index, value));
   }
   if (value && typeof value === "object") {
     return Object.entries(value).reduce((a, c) => {

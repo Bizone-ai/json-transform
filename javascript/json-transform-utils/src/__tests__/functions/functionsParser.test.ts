@@ -830,21 +830,9 @@ describe("matchInline", () => {
   });
 });
 
-describe("matchAllObjectFunctionsInLine", () => {
+describe("matchAllFunctionsInLine", () => {
   test(`sanity`, () => {
-    expect(functionsParser.matchAllObjectFunctionsInLine('  "$$pad":   ')).toEqual([
-      {
-        name: "pad",
-        keyLength: 5,
-        index: 5,
-      },
-    ]);
-  });
-});
-
-describe("matchAllInlineFunctionsInLine", () => {
-  test(`sanity`, () => {
-    expect(functionsParser.matchAllInlineFunctionsInLine("  : \"$$pad(1,2):$$wrap(abc,'def'):$$\"   ")).toEqual([
+    expect(functionsParser.matchAllFunctionsInLine("  : \"$$pad(1,2):$$wrap(abc,'def'):$$\"   ")).toEqual([
       {
         name: "pad",
         keyLength: 5,
@@ -894,7 +882,7 @@ describe("matchAllInlineFunctionsInLine", () => {
 
   test(`sanity 2`, () => {
     expect(
-      functionsParser.matchAllInlineFunctionsInLine(
+      functionsParser.matchAllFunctionsInLine(
         `  "age": "$$math('$$math(\\\\'$$date(EPOCH):#now\\\\',-,\\\\'$$date(EPOCH):$.date_of_birth\\\\')',//,'$$math(365,*,\\\\'$$math(24,*,3600)\\\\')')"`,
       ),
     ).toEqual([
@@ -924,7 +912,7 @@ describe("matchAllInlineFunctionsInLine", () => {
   });
 
   test(`sanity 3`, () => {
-    expect(functionsParser.matchAllInlineFunctionsInLine(`"$$pad:$$wrap:"`)).toEqual([
+    expect(functionsParser.matchAllFunctionsInLine(`"$$pad:$$wrap:"`)).toEqual([
       {
         index: 1,
         input: {
@@ -949,7 +937,7 @@ describe("matchAllInlineFunctionsInLine", () => {
   });
 
   test(`sanity 4`, () => {
-    expect(functionsParser.matchAllInlineFunctionsInLine(`"$$pad:$$wrap:", `)).toEqual([
+    expect(functionsParser.matchAllFunctionsInLine(`"$$pad:$$wrap:", `)).toEqual([
       {
         index: 1,
         input: {
@@ -974,7 +962,7 @@ describe("matchAllInlineFunctionsInLine", () => {
   });
 
   test(`sanity 5`, () => {
-    expect(functionsParser.matchAllInlineFunctionsInLine(`  "$$pad:a", "$$wrap:" `)).toEqual([
+    expect(functionsParser.matchAllFunctionsInLine(`  "$$pad:a", "$$wrap:" `)).toEqual([
       {
         index: 3,
         input: {
@@ -999,7 +987,7 @@ describe("matchAllInlineFunctionsInLine", () => {
   });
 
   test(`sanity 6`, () => {
-    expect(functionsParser.matchAllInlineFunctionsInLine(`"$$pad", "$$wrap", "$$wrap"`)).toEqual([
+    expect(functionsParser.matchAllFunctionsInLine(`"$$pad", "$$wrap", "$$wrap"`)).toEqual([
       {
         index: 1,
         keyLength: 5,
@@ -1019,7 +1007,7 @@ describe("matchAllInlineFunctionsInLine", () => {
   });
 
   test(`sanity 7`, () => {
-    expect(functionsParser.matchAllInlineFunctionsInLine(`  "$$pad(1):$$trim:$$", "$$wrap:$$pad('a'):b" `)).toEqual([
+    expect(functionsParser.matchAllFunctionsInLine(`  "$$pad(1):$$trim:$$", "$$wrap:$$pad('a'):b" `)).toEqual([
       {
         args: [
           {
@@ -1078,6 +1066,17 @@ describe("matchAllInlineFunctionsInLine", () => {
   });
 
   test(`sanity 8`, () => {
-    expect(functionsParser.matchAllInlineFunctionsInLine(`      '$$math\n`)).toEqual([]);
+    expect(functionsParser.matchAllFunctionsInLine(`      '$$math\n`)).toEqual([]);
+  });
+
+  test(`sanity 9`, () => {
+    expect(functionsParser.matchAllFunctionsInLine(`"$$\n`)).toEqual([]);
+  });
+
+  test(`sanity 10`, () => {
+    expect(functionsParser.matchAllFunctionsInLine(`"$$a`)).toEqual([]);
+  });
+  test(`sanity 11`, () => {
+    expect(functionsParser.matchAllFunctionsInLine(`"$$a": "$$a"\n`)).toEqual([]);
   });
 });

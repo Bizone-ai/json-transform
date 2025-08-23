@@ -1,4 +1,4 @@
-import { functionsParser, JsonPathFunctionRegex, transformUtils } from "@bizone-ai/json-transform-utils";
+import { functionsParser, transformUtils } from "@bizone-ai/json-transform-utils";
 
 const FunctionContextRegExp = /##([a-z]+[a-z_\d]*)(((\.(?![-\w$]+\()[-\w$]+)|(\[[^\]\n]+]))+|(?=[^\w.]|$))/g;
 const FindCommentsRegex = /"(\/\/|\$comment)":\s*"(\\"|[^"])*"/g;
@@ -37,29 +37,9 @@ export type TokenizationState = {
 };
 
 export default function tokenizeLine(line: string, lineNumber: number, ts: TokenizationState) {
-  // OBJECT FUNCTIONS
-  // let iter: IterableIterator<RegExpMatchArray> = functionsParser.matchAllObjectFunctionsInLine(line);
-  // for (
-  //   let iterResult = iter.next(), match: RegExpMatchArray | null | undefined = iterResult.value;
-  //   !iterResult.done;
-  //   iterResult = iter.next(), match = iterResult.value as RegExpMatchArray | null | undefined
-  // ) {
-  //   if (!match || typeof match.index === "undefined") continue;
-  //   const func = functionsParser.get(match[1]);
-  //   const deprecated = func?.deprecatedInFavorOf;
-  //
-  //   ts.tokens.push({
-  //     line: lineNumber,
-  //     char: match.index,
-  //     length: 2 + match[1].length, // $$ and name
-  //     type: deprecated ? TokenType.FUNCTION_DEPRECATED : TokenType.FUNCTION,
-  //     modifier: TokenModifier.DECLARATION,
-  //   });
-  // }
-
-  // INLINE FUNCTIONS (name and args symbols)
-  const inlineMatches = functionsParser.matchAllInlineFunctionsInLine(line);
-  for (const match of inlineMatches) {
+  // FUNCTIONS (name and args symbols)
+  const funcMatches = functionsParser.matchAllFunctionsInLine(line);
+  for (const match of funcMatches) {
     const func = functionsParser.get(match.name);
     const deprecated = func?.deprecatedInFavorOf;
 
@@ -151,38 +131,6 @@ export default function tokenizeLine(line: string, lineNumber: number, ts: Token
         type,
         modifier,
       });
-
-      const matchEnd = match.index + matchLength;
-      if (line[matchEnd] === ".") {
-        // suspected function call, highlight it if it is (we do it only if it's on the same line)
-        const jsonpathMatch = line.substring(matchEnd).match(JsonPathFunctionRegex);
-        if (jsonpathMatch) {
-          // dot
-          ts.tokens.push({
-            line: lineNumber,
-            char: matchEnd,
-            length: 1,
-            type: TokenType.NO_STYLE,
-            modifier: TokenModifier.DECLARATION,
-          });
-          // function name
-          ts.tokens.push({
-            line: lineNumber,
-            char: matchEnd + 1,
-            length: jsonpathMatch[1].length,
-            type: TokenType.FUNCTION,
-            modifier: TokenModifier.DECLARATION,
-          });
-          // parenthesis open and possibly close (if simple function call)
-          ts.tokens.push({
-            line: lineNumber,
-            char: matchEnd + 1 + jsonpathMatch[1].length,
-            length: jsonpathMatch[0].length - jsonpathMatch[1].length - 1,
-            type: TokenType.NO_STYLE,
-            modifier: TokenModifier.DECLARATION,
-          });
-        }
-      }
     }
   }
 

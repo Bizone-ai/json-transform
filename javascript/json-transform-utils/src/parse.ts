@@ -6,7 +6,6 @@ import {
 } from "@bizone-ai/json-schema-utils";
 import { EmbeddedTransformerFunction } from "./functions/types";
 import { functionsParser } from "./functions/functionsParser";
-import { matchJsonPathFunction } from "./jsonpath/jsonpathFunctions";
 import { jsonpathJoin, VALID_ID_REGEXP } from "./jsonpath/jsonpathJoin";
 import ParseContext, { HandleFunctionMethod, ParseMethod } from "./ParseContext";
 
@@ -125,25 +124,13 @@ class TransformerParser {
 
     // definition is string and custom JsonPath (e.g. $ / $. / # / ##)
     if (context.isReferencingKnownVariable(definition)) {
-      // check if jsonpath is using a function (e.g. $.concat())
-      const jsonPathFunctionSchema = matchJsonPathFunction(definition);
-      if (jsonPathFunctionSchema) {
-        if (context.hasPaths()) {
-          context.setPath(targetPath + localPath, structuredClone(jsonPathFunctionSchema));
-          if (jsonPathFunctionSchema.type === "array") {
-            paths.push(targetPath + localPath + "[]");
-            context.setPath(targetPath + localPath + "[]", structuredClone(jsonPathFunctionSchema.items) as any);
-          }
-        }
-      } else {
-        // copy all the sub paths of that path object
-        TransformerParser.copySubPathsOnWalk(definition, targetPath, localPath, previousPaths, paths, context);
-        if (context.hasPaths() && !context.resolve(targetPath + localPath)) {
-          context.setPath(
-            targetPath + localPath,
-            context.resolve(definition) ? structuredClone(context.resolve(definition)) : ({} as any),
-          );
-        }
+      // copy all the sub paths of that path object
+      TransformerParser.copySubPathsOnWalk(definition, targetPath, localPath, previousPaths, paths, context);
+      if (context.hasPaths() && !context.resolve(targetPath + localPath)) {
+        context.setPath(
+          targetPath + localPath,
+          context.resolve(definition) ? structuredClone(context.resolve(definition)) : ({} as any),
+        );
       }
       return;
     }

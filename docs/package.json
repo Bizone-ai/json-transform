@@ -5,6 +5,7 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start --port 10001",
+    "prestart": "tsx functions.md.ts",
     "prebuild": "tsx functions.md.ts",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",

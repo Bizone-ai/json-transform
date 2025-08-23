@@ -173,10 +173,7 @@ export class FunctionsParser {
     }
   }
 
-  matchAllObjectFunctionsInLine(line: string) {
-    return line.matchAll(this.objectFunctionRegex);
-  }
-  matchAllInlineFunctionsInLine(line: string) {
+  matchAllFunctionsInLine(line: string) {
     const matches: ({ index: number } & TokenizedInlineFunction)[] = [];
     const inputLine = line.trimEnd();
     let inputLineOffset = 0;
@@ -207,7 +204,9 @@ export class FunctionsParser {
       let newInputOffset = -1;
       while ((match = InlineFunctionTokenizer.tokenize(str))) {
         if (!functionsParser.get(match.name)) {
-          break; // not a known function name (so not a function)
+          // not a known function name (so not a function), skip it on next iteration
+          newInputOffset = inputLineOffset + match.keyLength;
+          break;
         }
         (match as any).index = inputLineOffset + indexOffset; // add index to match
         match.args?.forEach(arg => {
@@ -245,6 +244,9 @@ export class FunctionsParser {
         }
         indexOffset = match.input.index - inputLineOffset;
         str = line.substring(indexOffset);
+      }
+      if (newInputOffset < 0) {
+        break; // did not match in this iteration
       }
       inputLineOffset = newInputOffset;
       newInputOffset = -1;

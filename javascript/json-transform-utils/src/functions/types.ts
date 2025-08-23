@@ -65,6 +65,7 @@ export enum EmbeddedTransformerFunction {
   some = "some", // boolean
   sort = "sort", // #SPECIAL
   split = "split", // string[]
+  stddev = "stddev", // number
   string = "string", // string
   substring = "substring", // string
   sum = "sum", // number

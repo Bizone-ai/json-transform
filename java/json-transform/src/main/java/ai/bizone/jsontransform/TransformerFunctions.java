@@ -27,11 +27,11 @@ public class TransformerFunctions implements TransformerFunctionsAdapter {
 
     static {
         registerFunctions(
-                Map.entry("all",new TransformerFunctionEvery()), // * alias for every
+                Map.entry("all", new TransformerFunctionEvery()), // * alias for every
                 Map.entry("and", new TransformerFunctionAnd()),
                 Map.entry("any", new TransformerFunctionSome()), // * alias for some
-                Map.entry("at",new TransformerFunctionAt()),
-                Map.entry("avg",new TransformerFunctionAvg()),
+                Map.entry("at", new TransformerFunctionAt()),
+                Map.entry("avg", new TransformerFunctionAvg()),
                 Map.entry("base64", new TransformerFunctionBase64()),
                 Map.entry("boolean", new TransformerFunctionBoolean()),
                 Map.entry("coalesce", new TransformerFunctionCoalesce()),
@@ -45,7 +45,7 @@ public class TransformerFunctions implements TransformerFunctionsAdapter {
                 Map.entry("distinct", new TransformerFunctionDistinct()),
                 Map.entry("entries", new TransformerFunctionEntries()),
                 Map.entry("eval",new TransformerFunctionEval()),
-                Map.entry("every",new TransformerFunctionEvery()),
+                Map.entry("every", new TransformerFunctionEvery()),
                 Map.entry("filter", new TransformerFunctionFilter()),
                 Map.entry("find", new TransformerFunctionFind()),
                 Map.entry("findindex", new TransformerFunctionFindIndex()),
@@ -76,7 +76,7 @@ public class TransformerFunctions implements TransformerFunctionsAdapter {
                 Map.entry("math", new TransformerFunctionMath()),
                 Map.entry("max",new TransformerFunctionMax()),
                 Map.entry("merge",new TransformerFunctionMerge()),
-                Map.entry("min",new TransformerFunctionMin()),
+                Map.entry("min", new TransformerFunctionMin()),
                 Map.entry("normalize", new TransformerFunctionNormalize()),
                 Map.entry("not", new TransformerFunctionNot()),
                 Map.entry("numberformat", new TransformerFunctionNumberFormat()),
@@ -95,9 +95,10 @@ public class TransformerFunctions implements TransformerFunctionsAdapter {
                 Map.entry("some", new TransformerFunctionSome()),
                 Map.entry("sort", new TransformerFunctionSort()),
                 Map.entry("split", new TransformerFunctionSplit()),
+                Map.entry("stddev", new TransformerFunctionStddev()),
                 Map.entry("string", new TransformerFunctionString()),
                 Map.entry("substring", new TransformerFunctionSubstring()),
-                Map.entry("sum",new TransformerFunctionSum()),
+                Map.entry("sum", new TransformerFunctionSum()),
                 Map.entry("switch", new TransformerFunctionSwitch()),
                 Map.entry("template", new TransformerFunctionTemplate()),
                 Map.entry("test", new TransformerFunctionTest()),
@@ -109,7 +110,7 @@ public class TransformerFunctions implements TransformerFunctionsAdapter {
                 Map.entry("urldecode", new TransformerFunctionUrlDecode()),
                 Map.entry("urlencode", new TransformerFunctionUrlEncode()),
                 Map.entry("uuid", new TransformerFunctionUuid()),
-                Map.entry("value",new TransformerFunctionValue()),
+                Map.entry("value", new TransformerFunctionValue()),
                 Map.entry("wrap", new TransformerFunctionWrap()),
                 Map.entry("xml", new TransformerFunctionXml()),
                 Map.entry("xmlparse", new TransformerFunctionXmlParse()),

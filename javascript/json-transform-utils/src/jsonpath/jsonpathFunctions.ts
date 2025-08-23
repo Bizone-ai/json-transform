@@ -14,10 +14,3 @@ const JsonPathFunctionsResultSchemas: Record<string, TypeSchema> = {
 };
 
 export const JsonPathFunctionRegex = new RegExp(`\\.(${Object.keys(JsonPathFunctionsResultSchemas).join("|")})\\(\\)?`);
-
-export const matchJsonPathFunction = (data: any) => {
-  if (typeof data === "undefined" || data === null) return null;
-  const match = data.toString().match(JsonPathFunctionRegex);
-  if (!match) return null;
-  return JsonPathFunctionsResultSchemas[match[1]];
-};

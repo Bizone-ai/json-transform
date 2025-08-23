@@ -62,6 +62,7 @@ import TransformerFunctionSlice from "./TransformerFunctionSlice";
 import TransformerFunctionSome from "./TransformerFunctionSome";
 import TransformerFunctionSort from "./TransformerFunctionSort";
 import TransformerFunctionSplit from "./TransformerFunctionSplit";
+import TransformerFunctionStddev from "./TransformerFunctionStddev";
 import TransformerFunctionString from "./TransformerFunctionString";
 import TransformerFunctionSubstring from "./TransformerFunctionSubstring";
 import TransformerFunctionSum from "./TransformerFunctionSum";
@@ -152,6 +153,7 @@ export default {
   some: new TransformerFunctionSome(),
   sort: new TransformerFunctionSort(),
   split: new TransformerFunctionSplit(),
+  stddev: new TransformerFunctionStddev(),
   string: new TransformerFunctionString(),
   substring: new TransformerFunctionSubstring(),
   sum: new TransformerFunctionSum(),
