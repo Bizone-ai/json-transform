@@ -62,6 +62,14 @@ public class JacksonJsonAdapter extends JsonAdapter<JsonNode, ArrayNode, ObjectN
     }
 
     @Override
+    public <T> T deserialize(Object value, Class<T> targetType) {
+        if (value == null) {
+            return null;
+        }
+        return JacksonHelpers.mapper().convertValue(value, targetType);
+    }
+
+    @Override
     public JsonNode parse(String value) {
         var provider = jsonPathConfiguration.jsonProvider();
         if (value != null && value.startsWith("'") && value.endsWith("'") && value.length() >= 2) {

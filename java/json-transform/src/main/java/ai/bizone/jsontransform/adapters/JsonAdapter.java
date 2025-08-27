@@ -117,6 +117,15 @@ public abstract class JsonAdapter<JE, JA extends Iterable<JE>, JO extends JE> {
     }
 
     /**
+     * Deserialize given json element in a Java object of specific class.
+     * @param value the Json element to deserialize
+     * @param targetType the class to try to deserialize to
+     * @return An object of type T
+     * @param <T> Type to deserialize to
+     */
+    public abstract <T> T deserialize(Object value, Class<T> targetType);
+
+    /**
      * Parses a Json string into a Json element
      * @param jsonString the Json string to parse
      * @return a Json element

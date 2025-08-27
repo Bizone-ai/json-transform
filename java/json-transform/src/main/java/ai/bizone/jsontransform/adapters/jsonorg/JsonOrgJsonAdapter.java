@@ -1,19 +1,22 @@
 package ai.bizone.jsontransform.adapters.jsonorg;
 
 import ai.bizone.jsontransform.adapters.JsonAdapter;
+import ai.bizone.jsontransform.adapters.pojo.PojoJsonTransformer;
 import com.jayway.jsonpath.DocumentContext;
 import org.json.*;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.List;
+import java.util.Map;
 
 public class JsonOrgJsonAdapter extends JsonAdapter<Object, JSONArray, JSONObject> {
 
     public JsonOrgJsonAdapter() {
         super(
-                JsonOrgObjectAdapter::new,
-                JsonOrgArrayAdapter::new,
-                JsonOrgHelpers.getJsonPathConfig()
+            JsonOrgObjectAdapter::new,
+            JsonOrgArrayAdapter::new,
+            JsonOrgHelpers.getJsonPathConfig()
         );
     }
 
@@ -66,6 +69,19 @@ public class JsonOrgJsonAdapter extends JsonAdapter<Object, JSONArray, JSONObjec
     @Override
     public Object unwrap(Object value, boolean reduceBigDecimals) {
         return JsonOrgHelpers.unwrap(value, reduceBigDecimals);
+    }
+
+    @Override
+    public <T> T deserialize(Object value, Class<T> targetType) {
+        if (value == null) {
+            return null;
+        }
+        if (targetType.equals(Object.class) || targetType.equals(List.class) || targetType.equals(Map.class)) {
+            // Only in these cases JsonOrg can be handled by the jsonpath mapping provider
+            return jsonPathConfiguration.mappingProvider().map(value, targetType, jsonPathConfiguration);
+        }
+        var unwrappedValue = unwrap(value, false);
+        return PojoJsonTransformer.getAdapter().deserialize(unwrappedValue, targetType);
     }
 
     @Override

@@ -7,6 +7,7 @@ import ai.bizone.jsontransform.adapters.jackson.JacksonJsonTransformer;
 import ai.bizone.jsontransform.adapters.jsonorg.JsonOrgJsonTransformer;
 import ai.bizone.jsontransform.adapters.jsonsmart.JsonSmartJsonTransformer;
 import ai.bizone.jsontransform.adapters.pojo.PojoJsonTransformer;
+import ai.bizone.jsontransform.adapters.tapestry.TapestryJsonTransformer;
 import com.google.gson.GsonBuilder;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +58,14 @@ public class ApiController {
     public TransformTestResponse v1TransformJsonSmart(@RequestBody TransformTestRequest request){
         var adapter = new DebuggableTransformerFunctions();
         var transformer = new JsonSmartJsonTransformer(request.definition, adapter);
+        var result = transformer.transform(request.input, request.additionalContext, true);
+        return new TransformTestResponse(result, request.debug ? adapter.getDebugResults() : null);
+    }
+
+    @PostMapping("/v1/transform/tapestry")
+    public TransformTestResponse v1TransformTapestry(@RequestBody TransformTestRequest request){
+        var adapter = new DebuggableTransformerFunctions();
+        var transformer = new TapestryJsonTransformer(request.definition, adapter);
         var result = transformer.transform(request.input, request.additionalContext, true);
         return new TransformTestResponse(result, request.debug ? adapter.getDebugResults() : null);
     }

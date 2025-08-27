@@ -2,6 +2,7 @@ package ai.bizone.jsontransform.adapters.jsonsmart;
 
 import ai.bizone.jsontransform.adapters.JsonAdapter;
 import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.spi.mapper.MappingException;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONAware;
 import net.minidev.json.JSONObject;
@@ -61,6 +62,26 @@ public class JsonSmartJsonAdapter extends JsonAdapter<Object, JSONArray, JSONObj
     @Override
     public Object unwrap(Object value, boolean reduceBigDecimals) {
         return JsonSmartHelpers.convert(value, true, reduceBigDecimals);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T deserialize(Object value, Class<T> targetType) {
+        if(value == null){
+            return null;
+        }
+        if (targetType.isAssignableFrom(value.getClass())) {
+            return (T) value;
+        }
+        try {
+            if (!isJsonObject(value) && !isJsonArray(value)) {
+                return jsonPathConfiguration.mappingProvider().map(value, targetType, jsonPathConfiguration);
+            }
+            String s = toString(value);
+            return JSONValue.parse(s, targetType);
+        } catch (Exception e) {
+            throw new MappingException(e);
+        }
     }
 
     @Override

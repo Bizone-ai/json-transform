@@ -18,6 +18,7 @@ ext {
     jmhVersion = "1.36"
     jacksonBindVersion = "2.17.1"
     jsonSmartVersion = "2.5.2"
+    tapestryVersion = "5.8.3"
     snakeYamlVersion = "2.9"
     aiBizoneShortUuidVersion = "1.0.0"
     slf4jVersion = "2.0.11"
@@ -41,6 +42,8 @@ dependencies {
     compileOnly "com.google.code.gson:gson:${gsonVersion}"
     compileOnly "com.fasterxml.jackson.core:jackson-databind:${jacksonBindVersion}"
     compileOnly "net.minidev:json-smart:${jsonSmartVersion}"
+    compileOnly "org.apache.tapestry:tapestry-json:${tapestryVersion}"
+
     implementation "org.json:json:${jsonVersion}" // for XML conversion
     implementation "com.jayway.jsonpath:json-path:${jsonPathVersion}"
 
@@ -57,6 +60,7 @@ dependencies {
     testImplementation "com.google.code.gson:gson:${gsonVersion}"
     testImplementation "com.fasterxml.jackson.core:jackson-databind:${jacksonBindVersion}"
     testImplementation "net.minidev:json-smart:${jsonSmartVersion}"
+    testImplementation "org.apache.tapestry:tapestry-json:${tapestryVersion}"
 }
 
 jar { archiveClassifier = '' }

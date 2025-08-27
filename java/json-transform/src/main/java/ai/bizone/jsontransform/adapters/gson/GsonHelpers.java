@@ -1,15 +1,19 @@
 package ai.bizone.jsontransform.adapters.gson;
 
 import ai.bizone.jsontransform.JsonTransformerConfiguration;
+import ai.bizone.jsontransform.adapters.JsonAdapterHelpers;
 import ai.bizone.jsontransform.adapters.gson.adapters.ISODateAdapter;
 import ai.bizone.jsontransform.adapters.gson.adapters.InstantTypeAdapter;
 import ai.bizone.jsontransform.adapters.gson.adapters.LocalDateTypeAdapter;
 import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.Option;
 import com.jayway.jsonpath.spi.json.GsonJsonProvider;
 import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
@@ -20,14 +24,27 @@ public class GsonHelpers {
 
     public static final String ISO_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
+    public static class BigDecimalToNumberPolicy implements ToNumberStrategy {
+        @Override
+        public Number readNumber(JsonReader in) throws IOException {
+            String value = in.nextString();
+            try {
+                return JsonAdapterHelpers.unwrapNumber(new BigDecimal(value), true);
+            } catch (NumberFormatException e) {
+                throw new JsonParseException("Cannot parse " + value + "; at path " + in.getPreviousPath(), e);
+            }
+        }
+    }
+    private static BigDecimalToNumberPolicy bigDecimalToNumberPolicy = new BigDecimalToNumberPolicy();
+
     public static GsonBuilder gsonBuilder() {
         return new GsonBuilder()
                 .setDateFormat(ISO_DATETIME_FORMAT)
                 .registerTypeAdapter(Date.class, new ISODateAdapter())
                 .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
                 .registerTypeAdapter(Instant.class, new InstantTypeAdapter())
-                .setNumberToNumberStrategy(ToNumberPolicy.BIG_DECIMAL)
-                .setObjectToNumberStrategy(ToNumberPolicy.BIG_DECIMAL);
+                .setNumberToNumberStrategy(bigDecimalToNumberPolicy)
+                .setObjectToNumberStrategy(bigDecimalToNumberPolicy);
     }
 
     private static final Supplier<Gson> DEFAULT_GSON_SUPPLIER = () -> gsonBuilder().create();

@@ -80,6 +80,14 @@ public class GsonJsonAdapter extends JsonAdapter<JsonElement, JsonArray, JsonObj
     }
 
     @Override
+    public <T> T deserialize(Object value, Class<T> targetType) {
+        if (value == null) {
+            return null;
+        }
+        return GsonHelpers.GSON().getAdapter(targetType).fromJsonTree((JsonElement) value);
+    }
+
+    @Override
     public JsonElement parse(String value) {
         return GsonHelpers.GSON().fromJson(value, JsonElement.class);
     }

@@ -1,10 +1,14 @@
 package ai.bizone.jsontransform.adapters;
 
 import ai.bizone.jsontransform.MultiAdapterBaseTest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class JsonAdapterTests extends MultiAdapterBaseTest {
     @ParameterizedTest()
@@ -287,5 +291,76 @@ public class JsonAdapterTests extends MultiAdapterBaseTest {
   "c": [3, 4]
 }
 """), new JsonAdapter.JsonMergeOptions(false, true)));
+    }
+
+    @ParameterizedTest()
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    void testObjectComparability(JsonAdapter<?,?,?> adapter) {
+        var sampleJson = """
+{
+  "a": {
+    "aaa": "AAA"
+  },
+  "c": [1, 2, 3, 4]
+}
+""";
+        var instance1 = adapter.parse(sampleJson);
+        var instance2 = adapter.parse(sampleJson);
+        Assertions.assertTrue(adapter.areEqual(instance1, instance2));
+    }
+
+    @ParameterizedTest()
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    void testArrayComparability(JsonAdapter<?,?,?> adapter) {
+        var sampleJson = "[\"a\",1,true]";
+        var instance1 = adapter.parse(sampleJson);
+        var instance2 = adapter.parse(sampleJson);
+        Assertions.assertTrue(adapter.areEqual(instance1, instance2));
+    }
+
+    @ParameterizedTest()
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    void testNonExistingKeyInObject(JsonAdapter<?,?,?> adapter) {
+        // should not fail and return `null`
+        var instance = adapter.parse("{}");
+        Assertions.assertNull(adapter.get(instance, ""));
+    }
+
+    public static class TestDeserialize {
+        public boolean bool;
+        public int num;
+        public String str;
+    }
+
+    @ParameterizedTest()
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    void testDeserialize(JsonAdapter<?,?,?> adapter) {
+        var adapterPayload = adapter.parse("""
+        {
+            "bool": true,
+            "num": 1,
+            "str": "foo"
+        }""");
+        var deserialized = adapter.deserialize(adapterPayload, TestDeserialize.class);
+        Assertions.assertTrue(deserialized.bool);
+        Assertions.assertEquals(1, deserialized.num);
+        Assertions.assertEquals("foo", deserialized.str);
+    }
+
+    public class ListOfTestDeserialize extends ArrayList<Object> { }
+
+    @ParameterizedTest()
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    void testDeserializeList(JsonAdapter<?,?,?> adapter) {
+        var adapterPayload = adapter.parse("""
+        [{
+            "bool": true,
+            "num": 1,
+            "str": "foo"
+        }]""");
+        var deserialized = adapter.deserialize(adapterPayload, List.class);
+        Assertions.assertEquals(1, deserialized.size());
+        var expected = Map.of("bool", true, "num", 1, "str", "foo");
+        Assertions.assertEquals(expected, deserialized.get(0));
     }
 }

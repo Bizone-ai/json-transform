@@ -64,6 +64,18 @@ public class PojoJsonAdapter extends JsonAdapter<Object, AbstractList<Object>, M
     }
 
     @Override
+    @SuppressWarnings("unchecked")
+    public <T> T deserialize(Object value, Class<T> targetType) {
+        if (value == null) {
+            return null;
+        }
+        if (targetType.isAssignableFrom(value.getClass())) {
+            return (T) value;
+        }
+        return jsonPathConfiguration.mappingProvider().map(value, targetType, jsonPathConfiguration);
+    }
+
+    @Override
     public Object parse(String value) {
         if (value != null && value.startsWith("'") && value.endsWith("'") && value.length() >= 2) {
             return PojoMapper.convert(PojoHelpers.parse(

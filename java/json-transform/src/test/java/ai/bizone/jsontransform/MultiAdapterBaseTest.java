@@ -6,6 +6,7 @@ import ai.bizone.jsontransform.adapters.jackson.JacksonJsonAdapter;
 import ai.bizone.jsontransform.adapters.jsonorg.JsonOrgJsonAdapter;
 import ai.bizone.jsontransform.adapters.jsonsmart.JsonSmartJsonAdapter;
 import ai.bizone.jsontransform.adapters.pojo.PojoJsonAdapter;
+import ai.bizone.jsontransform.adapters.tapestry.TapestryJsonAdapter;
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ public class MultiAdapterBaseTest {
                 new JacksonJsonAdapter(),
                 new JsonOrgJsonAdapter(),
                 new JsonSmartJsonAdapter(),
+                new TapestryJsonAdapter(),
                 new PojoJsonAdapter()
         );
     }

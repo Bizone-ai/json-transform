@@ -1,25 +1,24 @@
-package ai.bizone.jsontransform.adapters.jsonsmart;
+package ai.bizone.jsontransform.adapters.tapestry;
 
 import ai.bizone.jsontransform.adapters.JsonAdapterHelpers;
 import ai.bizone.jsontransform.adapters.pojo.PojoHelpers;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.Option;
-import com.jayway.jsonpath.spi.json.JsonSmartJsonProvider;
-import com.jayway.jsonpath.spi.mapper.JsonSmartMappingProvider;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
-import net.minidev.json.JSONValue;
-import net.minidev.json.parser.JSONParser;
+import com.jayway.jsonpath.spi.json.TapestryJsonProvider;
+import com.jayway.jsonpath.spi.mapper.TapestryMappingProvider;
+import org.apache.tapestry5.json.JSONArray;
+import org.apache.tapestry5.json.JSONObject;
+import org.json.JSONString;
 
 import java.lang.reflect.Array;
 import java.util.*;
 
-public class JsonSmartHelpers {
+public class TapestryHelpers {
 
     static Configuration getJsonPathConfig() {
         return new Configuration.ConfigurationBuilder()
-                .jsonProvider(new JsonSmartJsonProvider(JSONParser.MODE_PERMISSIVE, JSONValue.defaultReader.DEFAULT))
-                .mappingProvider(new JsonSmartMappingProvider())
+                .jsonProvider(new TapestryJsonProvider())
+                .mappingProvider(new TapestryMappingProvider())
                 .options(Set.of(
                         Option.SUPPRESS_EXCEPTIONS
                 ))
@@ -29,11 +28,11 @@ public class JsonSmartHelpers {
     /**
      * Wraps and unwraps values for JsonSmartJsonAdapter processing
      * @param object object to convert
-     * @param unwrap if true, will convert PojoNull to null, otherwise will convert null values to PojoNull
+     * @param unwrap if true, will convert JSONObject.NULL to null, otherwise will convert null values to JSONObject.NULL
      */
     public static Object convert(Object object, boolean unwrap, boolean reduceBigDecimals) {
-        if (object == null) {
-            return null;
+        if (object == null || JSONObject.NULL.equals(object)) {
+            return unwrap ? null : JSONObject.NULL;
         }
         // number
         if (object instanceof Number n) {
@@ -83,4 +82,20 @@ public class JsonSmartHelpers {
         }
         return result;
     }
+
+    public static int getContentsHashCode(Object object) {
+        if (object == JSONObject.NULL || object == null)
+            return 0;
+        if (object instanceof JSONObject jo) {
+            return jo.toCompactString().hashCode();
+        }
+        if (object instanceof JSONArray ja) {
+            return ja.toCompactString().hashCode();
+        }
+        if (object instanceof JSONString js) {
+            return js.toString().hashCode();
+        }
+        return object.hashCode();
+    }
+
 }

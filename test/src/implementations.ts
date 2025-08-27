@@ -7,6 +7,7 @@ export const ImplUrls = {
   "java-jackson": `${JAVA_BASE}/api/v1/transform/jackson`,
   "java-jsonorg": `${JAVA_BASE}/api/v1/transform/jsonorg`,
   "java-jsonsmart": `${JAVA_BASE}/api/v1/transform/jsonsmart`,
+  "java-tapestry": `${JAVA_BASE}/api/v1/transform/tapestry`,
   "java-pojo": `${JAVA_BASE}/api/v1/transform/pojo`
 }
 
@@ -18,6 +19,7 @@ export const ImplsByLang: Record<string, Implementation[]> = {
     "java-jackson",
     "java-jsonorg",
     "java-jsonsmart",
+    "java-tapestry",
     "java-pojo",
   ],
   "javascript": [
