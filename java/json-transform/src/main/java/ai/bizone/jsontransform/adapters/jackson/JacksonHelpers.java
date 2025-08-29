@@ -25,17 +25,15 @@ public class JacksonHelpers {
                 .configure(JsonNodeFeature.STRIP_TRAILING_BIGDECIMAL_ZEROES, true);
     }
 
-    private static final Supplier<ObjectMapper> DEFAULT_JACKSON_SUPPLIER = JacksonHelpers::createObjectMapper;
-
-    private static ThreadLocal<ObjectMapper> threadSafeFactory = ThreadLocal.withInitial(DEFAULT_JACKSON_SUPPLIER);
+    private static ObjectMapper objectMapper = createObjectMapper();
 
     public static ObjectMapper mapper() {
-        return threadSafeFactory.get();
+        return objectMapper;
     }
 
     static com.jayway.jsonpath.Configuration setFactoryAndReturnJsonPathConfig(Supplier<ObjectMapper> jacksonSupplier) {
         if (jacksonSupplier != null) {
-            threadSafeFactory = ThreadLocal.withInitial(jacksonSupplier);
+            objectMapper = jacksonSupplier.get();
         }
         var mapper = mapper();
         return new Configuration.ConfigurationBuilder()

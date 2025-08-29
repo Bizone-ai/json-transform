@@ -71,7 +71,7 @@ public class GsonJsonAdapter extends JsonAdapter<JsonElement, JsonArray, JsonObj
         if (value instanceof String s) return new JsonPrimitive(s);
         if (value instanceof Boolean b) return new JsonPrimitive(b);
         if (value instanceof Number n) return new JsonPrimitive(toBigDecimal(n));
-        return GsonHelpers.GSON().toJsonTree(value);
+        return GsonHelpers.getGSON().toJsonTree(value);
     }
 
     @Override
@@ -84,12 +84,15 @@ public class GsonJsonAdapter extends JsonAdapter<JsonElement, JsonArray, JsonObj
         if (value == null) {
             return null;
         }
-        return GsonHelpers.GSON().getAdapter(targetType).fromJsonTree((JsonElement) value);
+        return GsonHelpers.getGSON().getAdapter(targetType).fromJsonTree((JsonElement) value);
     }
 
     @Override
     public JsonElement parse(String value) {
-        return GsonHelpers.GSON().fromJson(value, JsonElement.class);
+        if (value == null) {
+            return null;
+        }
+        return GsonHelpers.getGSON().fromJson(value, JsonElement.class);
     }
 
     @Override
@@ -114,6 +117,6 @@ public class GsonJsonAdapter extends JsonAdapter<JsonElement, JsonArray, JsonObj
 
     @Override
     public String toString(Object value) {
-        return GsonHelpers.GSON().toJson(value);
+        return GsonHelpers.getGSON().toJson(value);
     }
 }

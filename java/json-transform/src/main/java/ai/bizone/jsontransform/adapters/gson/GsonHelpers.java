@@ -1,6 +1,5 @@
 package ai.bizone.jsontransform.adapters.gson;
 
-import ai.bizone.jsontransform.JsonTransformerConfiguration;
 import ai.bizone.jsontransform.adapters.JsonAdapterHelpers;
 import ai.bizone.jsontransform.adapters.gson.adapters.ISODateAdapter;
 import ai.bizone.jsontransform.adapters.gson.adapters.InstantTypeAdapter;
@@ -35,7 +34,7 @@ public class GsonHelpers {
             }
         }
     }
-    private static BigDecimalToNumberPolicy bigDecimalToNumberPolicy = new BigDecimalToNumberPolicy();
+    private static final BigDecimalToNumberPolicy bigDecimalToNumberPolicy = new BigDecimalToNumberPolicy();
 
     public static GsonBuilder gsonBuilder() {
         return new GsonBuilder()
@@ -47,32 +46,22 @@ public class GsonHelpers {
                 .setObjectToNumberStrategy(bigDecimalToNumberPolicy);
     }
 
-    private static final Supplier<Gson> DEFAULT_GSON_SUPPLIER = () -> gsonBuilder().create();
+    private static Gson gson = gsonBuilder().create();
 
-    private static ThreadLocal<Gson> threadSafeFactory = ThreadLocal.withInitial(DEFAULT_GSON_SUPPLIER);
-
-    static Gson GSON() {
-        return threadSafeFactory.get();
+    static Gson getGSON() {
+        return gson;
     }
 
     static com.jayway.jsonpath.Configuration setFactoryAndReturnJsonPathConfig(Supplier<Gson> gsonSupplier) {
         if (gsonSupplier != null) {
-            threadSafeFactory = ThreadLocal.withInitial(gsonSupplier);
+            gson = gsonSupplier.get();
         }
         return new Configuration.ConfigurationBuilder()
-                .jsonProvider(new GsonJsonProvider(threadSafeFactory.get()))
-                .mappingProvider(new GsonMappingProvider(() -> threadSafeFactory.get()))
+                .jsonProvider(new GsonJsonProvider(gson))
+                .mappingProvider(new GsonMappingProvider(() -> gson))
                 .options(Set.of(
                         Option.SUPPRESS_EXCEPTIONS
                 ))
                 .build();
-    }
-
-    /**
-     * Please use <code>JsonTransformerConfiguration.set(new GsonJsonTransformerConfiguration(supplier))</code> instead
-     */
-    @Deprecated(forRemoval = true)
-    public static void setGson(Supplier<Gson> supplier) {
-        JsonTransformerConfiguration.set(new GsonJsonTransformerConfiguration(supplier));
     }
 }
