@@ -41,7 +41,7 @@ export default function tokenizeLine(line: string, lineNumber: number, ts: Token
   const funcMatches = functionsParser.matchAllFunctionsInLine(line);
   for (const match of funcMatches) {
     const func = functionsParser.get(match.name);
-    const deprecated = func?.deprecatedInFavorOf;
+    const deprecated = func?.deprecated;
 
     ts.tokens.push({
       line: lineNumber,

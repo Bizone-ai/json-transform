@@ -9,12 +9,10 @@ const DOLLAR = "$";
 class TransformerFunctionTemplate extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "payload", type: ArgType.Any },
-          { name: "default_resolve", type: ArgType.String, defaultValue: "UNIQUE" },
-          { name: "url_encode", type: ArgType.Boolean, defaultValue: false },
-        ],
+      argsSet: [
+        { name: "payload", type: ArgType.Any },
+        { name: "default_resolve", type: ArgType.String, defaultValue: "UNIQUE" },
+        { name: "url_encode", type: ArgType.Boolean, defaultValue: false },
       ],
     });
   }

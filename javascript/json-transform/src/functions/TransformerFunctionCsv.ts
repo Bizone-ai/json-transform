@@ -7,13 +7,11 @@ import CsvFormat from "../formats/csv/CsvFormat";
 class TransformerFunctionCsv extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "no_headers", type: ArgType.Boolean, defaultValue: false },
-          { name: "force_quote", type: ArgType.Boolean, defaultValue: false },
-          { name: "separator", type: ArgType.String, defaultValue: "," },
-          { name: "names", type: ArgType.Array },
-        ],
+      argsSet: [
+        { name: "no_headers", type: ArgType.Boolean, defaultValue: false },
+        { name: "force_quote", type: ArgType.Boolean, defaultValue: false },
+        { name: "separator", type: ArgType.String, defaultValue: "," },
+        { name: "names", type: ArgType.Array },
       ],
     });
   }

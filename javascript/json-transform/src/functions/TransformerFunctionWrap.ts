@@ -5,11 +5,9 @@ import FunctionContext from "./common/FunctionContext";
 class TransformerFunctionWrap extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "prefix", type: ArgType.String, defaultValue: "" },
-          { name: "suffix", type: ArgType.String, defaultValue: "" },
-        ],
+      argsSet: [
+        { name: "prefix", type: ArgType.String, defaultValue: "" },
+        { name: "suffix", type: ArgType.String, defaultValue: "" },
       ],
     });
   }

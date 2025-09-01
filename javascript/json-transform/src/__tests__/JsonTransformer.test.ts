@@ -329,12 +329,10 @@ describe("JsonTransformer", () => {
   class TransformerFunctionArgsTest extends TransformerFunction {
     constructor() {
       super({
-        argsSets: [
-          [
-            { name: "a", type: ArgType.Any },
-            { name: "b", type: ArgType.Any },
-            { name: "c", type: ArgType.Any },
-          ],
+        argsSet: [
+          { name: "a", type: ArgType.Any },
+          { name: "b", type: ArgType.Any },
+          { name: "c", type: ArgType.Any },
         ],
       });
     }

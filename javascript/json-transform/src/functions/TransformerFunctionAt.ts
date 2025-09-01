@@ -5,7 +5,7 @@ import FunctionContext from "./common/FunctionContext";
 class TransformerFunctionAt extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [[{ name: "index", type: ArgType.Number }]],
+      argsSet: [{ name: "index", type: ArgType.Number }],
     });
   }
 

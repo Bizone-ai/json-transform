@@ -21,7 +21,7 @@ const JSON_ESCAPE_CHARACTERS: Record<string, string> = {
 };
 
 class InlineFunctionTokenizer {
-  public static tokenize(input: string): TokenizedInlineFunction | undefined {
+  public static tokenize(input: string, loose?: boolean): TokenizedInlineFunction | undefined {
     if (!input || !input.startsWith("$$")) {
       return undefined; // not a function
     }
@@ -112,10 +112,10 @@ class InlineFunctionTokenizer {
           current += char;
         }
       }
-      if (!finished) {
+      if (!finished && !loose) {
         return undefined; // syntax error, missing closing parenthesis
       }
-      if (i < input.length && input[i] !== ":") {
+      if (i < input.length && input[i] !== ":" && !loose) {
         return undefined; // syntax error, expected ':' or EOS
       }
     }

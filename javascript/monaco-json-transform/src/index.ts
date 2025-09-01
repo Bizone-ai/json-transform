@@ -7,6 +7,7 @@ export {
   registerJsonTransformDSTProvider,
 } from "./dstProviders/jsonTransformVariablesTokensProvider";
 export {
+  JsonTransformHoverProviderFactoryOptions,
   jsonTransformHoverProviderFactory,
   registerJsonTransformHoverProvider,
 } from "./hoverProviders/jsonTransformerHoverProvider";

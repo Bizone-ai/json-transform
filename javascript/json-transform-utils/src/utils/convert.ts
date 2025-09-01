@@ -160,7 +160,7 @@ export const tryConvertFunctionsToInline = (definition: any): any => {
     spec["$$" + match.name] = argValue; // store it back for output
     result += ":";
     if (argValue && (Array.isArray(argValue) || typeof argValue === "object")) {
-      possible = false; // the primary argument is not primitive
+      possible = false; // the input argument is not primitive
     } else if (possible) {
       result += argValue;
     }

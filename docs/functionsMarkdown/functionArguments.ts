@@ -5,8 +5,8 @@ import htmlEscape from "./htmlEscape";
 const getTypeHTML = (arg: Argument) => {
   if (arg.type === "transformer") {
     return `<span>Transformer(${arg.transformerArguments
-        ?.map(v => `<code>${htmlEscape(v.name)}</code>`).join(",")
-    })</span>`;
+      ?.map(v => `<code>${htmlEscape(v.name)}</code>`)
+      .join(",")})</span>`;
   }
   return `<code>${htmlEscape(arg.type)}</code>`;
 };
@@ -19,9 +19,9 @@ const getValuesHTML = (arg: Argument) => {
     return `<code>false</code>/<code>true</code>`;
   }
   if (arg.type === "enum" && arg.enum) {
-    return arg.enum.map((v, i, a) => (
-            `<code>${htmlEscape(v)}</code>${i < a.length - 1 ? "/" + (i % 5 === 0 ? " " : "") : ""}`
-        )).join("");
+    return arg.enum
+      .map((v, i, a) => `<code>${htmlEscape(v)}</code>${i < a.length - 1 ? "/" + (i % 5 === 0 ? " " : "") : ""}`)
+      .join("");
   }
   return "";
 };
@@ -30,17 +30,17 @@ const getRequiredOrDefaultHTML = (arg: Argument) => {
   if (arg.required) return `<strong>Yes</strong>`;
   if (typeof arg.default !== "undefined") {
     return `<code>${htmlEscape(
-        arg.type === "string" || arg.type === "array" || arg.type.endsWith("[]")
-          ? JSON.stringify(arg.default)
-          : `${arg.default}`)
-    }</code>`;
+      arg.type === "string" || arg.type === "array" || arg.type.endsWith("[]")
+        ? JSON.stringify(arg.default)
+        : `${arg.default}`,
+    )}</code>`;
   }
   return null;
 };
 
 const argumentRowHTML = (arg?: Argument) => `
     <tr>
-      <td>${arg?.name ? `<code>${htmlEscape(arg.name)}</code>` : "Primary"}</td>
+      <td>${arg?.name ? `<code>${htmlEscape(arg.name)}</code>` : "<strong>Input</strong>"}</td>
       <td>${arg ? getTypeHTML(arg) : ""}</td>
       <td>${arg ? getValuesHTML(arg) : ""}</td>
       <td>${arg ? getRequiredOrDefaultHTML(arg) : ""}</td>

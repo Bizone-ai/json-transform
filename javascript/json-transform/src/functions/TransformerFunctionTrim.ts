@@ -5,7 +5,7 @@ import { ArgType } from "./common/ArgType";
 class TransformerFunctionTrim extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [[{ name: "type", type: ArgType.String, defaultValue: "BOTH" }]],
+      argsSet: [{ name: "type", type: ArgType.String, defaultValue: "BOTH" }],
     });
   }
 

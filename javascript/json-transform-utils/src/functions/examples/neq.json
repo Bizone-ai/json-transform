@@ -1,0 +1,132 @@
+[
+  {
+    "name": "object not equal string",
+    "given": {
+      "input": "A",
+      "definition": { "$$neq": "B", "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object equal string",
+    "given": {
+      "input": "A",
+      "definition": { "$$neq": "A", "value": "$" }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object equal number",
+    "given": {
+      "input": 4,
+      "definition": { "$$neq": 4, "value": "$" }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object not equal number (coercion)",
+    "given": {
+      "input": 4,
+      "definition": { "$$neq": "4", "value": "$" }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object not equal number (strict)",
+    "given": {
+      "input": 4,
+      "definition": { "$$neq": "4", "value": "$", "strict": true }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object equal list",
+    "given": {
+      "input": [1, 2],
+      "definition": { "$$neq": [1, 2], "value": "$" }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object equal object",
+    "given": {
+      "input": { "a": true },
+      "definition": { "$$neq": { "a": true }, "value": "$" }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object not equal number",
+    "given": {
+      "input": 4.5,
+      "definition": { "$$neq": 4, "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "inline equal string",
+    "given": {
+      "input": "A",
+      "definition": "$$neq($):A"
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "inline not equal string",
+    "given": {
+      "input": 4,
+      "definition": "$$neq($):B"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "inline not equal number (coercion)",
+    "given": {
+      "input": 4,
+      "definition": "$$neq($):4"
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "inline not equal number (strict)",
+    "given": {
+      "input": 4,
+      "definition": "$$neq($,true):4"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "inline not equal null",
+    "given": {
+      "input": null,
+      "definition": "$$neq($):#null"
+    },
+    "expect": {
+      "equal": false
+    }
+  }
+]

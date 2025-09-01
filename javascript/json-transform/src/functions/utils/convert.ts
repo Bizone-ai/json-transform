@@ -48,7 +48,7 @@ export const convertFunctionsToObjects = (definition: any): any => {
     }
     const func = ctx.getFunction();
     const funcArgs = ctx.getArgumentSet();
-    let primaryValue: any;
+    let inputValue: any;
     if (func.allowsArgumentsAsInput()) {
       const arr = [];
       for (const arg of funcArgs ?? []) {
@@ -62,14 +62,14 @@ export const convertFunctionsToObjects = (definition: any): any => {
           arr.pop();
         }
       }
-      primaryValue = arr;
+      inputValue = arr;
     } else {
       const argValue = ctx.getRaw(null);
       if (!func.inputIsRaw()) {
-        primaryValue = convertFunctionsToObjects(argValue) ?? DEFAULT_PRIMARY_VALUE;
+        inputValue = convertFunctionsToObjects(argValue) ?? DEFAULT_PRIMARY_VALUE;
       }
     }
-    const result = { [ctx.getAlias()]: primaryValue };
+    const result = { [ctx.getAlias()]: inputValue };
     if (funcArgs && !func.allowsArgumentsAsInput()) {
       for (const arg of funcArgs) {
         const argValue = ctx.getRaw(arg.name);

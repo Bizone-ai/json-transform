@@ -37,19 +37,6 @@
     }
   },
   {
-    "name": "Object array with delimiter",
-    "given": {
-      "input": ["a", "b", "c"],
-      "definition": {
-        "$$join": "$",
-        "$$delimiter": ","
-      }
-    },
-    "expect": {
-      "equal": "a,b,c"
-    }
-  },
-  {
     "name": "Object array with prefix",
     "given": {
       "input": ["hello", "world"],

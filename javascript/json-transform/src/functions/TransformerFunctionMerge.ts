@@ -7,11 +7,9 @@ import { AsyncSequence, asyncSequenceOf } from "@wortise/sequency";
 class TransformerFunctionMerge extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "deep", type: ArgType.Boolean, defaultValue: false },
-          { name: "arrays", type: ArgType.Boolean, defaultValue: false },
-        ],
+      argsSet: [
+        { name: "deep", type: ArgType.Boolean, defaultValue: false },
+        { name: "arrays", type: ArgType.Boolean, defaultValue: false },
       ],
     });
   }

@@ -8,11 +8,9 @@ import { BigDecimal_ZERO, BigDecimal } from "./common/FunctionHelpers";
 class TransformerFunctionAvg extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "default", type: ArgType.Number, defaultValue: BigDecimal_ZERO },
-          { name: "by", type: ArgType.Any },
-        ],
+      argsSet: [
+        { name: "default", type: ArgType.Number, defaultValue: BigDecimal_ZERO },
+        { name: "by", type: ArgType.Any },
       ],
     });
   }

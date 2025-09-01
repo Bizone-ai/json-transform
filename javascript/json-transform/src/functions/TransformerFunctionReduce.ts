@@ -6,11 +6,9 @@ import { ArgType } from "./common/ArgType";
 class TransformerFunctionReduce extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "to", type: ArgType.Any },
-          { name: "identity", type: ArgType.Any },
-        ],
+      argsSet: [
+        { name: "to", type: ArgType.Any },
+        { name: "identity", type: ArgType.Any },
       ],
     });
   }

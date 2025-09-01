@@ -5,11 +5,9 @@ import FunctionContext from "./common/FunctionContext";
 class TransformerFunctionSubstring extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "begin", type: ArgType.Number, defaultValue: 0 },
-          { name: "end", type: ArgType.Number },
-        ],
+      argsSet: [
+        { name: "begin", type: ArgType.Number, defaultValue: 0 },
+        { name: "end", type: ArgType.Number },
       ],
     });
   }

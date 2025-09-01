@@ -1,0 +1,122 @@
+[
+  {
+    "name": "object less than string",
+    "given": {
+      "input": "A",
+      "definition": { "$$lt": "B", "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object not less than string",
+    "given": {
+      "input": "B",
+      "definition": { "$$lt": "A", "value": "$" }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object less than number",
+    "given": {
+      "input": 4,
+      "definition": { "$$lt": 5, "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object less than number (not equal)",
+    "given": {
+      "input": 4,
+      "definition": { "$$lt": 4, "value": "$" }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object not less than number",
+    "given": {
+      "input": 4,
+      "definition": { "$$lt": 3, "value": "$" }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object less than number (coercion)",
+    "given": {
+      "input": 4,
+      "definition": { "$$lt": "5", "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object less than number (strict)",
+    "given": {
+      "input": 4,
+      "definition": { "$$lt": "5", "value": "$", "strict": true }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object less than list",
+    "given": {
+      "input": [1],
+      "definition": { "$$lt": [1, 2], "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object less than object",
+    "given": {
+      "input": { "a": true },
+      "definition": { "$$lt": { "a": true, "b": true }, "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "inline less than string",
+    "given": {
+      "input": "A",
+      "definition": "$$lt($):B"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "inline less than number (coercion)",
+    "given": {
+      "input": 4,
+      "definition": "$$lt($):5"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "inline less than number (strict)",
+    "given": {
+      "input": 4,
+      "definition": "$$lt($,true):5"
+    },
+    "expect": {
+      "equal": false
+    }
+  }
+]

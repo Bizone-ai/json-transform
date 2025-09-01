@@ -20,6 +20,9 @@ abstract class TransformerFunction {
   }
 
   public parseArguments(args?: Record<string, any> | (string | null)[]): ArgumentsSet | undefined {
+    if (this.description.argsSet) {
+      return this.description.argsSet;
+    }
     const argsSets = this.description.argsSets;
     if (!argsSets) return undefined;
     if (argsSets.length === 1) return argsSets[0];

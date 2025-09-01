@@ -7,11 +7,9 @@ import JsonElementStreamer from "../JsonElementStreamer";
 class TransformerFunctionLength extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "type", type: ArgType.String, defaultValue: "AUTO" },
-          { name: "default_zero", type: ArgType.Boolean, defaultValue: false },
-        ],
+      argsSet: [
+        { name: "type", type: ArgType.String, defaultValue: "AUTO" },
+        { name: "default_zero", type: ArgType.Boolean, defaultValue: false },
       ],
     });
   }

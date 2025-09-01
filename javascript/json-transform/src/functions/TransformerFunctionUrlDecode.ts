@@ -10,7 +10,7 @@ class TransformerFunctionUrlDecode extends TransformerFunction {
 
   constructor() {
     super({
-      argsSets: [[{ name: "charset", type: ArgType.String, defaultValue: "UTF-8" }]],
+      argsSet: [{ name: "charset", type: ArgType.String, defaultValue: "UTF-8" }],
     });
   }
 

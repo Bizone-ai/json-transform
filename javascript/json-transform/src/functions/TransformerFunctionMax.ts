@@ -7,12 +7,10 @@ import CompareBy from "./common/CompareBy";
 class TransformerFunctionMax extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "default", type: ArgType.Any },
-          { name: "type", type: ArgType.String, defaultValue: "AUTO" },
-          { name: "by", type: ArgType.Any, defaultValue: "##current" },
-        ],
+      argsSet: [
+        { name: "default", type: ArgType.Any },
+        { name: "type", type: ArgType.String, defaultValue: "AUTO" },
+        { name: "by", type: ArgType.Any, defaultValue: "##current" },
       ],
     });
   }

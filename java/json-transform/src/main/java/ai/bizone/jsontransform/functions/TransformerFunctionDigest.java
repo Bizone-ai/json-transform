@@ -1,7 +1,6 @@
 package ai.bizone.jsontransform.functions;
 
 import ai.bizone.jsontransform.functions.common.*;
-import ai.bizone.jsontransform.functions.common.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -25,9 +24,6 @@ public class TransformerFunctionDigest extends TransformerFunction {
             return null;
         }
         var algorithm = context.getEnum("algorithm");
-        if (algorithm.equals("JAVA")) {
-            return str.hashCode();
-        }
         try {
             var digest = MessageDigest.getInstance(algorithm).digest(str.getBytes());
             return switch (context.getEnum("format")) {

@@ -7,12 +7,10 @@ const DUMMY_ROOT = "R__O__O__T";
 class TransformerFunctionXml extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "root", type: ArgType.String },
-          { name: "xslt", type: ArgType.String },
-          { name: "indent", type: ArgType.Boolean, defaultValue: false },
-        ],
+      argsSet: [
+        { name: "root", type: ArgType.String },
+        { name: "xslt", type: ArgType.String },
+        { name: "indent", type: ArgType.Boolean, defaultValue: false },
       ],
     });
   }

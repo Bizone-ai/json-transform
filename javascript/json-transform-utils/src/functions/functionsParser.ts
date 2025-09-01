@@ -25,7 +25,7 @@ export const getFunctionInlineSignature = (name: string, func: FunctionDescripto
         func.arguments
           .filter(a => typeof a.position === "number" && (!requiredOnly || a.required))
           .sort(compareArgumentPosition)
-          .map(a => (a.required ? "{" + a.name + "}" : "[" + a.name + "]"))
+          .map(a => (a.type === "const" ? a.const : a.required ? "{" + a.name + "}" : "[" + a.name + "]"))
           .join(",") +
         ")"
       : "")
@@ -48,11 +48,8 @@ export const getFunctionObjectSignature = (name: string, func: FunctionDescripto
 export class FunctionsParser {
   private clientFunctions: Record<string, FunctionDescriptor>;
   private allFunctionsNames: Set<string>;
-  private objectFunctionRegex: RegExp;
   private clientDocsUrlResolver: ((funcName: string) => string) | undefined;
   public handleClientFunction?: HandleFunctionMethod;
-
-  private objectFunctionRegexFactory = (names: string[]) => new RegExp(`(?<=")\\$\\$(${names.join("|")})"\s*:`, "g");
 
   constructor() {
     this.clientFunctions = {};
@@ -64,8 +61,6 @@ export class FunctionsParser {
       }
     }
     this.allFunctionsNames = functionNames;
-    const names = Array.from(this.allFunctionsNames);
-    this.objectFunctionRegex = this.objectFunctionRegexFactory(names);
   }
 
   setClientFunctions(
@@ -81,8 +76,6 @@ export class FunctionsParser {
         clientFunctions[name].aliases?.forEach(alias => this.allFunctionsNames.add(alias));
       }
     }
-    const names = Array.from(this.allFunctionsNames);
-    this.objectFunctionRegex = this.objectFunctionRegexFactory(names);
     this.handleClientFunction = handler;
   }
 

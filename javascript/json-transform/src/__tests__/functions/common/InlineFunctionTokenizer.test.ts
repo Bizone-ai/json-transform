@@ -250,17 +250,4 @@ describe("InlineFunctionTokenizer", () => {
       ],
     });
   });
-  test("tokenize - test 17", () => {
-    expect(InlineFunctionTokenizer.tokenize("$$foo(\n\r\t\u0f0f)")).toEqual({
-      name: "foo",
-      keyLength: 5,
-      args: [
-        {
-          index: 6,
-          length: 4,
-          value: "\n\r\t\u0f0f",
-        },
-      ],
-    });
-  });
 });

@@ -7,7 +7,6 @@ import _base64 from "./examples/base64.json";
 import _boolean from "./examples/boolean.json";
 import _coalesce from "./examples/coalesce.json";
 import _concat from "./examples/concat.json";
-import _contains from "./examples/contains.json";
 import _csv from "./examples/csv.json";
 import _csvparse from "./examples/csvparse.json";
 import _date from "./examples/date.json";
@@ -15,6 +14,7 @@ import _decimal from "./examples/decimal.json";
 import _digest from "./examples/digest.json";
 import _distinct from "./examples/distinct.json";
 import _entries from "./examples/entries.json";
+import _eq from "./examples/eq.json";
 import _eval from "./examples/eval.json";
 import _every from "./examples/every.json";
 import _filter from "./examples/filter.json";
@@ -25,7 +25,10 @@ import _flatten from "./examples/flatten.json";
 import _form from "./examples/form.json";
 import _formparse from "./examples/formparse.json";
 import _group from "./examples/group.json";
+import _gt from "./examples/gt.json";
+import _gte from "./examples/gte.json";
 import _if from "./examples/if.json";
+import _in from "./examples/in.json";
 import _indexof from "./examples/indexof.json";
 import _is from "./examples/is.json";
 import _isnull from "./examples/isnull.json";
@@ -39,6 +42,8 @@ import _length from "./examples/length.json";
 import _long from "./examples/long.json";
 import _lookup from "./examples/lookup.json";
 import _lower from "./examples/lower.json";
+import _lt from "./examples/lt.json";
+import _lte from "./examples/lte.json";
 import _map from "./examples/map.json";
 import _match from "./examples/match.json";
 import _matchall from "./examples/matchall.json";
@@ -46,6 +51,8 @@ import _math from "./examples/math.json";
 import _max from "./examples/max.json";
 import _merge from "./examples/merge.json";
 import _min from "./examples/min.json";
+import _neq from "./examples/neq.json";
+import _nin from "./examples/nin.json";
 import _normalize from "./examples/normalize.json";
 import _not from "./examples/not.json";
 import _numberformat from "./examples/numberformat.json";
@@ -54,6 +61,7 @@ import _object from "./examples/object.json";
 import _or from "./examples/or.json";
 import _pad from "./examples/pad.json";
 import _partition from "./examples/partition.json";
+import _pathjoin from "./examples/pathjoin.json";
 import _range from "./examples/range.json";
 import _raw from "./examples/raw.json";
 import _reduce from "./examples/reduce.json";
@@ -95,7 +103,6 @@ export default {
   boolean: _boolean,
   coalesce: _coalesce,
   concat: _concat,
-  contains: _contains,
   csv: _csv,
   csvparse: _csvparse,
   date: _date,
@@ -103,6 +110,7 @@ export default {
   digest: _digest,
   distinct: _distinct,
   entries: _entries,
+  eq: _eq,
   eval: _eval,
   every: _every,
   filter: _filter,
@@ -113,7 +121,10 @@ export default {
   form: _form,
   formparse: _formparse,
   group: _group,
+  gt: _gt,
+  gte: _gte,
   if: _if,
+  in: _in,
   indexof: _indexof,
   is: _is,
   isnull: _isnull,
@@ -127,6 +138,8 @@ export default {
   long: _long,
   lookup: _lookup,
   lower: _lower,
+  lt: _lt,
+  lte: _lte,
   map: _map,
   match: _match,
   matchall: _matchall,
@@ -134,6 +147,8 @@ export default {
   max: _max,
   merge: _merge,
   min: _min,
+  neq: _neq,
+  nin: _nin,
   normalize: _normalize,
   not: _not,
   numberformat: _numberformat,
@@ -142,6 +157,7 @@ export default {
   or: _or,
   pad: _pad,
   partition: _partition,
+  pathjoin: _pathjoin,
   range: _range,
   raw: _raw,
   reduce: _reduce,

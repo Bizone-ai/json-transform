@@ -101,24 +101,14 @@ export default {
     outputSchemaTemplate: { type: "object", description: "Same as first non-null value" },
   },
   concat: {
-    description: "Concatenates primary value array with elements or other arrays of elements",
-    notes: ":::note\nElements which are `null` on the primary value will be ignored.\n:::",
+    description: "Concatenates input array with elements or other arrays of elements",
+    notes: ":::note\nElements which are `null` on the input will be ignored.\n:::",
     inputSchema: {
       type: "array",
       required: true,
       description: "Array of arrays / elements (null elements are ignored)",
     },
     outputSchemaTemplate: { type: "array" },
-  },
-  contains: {
-    description: "Checks whether an array contains a certain value",
-    inputSchema: {
-      type: "array",
-      required: true,
-      description: "Array of arrays / elements (null elements are ignored)",
-    },
-    outputSchema: { type: "boolean" },
-    arguments: [{ name: "that", required: true, description: "The value to look for", type: "any", position: 0 }],
   },
   csv: {
     description: "Converts an array of objects/arrays to a CSV string",
@@ -498,29 +488,12 @@ export default {
     description: "Creates a message digest based on a supported algorithm",
     inputSchema: { type: "string" },
     outputSchema: { type: "string" },
-    subfunctions: [
-      {
-        if: [{ argument: "algorithm", equals: "JAVA" }],
-        then: {
-          outputSchema: { type: "integer" },
-          description: "Creates a message digest based on Java's hashCode()",
-          arguments: [
-            {
-              name: "algorithm",
-              type: "const",
-              position: 0,
-              const: "JAVA",
-            },
-          ],
-        },
-      },
-    ],
     arguments: [
       {
         name: "algorithm",
         description: "Hashing algorithm",
         type: "enum",
-        enum: ["SHA-1", "SHA-256", "SHA-384", "SHA-512", "MD5", "JAVA"],
+        enum: ["SHA-1", "SHA-256", "SHA-384", "SHA-512", "MD5"],
         position: 0,
         default: "SHA-1",
       },
@@ -565,6 +538,21 @@ export default {
       type: "array",
       items: { type: "array", items: [{ type: "string" }, { type: undefined }] },
     },
+  },
+  eq: {
+    description: "Checks if value is equal to another value",
+    inputSchema: { type: "object", required: true, description: "A value which `value` should be the same as" },
+    outputSchema: { type: "boolean" },
+    arguments: [
+      { name: "value", description: "Value to check against", type: "any", position: 0, required: true },
+      {
+        name: "strict",
+        description: "Disable input type coercion between string to numbers (if value is number)",
+        type: "boolean",
+        position: 1,
+        default: false,
+      },
+    ],
   },
   eval: {
     description: "Evaluates the input and then transforms the context with the expression",
@@ -729,13 +717,51 @@ export default {
       },
     ],
   },
+  gt: {
+    description: "Checks if value is greater than another value",
+    inputSchema: {
+      type: "object",
+      required: true,
+      description: "A value which `value` should be greater than (value > input)",
+    },
+    outputSchema: { type: "boolean" },
+    arguments: [
+      { name: "value", description: "Value to check against", type: "any", position: 0, required: true },
+      {
+        name: "strict",
+        description: "Disable input type coercion between string to numbers (if value is number)",
+        type: "boolean",
+        position: 1,
+        default: false,
+      },
+    ],
+  },
+  gte: {
+    description: "Checks if value is greater than or equal to another value",
+    inputSchema: {
+      type: "object",
+      required: true,
+      description: "A value which `value` should be greater than or equal to (value >= input)",
+    },
+    outputSchema: { type: "boolean" },
+    arguments: [
+      { name: "value", description: "Value to check against", type: "any", position: 0, required: true },
+      {
+        name: "strict",
+        description: "Disable input type coercion between string to numbers (if value is number)",
+        type: "boolean",
+        position: 1,
+        default: false,
+      },
+    ],
+  },
   if: {
     description:
       "Conditionally returns a value, if the evaluation of the condition argument is truthy (using the [Truthy logic](../truthy-logic)).\nA fallback value (if condition evaluates to false) is optional",
     usageNotes:
       ":::note\nAlternative form is available using \n```transformers \n{\n" +
       '  "$$if": [ /* condition */, /* then */, /* else ? */]\n' +
-      "}\n```\nIf `then` is used, the primary argument is treated as a condition\n:::",
+      "}\n```\nIf `then` is used, the input argument is treated as a condition\n:::",
     inputSchema: {
       type: "any",
       required: true,
@@ -745,6 +771,12 @@ export default {
       { name: "then", required: true, description: "Value to return if condition is true", type: "any", position: 0 },
       { name: "else", description: "Value to return if condition is false", type: "any", position: 1, default: null },
     ],
+  },
+  in: {
+    description: "Checks if a value is in a list of values",
+    inputSchema: { type: "array", required: true, description: "An array of values which `value` should be part of" },
+    outputSchema: { type: "boolean" },
+    arguments: [{ name: "value", description: "Value to check against", type: "any", position: 0, required: true }],
   },
   indexof: {
     description: "Find the index of the first element that matches the specified value.",
@@ -762,6 +794,8 @@ export default {
   },
   is: {
     description: "Checks value for one or more predicates (all predicates must be satisfied)",
+    deprecated:
+      "This function is deprecated in favor of: `$$eq`/`$$neq`/`$$in`/`$$nin`/`$$lt`/`$$lte`/`$$gt`/`$$gte`.\n\nIt will be removed in future versions.",
     usageNotes:
       ":::note\n**Inline form** supports only `that` and `op` arguments.\n:::\n\n:::tip\n`gt`/`gte`/`lt`/`lte` - Uses the [Comparison logic](../comparison-logic)\n:::",
     inputSchema: { type: "object", required: true, description: "Value to check against" },
@@ -937,7 +971,7 @@ export default {
     inputSchema: { type: "array", required: true, description: "Main array of elements" },
     outputSchemaTemplate: {
       type: "array",
-      description: "of type of `to`'s result or the merge of both primary array's item and `with`'s item",
+      description: "of type of `to`'s result or the merge of both input array's item and `with`'s item",
     },
     arguments: [
       {
@@ -995,12 +1029,46 @@ export default {
     inputSchema: { type: "string", required: true, description: "Input string" },
     outputSchema: { type: "string" },
   },
+  lt: {
+    description: "Checks if value is less than another value (value < input)",
+    inputSchema: { type: "object", required: true, description: "A value which `value` should be less than" },
+    outputSchema: { type: "boolean" },
+    arguments: [
+      { name: "value", description: "Value to check against", type: "any", position: 0, required: true },
+      {
+        name: "strict",
+        description: "Disable input type coercion between string to numbers (if value is number)",
+        type: "boolean",
+        position: 1,
+        default: false,
+      },
+    ],
+  },
+  lte: {
+    description: "Checks if value is less than or equal to another value",
+    inputSchema: {
+      type: "object",
+      required: true,
+      description: "A value which `value` should be less than or equal to (value <= input)",
+    },
+    outputSchema: { type: "boolean" },
+    arguments: [
+      { name: "value", description: "Value to check against", type: "any", position: 0, required: true },
+      {
+        name: "strict",
+        description: "Disable input type coercion between string to numbers (if value is number)",
+        type: "boolean",
+        position: 1,
+        default: false,
+      },
+    ],
+  },
   map: {
     description: "Returns a mapped array applying the transformer on each of the elements",
     usageNotes:
       ":::note\nAlternative form is available using \n```transformers \n{\n" +
       '  "$$map": [ /* values */, /* to */ ]\n' +
-      "}\n```\nIf `to` is used, the primary argument is treated only as values\n:::",
+      "}\n```\nIf `to` is used, the input argument is treated only as values\n:::",
     inputSchema: { type: "array", required: true, description: "Array of elements" },
     outputSchemaTemplate: { type: "array", description: "of type of `to`'s result" },
     arguments: [
@@ -1168,6 +1236,31 @@ export default {
         transformerArguments: [{ name: "##current", type: "any", position: 0, description: "Current element" }],
       },
     ],
+  },
+  neq: {
+    description: "Checks if value is not equal to another value",
+    inputSchema: { type: "object", required: true, description: "A value which `value` should be different from" },
+    outputSchema: { type: "boolean" },
+    arguments: [
+      { name: "value", description: "Value to check against", type: "any", position: 0, required: true },
+      {
+        name: "strict",
+        description: "Disable input type coercion between string to numbers (if value is number)",
+        type: "boolean",
+        position: 1,
+        default: false,
+      },
+    ],
+  },
+  nin: {
+    description: "Checks if a value is not in a list of values",
+    inputSchema: {
+      type: "array",
+      required: true,
+      description: "An array of values which `value` should **NOT** be part of",
+    },
+    outputSchema: { type: "boolean" },
+    arguments: [{ name: "value", description: "Value to check against", type: "any", position: 0, required: true }],
   },
   normalize: {
     description: "Replace special characters forms with their simple form equivalent (removing marks by default)",
@@ -1521,12 +1614,28 @@ export default {
       { name: "size", description: "The size of each partition", type: "integer", position: 0, default: 100 },
     ],
   },
+  pathjoin: {
+    description:
+      "Joins paths segments into a single path string (removing duplicate separators and resolving relative paths; `..`/`.`)",
+    inputSchema: { type: "array", required: true, items: { type: "string" }, description: "Array of path segments" },
+    outputSchema: { type: "string" },
+    arguments: [
+      {
+        name: "type",
+        description: "Path separator type (`URL` will url-encode the segments and prefix output with `/`)",
+        type: "enum",
+        enum: ["POSIX", "WINDOWS", "URL"],
+        position: 0,
+        default: "POSIX",
+      },
+    ],
+  },
   range: {
     description: "Creates an array with a sequence of numbers starting with `start` up-to `end` in steps of `step`",
     usageNotes:
       ":::note\nAlternative form is available using \n```transformers \n{\n" +
       '  "$$range": [ /* start */, /* end */, /* step ? */]\n' +
-      "}\n```\nIf `start` is used, the primary argument is ignored and can be of any value\n:::",
+      "}\n```\nIf `start` is used, the input argument is ignored and can be of any value\n:::",
     argumentsAsInputSchema: true,
     outputSchema: { type: "array", items: { type: "number", $comment: "BigDecimal" } },
     arguments: [

@@ -8,11 +8,9 @@ import { BigDecimal, BigDecimal_ZERO, MAX_SCALE, MAX_SCALE_ROUNDING } from "./co
 class TransformerFunctionSum extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "default", type: ArgType.Number, defaultValue: BigDecimal_ZERO },
-          { name: "by", type: ArgType.Any },
-        ],
+      argsSet: [
+        { name: "default", type: ArgType.Number, defaultValue: BigDecimal_ZERO },
+        { name: "by", type: ArgType.Any },
       ],
     });
   }

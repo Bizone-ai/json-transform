@@ -16,8 +16,18 @@ export default function () {
     });
   // add functions and examples
   language.functions = structuredClone(definitions);
-  for (const key in language.functions) {
-    language.functions[key].examples = examples[key];
+  const keys = Object.keys(language.functions);
+  for (const key of keys) {
+    try {
+      if (language.functions[key].deprecated) {
+        delete language.functions[key];
+        continue;
+      }
+      language.functions[key].examples = examples[key];
+    } catch (e: any) {
+      console.error(`Error with func ${key}`, e);
+      throw e;
+    }
   }
   return language;
 }

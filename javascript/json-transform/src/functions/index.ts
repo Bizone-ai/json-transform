@@ -5,7 +5,7 @@ import TransformerFunctionBase64 from "./TransformerFunctionBase64";
 import TransformerFunctionBoolean from "./TransformerFunctionBoolean";
 import TransformerFunctionCoalesce from "./TransformerFunctionCoalesce";
 import TransformerFunctionConcat from "./TransformerFunctionConcat";
-import TransformerFunctionContains from "./TransformerFunctionContains";
+import TransformerFunctionIn from "./TransformerFunctionIn";
 import TransformerFunctionCsv from "./TransformerFunctionCsv";
 import TransformerFunctionCsvParse from "./TransformerFunctionCsvParse";
 import TransformerFunctionDate from "./TransformerFunctionDate";
@@ -13,6 +13,7 @@ import TransformerFunctionDecimal from "./TransformerFunctionDecimal";
 import TransformerFunctionDigest from "./TransformerFunctionDigest";
 import TransformerFunctionDistinct from "./TransformerFunctionDistinct";
 import TransformerFunctionEntries from "./TransformerFunctionEntries";
+import TransformerFunctionEq from "./TransformerFunctionEq";
 import TransformerFunctionEval from "./TransformerFunctionEval";
 import TransformerFunctionEvery from "./TransformerFunctionEvery";
 import TransformerFunctionFilter from "./TransformerFunctionFilter";
@@ -23,6 +24,8 @@ import TransformerFunctionFlatten from "./TransformerFunctionFlatten";
 import TransformerFunctionForm from "./TransformerFunctionForm";
 import TransformerFunctionFormParse from "./TransformerFunctionFormParse";
 import TransformerFunctionGroup from "./TransformerFunctionGroup";
+import TransformerFunctionGt from "./TransformerFunctionGt";
+import TransformerFunctionGte from "./TransformerFunctionGte";
 import TransformerFunctionIf from "./TransformerFunctionIf";
 import TransformerFunctionIndexOf from "./TransformerFunctionIndexOf";
 import TransformerFunctionIs from "./TransformerFunctionIs";
@@ -37,6 +40,8 @@ import TransformerFunctionLength from "./TransformerFunctionLength";
 import TransformerFunctionLong from "./TransformerFunctionLong";
 import TransformerFunctionLookup from "./TransformerFunctionLookup";
 import TransformerFunctionLower from "./TransformerFunctionLower";
+import TransformerFunctionLt from "./TransformerFunctionLt";
+import TransformerFunctionLte from "./TransformerFunctionLte";
 import TransformerFunctionMap from "./TransformerFunctionMap";
 import TransformerFunctionMatch from "./TransformerFunctionMatch";
 import TransformerFunctionMatchAll from "./TransformerFunctionMatchAll";
@@ -44,6 +49,8 @@ import TransformerFunctionMath from "./TransformerFunctionMath";
 import TransformerFunctionMax from "./TransformerFunctionMax";
 import TransformerFunctionMerge from "./TransformerFunctionMerge";
 import TransformerFunctionMin from "./TransformerFunctionMin";
+import TransformerFunctionNeq from "./TransformerFunctionNeq";
+import TransformerFunctionNin from "./TransformerFunctionNin";
 import TransformerFunctionNormalize from "./TransformerFunctionNormalize";
 import TransformerFunctionNot from "./TransformerFunctionNot";
 import TransformerFunctionNumberFormat from "./TransformerFunctionNumberFormat";
@@ -52,6 +59,7 @@ import TransformerFunctionObject from "./TransformerFunctionObject";
 import TransformerFunctionOr from "./TransformerFunctionOr";
 import TransformerFunctionPad from "./TransformerFunctionPad";
 import TransformerFunctionPartition from "./TransformerFunctionPartition";
+import TransformerFunctionPathJoin from "./TransformerFunctionPathJoin";
 import TransformerFunctionRange from "./TransformerFunctionRange";
 import TransformerFunctionRaw from "./TransformerFunctionRaw";
 import TransformerFunctionReduce from "./TransformerFunctionReduce";
@@ -95,13 +103,13 @@ export default {
   boolean: new TransformerFunctionBoolean(),
   coalesce: new TransformerFunctionCoalesce(),
   concat: new TransformerFunctionConcat(),
-  contains: new TransformerFunctionContains(),
   csv: new TransformerFunctionCsv(),
   csvparse: new TransformerFunctionCsvParse(),
   date: new TransformerFunctionDate(),
   decimal: new TransformerFunctionDecimal(),
   digest: new TransformerFunctionDigest(),
   distinct: new TransformerFunctionDistinct(),
+  eq: new TransformerFunctionEq(),
   entries: new TransformerFunctionEntries(),
   eval: new TransformerFunctionEval(),
   every: new TransformerFunctionEvery(),
@@ -114,7 +122,10 @@ export default {
   form: new TransformerFunctionForm(),
   formparse: new TransformerFunctionFormParse(),
   group: new TransformerFunctionGroup(),
+  gt: new TransformerFunctionGt(),
+  gte: new TransformerFunctionGte(),
   if: new TransformerFunctionIf(),
+  in: new TransformerFunctionIn(),
   indexof: new TransformerFunctionIndexOf(),
   is: new TransformerFunctionIs(),
   isnull: new TransformerFunctionIsNull(),
@@ -128,6 +139,8 @@ export default {
   long: new TransformerFunctionLong(),
   lookup: new TransformerFunctionLookup(),
   lower: new TransformerFunctionLower(),
+  lt: new TransformerFunctionLt(),
+  lte: new TransformerFunctionLte(),
   map: new TransformerFunctionMap(),
   match: new TransformerFunctionMatch(),
   matchall: new TransformerFunctionMatchAll(),
@@ -135,6 +148,8 @@ export default {
   max: new TransformerFunctionMax(),
   merge: new TransformerFunctionMerge(),
   min: new TransformerFunctionMin(),
+  neq: new TransformerFunctionNeq(),
+  nin: new TransformerFunctionNin(),
   normalize: new TransformerFunctionNormalize(),
   not: new TransformerFunctionNot(),
   numberformat: new TransformerFunctionNumberFormat(),
@@ -143,6 +158,7 @@ export default {
   or: new TransformerFunctionOr(),
   pad: new TransformerFunctionPad(),
   partition: new TransformerFunctionPartition(),
+  pathjoin: new TransformerFunctionPathJoin(),
   range: new TransformerFunctionRange(),
   raw: new TransformerFunctionRaw(),
   reduce: new TransformerFunctionReduce(),

@@ -8,7 +8,6 @@ export enum EmbeddedTransformerFunction {
   boolean = "boolean", // boolean
   coalesce = "coalesce", // #SPECIAL
   concat = "concat", // #SPECIAL
-  contains = "contains", // boolean
   csv = "csv", // string
   csvparse = "csvparse", // array[] / object[] (arg based)
   date = "date", // string | number (arg based)
@@ -16,6 +15,7 @@ export enum EmbeddedTransformerFunction {
   digest = "digest", // number | string (arg based)
   distinct = "distinct", // #SPECIAL
   entries = "entries", // [string, object]][]
+  eq = "eq", // boolean
   eval = "eval", // ?? (it might be possible if we can calculate the containing function, but definitely not always)
   every = "every", // boolean
   filter = "filter", // #SPECIAL
@@ -26,7 +26,10 @@ export enum EmbeddedTransformerFunction {
   form = "form", // string
   formparse = "formparse", // object
   group = "group", // object ??
+  gt = "gt", // boolean
+  gte = "gte", // boolean
   if = "if", // #SPECIAL
+  in = "in", // boolean
   indexof = "indexof", // number
   is = "is", // boolean
   isnull = "isnull", // boolean
@@ -40,6 +43,8 @@ export enum EmbeddedTransformerFunction {
   long = "long", // number
   lookup = "lookup", // #SPECIAL
   lower = "lower", // string
+  lt = "lt", // boolean
+  lte = "lte", // boolean
   map = "map", // #SPECIAL
   match = "match", // string
   matchall = "matchall", // string[]
@@ -47,6 +52,8 @@ export enum EmbeddedTransformerFunction {
   max = "max", // #SPECIAL
   merge = "merge", // #SPECIAL
   min = "min", // #SPECIAL
+  neq = "neq", // boolean
+  nin = "nin", // boolean
   normalize = "normalize", // string
   not = "not", // boolean
   numberformat = "numberformat", // string
@@ -161,9 +168,11 @@ export type FunctionDefinition = {
   subfunctions?: ConditionalSubFunction<FunctionDefinition>[];
   /** For documentation purposes when output schema is calculated */
   outputSchemaTemplate?: TypeSchema;
+  /** should specify the alternative that should be used instead **/
+  deprecated?: string;
   /** should specify the alternative function that should be used instead **/
   deprecatedInFavorOf?: string;
-  /** If set, this function does not alter the type of its primary argument */
+  /** If set, this function does not alter the type of its input argument */
   pipedType?: boolean;
 
   schema?: TypeSchema;

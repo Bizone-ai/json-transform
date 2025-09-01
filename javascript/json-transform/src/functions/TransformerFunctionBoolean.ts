@@ -6,7 +6,7 @@ import { isTruthy } from "../JsonHelpers";
 class TransformerFunctionBoolean extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [[{ name: "style", type: ArgType.String, defaultValue: "JAVA" }]],
+      argsSet: [{ name: "style", type: ArgType.String, defaultValue: "JAVA" }],
     });
   }
 

@@ -5,11 +5,9 @@ import FunctionContext from "./common/FunctionContext";
 class TransformerFunctionMatchAll extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "pattern", type: ArgType.String },
-          { name: "group", type: ArgType.Number, defaultValue: 0 },
-        ],
+      argsSet: [
+        { name: "pattern", type: ArgType.String },
+        { name: "group", type: ArgType.Number, defaultValue: 0 },
       ],
     });
   }

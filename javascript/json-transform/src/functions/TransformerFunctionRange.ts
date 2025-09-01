@@ -10,12 +10,10 @@ class TransformerFunctionRange extends TransformerFunction {
   constructor() {
     super({
       allowsArgumentsAsInput: true,
-      argsSets: [
-        [
-          { name: "start", type: ArgType.Number },
-          { name: "end", type: ArgType.Number },
-          { name: "step", type: ArgType.Number, defaultValue: BigDecimal_ONE },
-        ],
+      argsSet: [
+        { name: "start", type: ArgType.Number },
+        { name: "end", type: ArgType.Number },
+        { name: "step", type: ArgType.Number, defaultValue: BigDecimal_ONE },
       ],
     });
   }

@@ -10,14 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class TransformerFunctions implements TransformerFunctionsAdapter {
     static final Logger log = LoggerFactory.getLogger(TransformerFunctions.class);
 
-    private static final Pattern inlineFunctionRegex = Pattern.compile("^\\$\\$(\\w+)(\\((.*?)\\))?(:|$)");
-    private static final Pattern inlineFunctionArgsRegex = Pattern.compile("('(\\\\'|[^'])*'|[^,]*)(?:,|$)");
     public static final String FUNCTION_KEY_PREFIX = "$$";
     public static final String QUOTE_APOS = "'";
     public static final String ESCAPE_DOLLAR = "\\$";
@@ -36,7 +33,6 @@ public class TransformerFunctions implements TransformerFunctionsAdapter {
                 Map.entry("boolean", new TransformerFunctionBoolean()),
                 Map.entry("coalesce", new TransformerFunctionCoalesce()),
                 Map.entry("concat", new TransformerFunctionConcat()),
-                Map.entry("contains", new TransformerFunctionContains()),
                 Map.entry("csv", new TransformerFunctionCsv()),
                 Map.entry("csvparse", new TransformerFunctionCsvParse()),
                 Map.entry("date", new TransformerFunctionDate()),
@@ -44,6 +40,7 @@ public class TransformerFunctions implements TransformerFunctionsAdapter {
                 Map.entry("digest", new TransformerFunctionDigest()),
                 Map.entry("distinct", new TransformerFunctionDistinct()),
                 Map.entry("entries", new TransformerFunctionEntries()),
+                Map.entry("eq", new TransformerFunctionEq()),
                 Map.entry("eval",new TransformerFunctionEval()),
                 Map.entry("every", new TransformerFunctionEvery()),
                 Map.entry("filter", new TransformerFunctionFilter()),
@@ -55,12 +52,14 @@ public class TransformerFunctions implements TransformerFunctionsAdapter {
                 Map.entry("form", new TransformerFunctionForm()),
                 Map.entry("formparse", new TransformerFunctionFormParse()),
                 Map.entry("group", new TransformerFunctionGroup()),
+                Map.entry("gt", new TransformerFunctionGt()),
+                Map.entry("gte", new TransformerFunctionGte()),
                 Map.entry("if", new TransformerFunctionIf()),
+                Map.entry("in", new TransformerFunctionIn()),
                 Map.entry("indexof", new TransformerFunctionIndexOf()),
                 Map.entry("is", new TransformerFunctionIs()),
                 Map.entry("isnull", new TransformerFunctionIsNull()),
                 Map.entry("join", new TransformerFunctionJoin()),
-                Map.entry("json", new TransformerFunctionJsonParse()),
                 Map.entry("jsonparse", new TransformerFunctionJsonParse()),
                 Map.entry("jsonpatch", new TransformerFunctionJsonPatch()),
                 Map.entry("jsonpath", new TransformerFunctionJsonPath()),
@@ -70,6 +69,8 @@ public class TransformerFunctions implements TransformerFunctionsAdapter {
                 Map.entry("long", new TransformerFunctionLong()),
                 Map.entry("lookup", new TransformerFunctionLookup()),
                 Map.entry("lower", new TransformerFunctionLower()),
+                Map.entry("lt", new TransformerFunctionLt()),
+                Map.entry("lte", new TransformerFunctionLte()),
                 Map.entry("map", new TransformerFunctionMap()),
                 Map.entry("match", new TransformerFunctionMatch()),
                 Map.entry("matchall", new TransformerFunctionMatchAll()),
@@ -77,6 +78,8 @@ public class TransformerFunctions implements TransformerFunctionsAdapter {
                 Map.entry("max",new TransformerFunctionMax()),
                 Map.entry("merge",new TransformerFunctionMerge()),
                 Map.entry("min", new TransformerFunctionMin()),
+                Map.entry("neq", new TransformerFunctionNeq()),
+                Map.entry("nin", new TransformerFunctionNin()),
                 Map.entry("normalize", new TransformerFunctionNormalize()),
                 Map.entry("not", new TransformerFunctionNot()),
                 Map.entry("numberformat", new TransformerFunctionNumberFormat()),
@@ -84,6 +87,7 @@ public class TransformerFunctions implements TransformerFunctionsAdapter {
                 Map.entry("object", new TransformerFunctionObject()),
                 Map.entry("or", new TransformerFunctionOr()),
                 Map.entry("pad", new TransformerFunctionPad()),
+                Map.entry("pathjoin", new TransformerFunctionPathJoin()),
                 Map.entry("partition", new TransformerFunctionPartition()),
                 Map.entry("range", new TransformerFunctionRange()),
                 Map.entry("raw", new TransformerFunctionRaw()),

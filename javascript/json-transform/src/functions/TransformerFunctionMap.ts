@@ -7,7 +7,7 @@ import JsonElementStreamer from "../JsonElementStreamer";
 class TransformerFunctionMap extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [[{ name: "to", type: ArgType.Any }]],
+      argsSet: [{ name: "to", type: ArgType.Any }],
     });
   }
 

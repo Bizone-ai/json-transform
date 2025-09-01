@@ -6,11 +6,9 @@ import { ArgType } from "./common/ArgType";
 class TransformerFunctionSwitch extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "cases", type: ArgType.Object },
-          { name: "default", type: ArgType.Any },
-        ],
+      argsSet: [
+        { name: "cases", type: ArgType.Object },
+        { name: "default", type: ArgType.Any },
       ],
     });
   }

@@ -1,0 +1,122 @@
+[
+  {
+    "name": "object less than or equal string",
+    "given": {
+      "input": "A",
+      "definition": { "$$lte": "B", "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object not less than or equal string",
+    "given": {
+      "input": "B",
+      "definition": { "$$lte": "A", "value": "$" }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object less than number",
+    "given": {
+      "input": 4,
+      "definition": { "$$lte": 5, "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object less than or equal number",
+    "given": {
+      "input": 4,
+      "definition": { "$$lte": 4, "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object not less than or equal number",
+    "given": {
+      "input": 4,
+      "definition": { "$$lte": 3, "value": "$" }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object less than or equal number (coercion)",
+    "given": {
+      "input": 4,
+      "definition": { "$$lte": "5", "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object less than or equal number (strict)",
+    "given": {
+      "input": 4,
+      "definition": { "$$lte": "5", "value": "$", "strict": true }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object less than or equal list",
+    "given": {
+      "input": [1],
+      "definition": { "$$lte": [1, 2], "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object less than or equal object",
+    "given": {
+      "input": { "a": true},
+      "definition": { "$$lte": { "a": true, "b": true  }, "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "inline less than or equal string",
+    "given": {
+      "input": "A",
+      "definition": "$$lte($):B"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "inline less than or equal number (coercion)",
+    "given": {
+      "input": 4,
+      "definition": "$$lte($):5"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "inline less than or equal number (strict)",
+    "given": {
+      "input": 4,
+      "definition": "$$lte($,true):5"
+    },
+    "expect": {
+      "equal": false
+    }
+  }
+]

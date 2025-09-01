@@ -1,0 +1,122 @@
+[
+  {
+    "name": "object greater than string",
+    "given": {
+      "input": "B",
+      "definition": { "$$gt": "A", "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object not greater than string",
+    "given": {
+      "input": "A",
+      "definition": { "$$gt": "B", "value": "$" }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object greater than number",
+    "given": {
+      "input": 5,
+      "definition": { "$$gt": 4, "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object greater than number (not equal)",
+    "given": {
+      "input": 4,
+      "definition": { "$$gt": 4, "value": "$" }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object not greater than number",
+    "given": {
+      "input": 3,
+      "definition": { "$$gt": 4, "value": "$" }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object greater than number (coercion)",
+    "given": {
+      "input": 5,
+      "definition": { "$$gt": "4", "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object greater than number (strict)",
+    "given": {
+      "input": 5,
+      "definition": { "$$gt": "4", "value": "$", "strict": true }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object greater than list",
+    "given": {
+      "input": [1, 2],
+      "definition": { "$$gt": [1], "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object greater than object",
+    "given": {
+      "input": { "a": true, "b": true },
+      "definition": { "$$gt": { "a": true }, "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "inline greater than string",
+    "given": {
+      "input": "B",
+      "definition": "$$gt($):A"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "inline greater than number (coercion)",
+    "given": {
+      "input": 5,
+      "definition": "$$gt($):4"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "inline greater than number (strict)",
+    "given": {
+      "input": 5,
+      "definition": "$$gt($,true):4"
+    },
+    "expect": {
+      "equal": false
+    }
+  }
+]

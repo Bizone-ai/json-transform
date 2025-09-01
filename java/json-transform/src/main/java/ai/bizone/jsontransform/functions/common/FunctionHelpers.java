@@ -2,11 +2,13 @@ package ai.bizone.jsontransform.functions.common;
 
 import ai.bizone.jsontransform.adapters.JsonAdapter;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.function.Supplier;
 
 public class FunctionHelpers {
 
@@ -36,6 +38,16 @@ public class FunctionHelpers {
             }
         }
         return new DecimalFormat(pattern, symbols);
+    }
+
+    public static Object nullableBigDecimalJsonPrimitive(JsonAdapter<?, ?, ?> adapter, Supplier<BigDecimal> numberSupplier) {
+        BigDecimal number;
+        try {
+            number = numberSupplier.get();
+        } catch (NumberFormatException e) {
+            number = null;
+        }
+        return number == null ? adapter.jsonNull() : adapter.wrap(number);
     }
 
     public static Comparator<Object> createComparator(JsonAdapter<?, ?, ?> adapter, String type) {

@@ -1,0 +1,139 @@
+[
+  {
+    "name": "Object posix",
+    "given": {
+      "input": ["dir1", "dir2", "file.json"],
+      "definition": {
+        "$$pathjoin": "$"
+      }
+    },
+    "expect": {
+      "equal": "dir1/dir2/file.json"
+    }
+  },
+  {
+    "name": "Object posix with extra separators",
+    "given": {
+      "input": ["dir1/", "/dir2", "file.json"],
+      "definition": {
+        "$$pathjoin": "$"
+      }
+    },
+    "expect": {
+      "equal": "dir1/dir2/file.json"
+    }
+  },
+  {
+    "name": "Object windows",
+    "given": {
+      "input": ["dir1", "dir2", "file.json"],
+      "definition": {
+        "$$pathjoin": "$",
+        "type": "WINDOWS"
+      }
+    },
+    "expect": {
+      "equal": "dir1\\dir2\\file.json"
+    }
+  },
+  {
+    "name": "Object windows with extra separators",
+    "given": {
+      "input": ["dir1\\", "\\dir2", "file.json"],
+      "definition": {
+        "$$pathjoin": "$",
+        "type": "WINDOWS"
+      }
+    },
+    "expect": {
+      "equal": "dir1\\dir2\\file.json"
+    }
+  },
+  {
+    "name": "Object url",
+    "given": {
+      "input": ["dir1", "dir?", "/file.json"],
+      "definition": {
+        "$$pathjoin": "$",
+        "type": "URL"
+      }
+    },
+    "expect": {
+      "equal": "/dir1/dir%3F/%2Ffile.json"
+    }
+  },
+  {
+    "name": "Object normalized",
+    "given": {
+      "input": ["dir1", "dir2", "..", "file.json"],
+      "definition": {
+        "$$pathjoin": "$"
+      }
+    },
+    "expect": {
+      "equal": "dir1/file.json"
+    }
+  },
+  {
+    "name": "Object normalized with extra separators",
+    "given": {
+      "input": ["dir1", "dir2//", "..", "/file.json"],
+      "definition": {
+        "$$pathjoin": "$"
+      }
+    },
+    "expect": {
+      "equal": "dir1/file.json"
+    }
+  },
+  {
+    "name": "Inline edge case 1",
+    "given": {
+      "input": ["dir1.", "dir2/..", "..", "/..file.json"],
+      "definition": "$$pathjoin:$"
+    },
+    "expect": {
+      "equal": "..file.json"
+    }
+  },
+  {
+    "name": "Inline edge case 2",
+    "given": {
+      "input": ["dir1", "..dir2", ".", "/.file.json"],
+      "definition": "$$pathjoin:$"
+    },
+    "expect": {
+      "equal": "dir1/..dir2/.file.json"
+    }
+  },
+  {
+    "name": "Inline edge case 3",
+    "given": {
+      "input": ["dir1.", "././.", "dir2.."],
+      "definition": "$$pathjoin:$"
+    },
+    "expect": {
+      "equal": "dir1./dir2.."
+    }
+  },
+  {
+    "name": "Inline edge case 4",
+    "given": {
+      "input": ["dir1", "dir2", ".."],
+      "definition": "$$pathjoin:$"
+    },
+    "expect": {
+      "equal": "dir1"
+    }
+  },
+  {
+    "name": "Inline traversal attempt",
+    "given": {
+      "input": ["a", "b", "c", "..", "..", "..", "..", ".htaccess"],
+      "definition": "$$pathjoin:$"
+    },
+    "expect": {
+      "isNull": true
+    }
+  }
+]

@@ -7,13 +7,11 @@ import FunctionContext from "./common/FunctionContext";
 class TransformerFunctionBase64 extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "action", type: ArgType.String, defaultValue: "ENCODE" },
-          { name: "rfc", type: ArgType.String, defaultValue: "BASIC" },
-          { name: "without_padding", type: ArgType.Boolean, defaultValue: false },
-          { name: "charset", type: ArgType.String, defaultValue: "UTF-8" },
-        ],
+      argsSet: [
+        { name: "action", type: ArgType.String, defaultValue: "ENCODE" },
+        { name: "rfc", type: ArgType.String, defaultValue: "BASIC" },
+        { name: "without_padding", type: ArgType.Boolean, defaultValue: false },
+        { name: "charset", type: ArgType.String, defaultValue: "UTF-8" },
       ],
     });
   }

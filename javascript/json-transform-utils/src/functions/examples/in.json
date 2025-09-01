@@ -1,0 +1,82 @@
+[
+  {
+    "name": "object assert in",
+    "given": {
+      "input": "A",
+      "definition": { "$$in": ["A", "B"], "value": "$" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object assert in (other direction)",
+    "given": {
+      "input": ["A", "B"],
+      "definition": { "$$in": "$", "value": "A" }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object assert in (not in)",
+    "given": {
+      "input": "A",
+      "definition": { "$$in": ["a", "B"], "value": "A" }
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "object assert in (boolean)",
+    "given": {
+      "input": [false, true],
+      "definition": { "$$in": "$", "value": true }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object assert in (number)",
+    "given": {
+      "input": null,
+      "definition": { "$$in": [10, 20, 30], "value": 30 }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "object assert in (object)",
+    "given": {
+      "input": null,
+      "definition": { "$$in": [[{ "a": 4 }], [{ "a": 1 }], [{ "a": 3 }]], "value": [{ "a": 1 }] }
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "inline in",
+    "given": {
+      "input": ["a", "b", "A", "B"],
+      "definition": "$$in(A):$"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "inline in (false)",
+    "given": {
+      "input": ["a", "b", "A", "B"],
+      "definition": "$$in(C):$"
+    },
+    "expect": {
+      "equal": false
+    }
+  }
+]

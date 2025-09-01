@@ -7,7 +7,7 @@ import JsonElementStreamer from "../JsonElementStreamer";
 class TransformerFunctionFilter extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [[{ name: "by", type: ArgType.Any }]],
+      argsSet: [{ name: "by", type: ArgType.Any }],
     });
   }
 

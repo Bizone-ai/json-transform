@@ -5,7 +5,7 @@ import { ArgType } from "./common/ArgType";
 class TransformerFunctionUrlEncode extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [[{ name: "charset", type: ArgType.String, defaultValue: "UTF-8" }]],
+      argsSet: [{ name: "charset", type: ArgType.String, defaultValue: "UTF-8" }],
     });
   }
 

@@ -44,15 +44,16 @@ export const jsonTransformerItemCompletionProvider: (
     let kind: languages.CompletionItem["kind"] = 3; /* monaco.languages.CompletionItemKind.Field */
     let tags: languages.CompletionItem["tags"] | undefined = undefined;
     if (inline && name[0] === "$" && name[1] === "$") {
-      const inlineFunction = functionsParser.get(name.substring(2));
+      const funcName = name.substring(2);
+      const inlineFunction = functionsParser.get(funcName);
       if (inlineFunction) {
-        if (inlineFunction.deprecatedInFavorOf) {
+        if (inlineFunction.deprecated) {
           tags = [1 /* monaco.languages.CompletionItemTag.Deprecated */];
         }
         let counter = 1;
         label = name + " (inline)";
 
-        insertText = getFunctionInlineSignature(name.substring(2), inlineFunction, true).replace("$$", "\\$\\$"); // escape the first $$
+        insertText = getFunctionInlineSignature(funcName, inlineFunction, true).replace("$$", "\\$\\$"); // escape the first $$
         if (insertText.includes("{")) {
           insertText = insertText.replace(/{/g, () => `$\{${counter++}:`);
         }

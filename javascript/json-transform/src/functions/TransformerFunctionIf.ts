@@ -6,11 +6,9 @@ import { isNullOrUndefined, isTruthy } from "../JsonHelpers";
 class TransformerFunctionIf extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "then", type: ArgType.Any },
-          { name: "else", type: ArgType.Any },
-        ],
+      argsSet: [
+        { name: "then", type: ArgType.Any },
+        { name: "else", type: ArgType.Any },
       ],
     });
   }

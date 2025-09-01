@@ -96,11 +96,15 @@ export const jsonTransformHoverProviderFactory: (
             {
               value: `\`${sig}\`` + (func.aliasTo ? `\n (alias to \`$$${func.aliasTo})\`` : ""),
             },
-            func.deprecatedInFavorOf && !dontShowDocsLink
+            func.deprecated && !dontShowDocsLink
               ? {
-                  value: `DEPRECATED - Please use [$$${func.deprecatedInFavorOf}](command:docs?${encodeURIComponent(
-                    JSON.stringify({ func: func.deprecatedInFavorOf, type: func }),
-                  )}) instead`,
+                  value: `**⚠️ DEPRECATED** - ${func.deprecated}${
+                    func.deprecatedInFavorOf
+                      ? `\nInstead, please use [$$${func.deprecatedInFavorOf}](command:docs?${encodeURIComponent(
+                          JSON.stringify({ func: func.deprecatedInFavorOf, type: func }),
+                        )}`
+                      : ""
+                  }`,
                   isTrusted: true,
                 }
               : (null as any),
@@ -147,7 +151,7 @@ export const jsonTransformHoverProviderFactory: (
  * @param options
  */
 export const registerJsonTransformHoverProvider = (
-  monaco: { languages: typeof languages; editor: typeof editor },
+  monaco: { languages: typeof languages; editor: { registerCommand: (typeof editor)["registerCommand"] } },
   options: JsonTransformHoverProviderFactoryOptions,
 ) => {
   if (!options.dontRegisterDocsCommand) {

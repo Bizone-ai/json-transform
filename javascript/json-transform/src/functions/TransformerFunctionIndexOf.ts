@@ -6,7 +6,7 @@ import { isEqual } from "../JsonHelpers";
 class TransformerFunctionIndexOf extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [[{ name: "of", type: ArgType.Any }]],
+      argsSet: [{ name: "of", type: ArgType.Any }],
     });
   }
 

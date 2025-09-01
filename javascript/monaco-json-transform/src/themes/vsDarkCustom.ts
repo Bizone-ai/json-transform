@@ -16,6 +16,9 @@ export const vsDarkCustom: editor.IStandaloneThemeData = {
   ],
 };
 
-export function defineThemeVsDarkCustom(monaco: { editor: typeof editor }, name = "vs-dark-custom") {
+export function defineThemeVsDarkCustom(
+  monaco: { editor: { defineTheme: (typeof editor)["defineTheme"] } },
+  name = "vs-dark-custom",
+) {
   monaco.editor.defineTheme(name, vsDarkCustom);
 }

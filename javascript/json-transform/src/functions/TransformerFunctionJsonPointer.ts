@@ -6,12 +6,10 @@ import FunctionContext from "./common/FunctionContext";
 class TransformerFunctionJsonPointer extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "op", type: ArgType.String, defaultValue: "GET" },
-          { name: "pointer", type: ArgType.String },
-          { name: "value", type: ArgType.Any },
-        ],
+      argsSet: [
+        { name: "op", type: ArgType.String, defaultValue: "GET" },
+        { name: "pointer", type: ArgType.String },
+        { name: "value", type: ArgType.Any },
       ],
     });
   }

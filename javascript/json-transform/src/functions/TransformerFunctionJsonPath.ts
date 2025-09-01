@@ -7,11 +7,9 @@ import DocumentContext from "../DocumentContext";
 class TransformerFunctionJsonPath extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "path", type: ArgType.String },
-          { name: "options", type: ArgType.Array },
-        ],
+      argsSet: [
+        { name: "path", type: ArgType.String },
+        { name: "options", type: ArgType.Array },
       ],
     });
   }

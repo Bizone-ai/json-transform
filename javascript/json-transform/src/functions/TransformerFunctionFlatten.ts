@@ -6,12 +6,10 @@ import { isMap, isNullOrUndefined } from "../JsonHelpers";
 class TransformerFunctionFlatten extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "target", type: ArgType.Object },
-          { name: "prefix", type: ArgType.String },
-          { name: "array_prefix", type: ArgType.String, defaultValue: "$" },
-        ],
+      argsSet: [
+        { name: "target", type: ArgType.Object },
+        { name: "prefix", type: ArgType.String },
+        { name: "array_prefix", type: ArgType.String, defaultValue: "$" },
       ],
     });
   }

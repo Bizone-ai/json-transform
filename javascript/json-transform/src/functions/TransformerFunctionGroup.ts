@@ -7,13 +7,11 @@ import CompareBy from "./common/CompareBy";
 class TransformerFunctionGroup extends TransformerFunction {
   constructor() {
     super({
-      argsSets: [
-        [
-          { name: "by", type: ArgType.Any },
-          { name: "order", type: ArgType.String, defaultValue: "ASC" },
-          { name: "type", type: ArgType.String, defaultValue: "AUTO" },
-          { name: "then", type: ArgType.Array },
-        ],
+      argsSet: [
+        { name: "by", type: ArgType.Any },
+        { name: "order", type: ArgType.String, defaultValue: "ASC" },
+        { name: "type", type: ArgType.String, defaultValue: "AUTO" },
+        { name: "then", type: ArgType.Array },
       ],
     });
   }
