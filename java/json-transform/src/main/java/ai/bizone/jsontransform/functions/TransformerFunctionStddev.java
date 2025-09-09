@@ -3,7 +3,6 @@ package ai.bizone.jsontransform.functions;
 import ai.bizone.jsontransform.functions.common.*;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -44,7 +43,7 @@ public class TransformerFunctionStddev extends TransformerFunction {
                 .map(val -> val.subtract(avg).pow(2))
                 .reduce(identity, BigDecimal::add);
         var variance = sumOfSquares.divide(BigDecimal.valueOf(size.get() - (population ? 0 : 1)), FunctionHelpers.MAX_SCALE_ROUNDING);
-        var result = variance.sqrt(MathContext.DECIMAL128);
+        var result = variance.sqrt(FunctionHelpers.DEFAULT_MATH_CONTEXT);
         // cap scale at max
         if (result.scale() > FunctionHelpers.MAX_SCALE) {
             result = result.setScale(FunctionHelpers.MAX_SCALE, FunctionHelpers.MAX_SCALE_ROUNDING);

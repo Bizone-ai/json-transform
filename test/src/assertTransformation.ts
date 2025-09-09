@@ -100,6 +100,19 @@ export const assertTransformation = async (t: JsonTransformExample, impl: Implem
             expect.fail("Unknown format: " + t.expect.format,"", message);
         }
       }
+      const resultNumber = BigNumber.isBigNumber(data.result) ? data.result.toNumber() : data.result;
+      if (typeof t.expect.lessThan  !== 'undefined') {
+        expect(resultNumber, message).toBeLessThan(BigNumber.isBigNumber(t.expect.lessThan) ? t.expect.lessThan.toNumber() : t.expect.lessThan);
+      }
+      if (typeof t.expect.lessThanEqual  !== 'undefined') {
+        expect(resultNumber, message).toBeLessThanOrEqual(BigNumber.isBigNumber(t.expect.lessThanEqual) ? t.expect.lessThanEqual.toNumber() : t.expect.lessThanEqual);
+      }
+      if (typeof t.expect.greaterThan  !== 'undefined') {
+        expect(resultNumber, message).toBeGreaterThan(BigNumber.isBigNumber(t.expect.greaterThan) ? t.expect.greaterThan.toNumber() : t.expect.greaterThan);
+      }
+      if (typeof t.expect.greaterThanEqual  !== 'undefined') {
+        expect(resultNumber, message).toBeGreaterThanOrEqual(BigNumber.isBigNumber(t.expect.greaterThanEqual) ? t.expect.greaterThanEqual.toNumber() : t.expect.greaterThanEqual);
+      }
       if (typeof t.expect.notEqual !== 'undefined') {
         expect(data.result, message).not.toEqual(t.expect.notEqual);
       }

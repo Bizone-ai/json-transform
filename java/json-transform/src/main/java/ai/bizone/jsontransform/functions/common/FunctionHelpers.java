@@ -3,6 +3,7 @@ package ai.bizone.jsontransform.functions.common;
 import ai.bizone.jsontransform.adapters.JsonAdapter;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -18,6 +19,7 @@ public class FunctionHelpers {
     // so in principle, we allow 19 digits for the whole number and 15 for the fraction
     public static int MAX_SCALE = 15;
     public static RoundingMode MAX_SCALE_ROUNDING = RoundingMode.HALF_UP;
+    public static MathContext DEFAULT_MATH_CONTEXT = new MathContext(34, MAX_SCALE_ROUNDING);
     public static boolean isNullOrEmpty(String value) {
         return value == null || value.isEmpty();
     }

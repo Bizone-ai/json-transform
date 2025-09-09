@@ -3,6 +3,7 @@ import TransformerFunctionAt from "./TransformerFunctionAt";
 import TransformerFunctionAvg from "./TransformerFunctionAvg";
 import TransformerFunctionBase64 from "./TransformerFunctionBase64";
 import TransformerFunctionBoolean from "./TransformerFunctionBoolean";
+import TransformerFunctionCidrTest from "./TransformerFunctionCidrTest";
 import TransformerFunctionCoalesce from "./TransformerFunctionCoalesce";
 import TransformerFunctionConcat from "./TransformerFunctionConcat";
 import TransformerFunctionIn from "./TransformerFunctionIn";
@@ -60,6 +61,7 @@ import TransformerFunctionOr from "./TransformerFunctionOr";
 import TransformerFunctionPad from "./TransformerFunctionPad";
 import TransformerFunctionPartition from "./TransformerFunctionPartition";
 import TransformerFunctionPathJoin from "./TransformerFunctionPathJoin";
+import TransformerFunctionRandom from "./TransformerFunctionRandom";
 import TransformerFunctionRange from "./TransformerFunctionRange";
 import TransformerFunctionRaw from "./TransformerFunctionRaw";
 import TransformerFunctionReduce from "./TransformerFunctionReduce";
@@ -101,6 +103,7 @@ export default {
   avg: new TransformerFunctionAvg(),
   base64: new TransformerFunctionBase64(),
   boolean: new TransformerFunctionBoolean(),
+  cidrtest: new TransformerFunctionCidrTest(),
   coalesce: new TransformerFunctionCoalesce(),
   concat: new TransformerFunctionConcat(),
   csv: new TransformerFunctionCsv(),
@@ -159,6 +162,7 @@ export default {
   pad: new TransformerFunctionPad(),
   partition: new TransformerFunctionPartition(),
   pathjoin: new TransformerFunctionPathJoin(),
+  random: new TransformerFunctionRandom(),
   range: new TransformerFunctionRange(),
   raw: new TransformerFunctionRaw(),
   reduce: new TransformerFunctionReduce(),

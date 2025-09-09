@@ -1,0 +1,50 @@
+[
+  {
+    "name": "inline",
+    "given": {
+      "input": null,
+      "definition": "$$random(1,5)"
+    },
+    "expect": {
+      "greaterThenEqual": 1,
+      "lessThan": 5
+    },
+    "example": 2.853175231346362
+  },
+  {
+    "name": "inline - large range",
+    "given": {
+      "input": null,
+      "definition": "$$random(0,10000)"
+    },
+    "expect": {
+      "greaterThenEqual": 0,
+      "lessThan": 10000
+    },
+    "example": 7880.520931720825
+  },
+  {
+    "name": "inline - negative",
+    "given": {
+      "input": null,
+      "definition": "$$random(-1,0)"
+    },
+    "expect": {
+      "greaterThenEqual": -1,
+      "lessThan": 0
+    },
+    "example": -0.944145239228386
+  },
+  {
+    "name": "object",
+    "given": {
+      "input": null,
+      "definition": { "$$random": [1, 5] }
+    },
+    "expect": {
+      "greaterThenEqual": 1,
+      "lessThan": 5
+    },
+    "example": 3.782006810876913
+  }
+]

@@ -1,12 +1,10 @@
 package ai.bizone.jsontransform.functions;
 
 import ai.bizone.jsontransform.functions.common.*;
-import ai.bizone.jsontransform.functions.common.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Map;
 
@@ -142,17 +140,17 @@ public class TransformerFunctionMath extends TransformerFunction {
     static BigDecimal eval(MathOp op, BigDecimal op1, BigDecimal op2) {
         return switch (op) {
             // 2 operands
-            case ADDITION -> op1.add(op2);
-            case SUBTRACTION -> op1.subtract(op2);
-            case MULTIPLICATION -> op1.multiply(op2);
-            case DIVISION -> op1.divide(op2, MathContext.DECIMAL128);
-            case INTEGER_DIVISION -> op1.divideToIntegralValue(op2);
-            case MODULU -> op1.remainder(op2);
-            case POWER -> op1.pow(op2.intValue());
+            case ADDITION -> op1.add(op2, FunctionHelpers.DEFAULT_MATH_CONTEXT);
+            case SUBTRACTION -> op1.subtract(op2, FunctionHelpers.DEFAULT_MATH_CONTEXT);
+            case MULTIPLICATION -> op1.multiply(op2, FunctionHelpers.DEFAULT_MATH_CONTEXT);
+            case DIVISION -> op1.divide(op2, FunctionHelpers.DEFAULT_MATH_CONTEXT);
+            case INTEGER_DIVISION -> op1.divideToIntegralValue(op2, FunctionHelpers.DEFAULT_MATH_CONTEXT);
+            case MODULU -> op1.remainder(op2, FunctionHelpers.DEFAULT_MATH_CONTEXT);
+            case POWER -> op1.pow(op2.intValue(), FunctionHelpers.DEFAULT_MATH_CONTEXT);
             case MIN -> op1.min(op2);
             case MAX -> op1.max(op2);
             // only one operand
-            case SQUARE_ROOT -> op1.sqrt(MathContext.DECIMAL128);
+            case SQUARE_ROOT -> op1.sqrt(FunctionHelpers.DEFAULT_MATH_CONTEXT);
             case ROUND -> op1.setScale(op2.intValue(), RoundingMode.HALF_UP);
             case FLOOR -> op1.setScale(op2.intValue(), RoundingMode.FLOOR);
             case CEIL -> op1.setScale(op2.intValue(), RoundingMode.CEILING);
@@ -160,12 +158,12 @@ public class TransformerFunctionMath extends TransformerFunction {
             case NEGATION -> op1.negate();
             case SIGNUM -> new BigDecimal(op1.signum());
             // bitwise
-            case BITAND -> new BigDecimal(op1.toBigInteger().and(op2.toBigInteger()));
-            case BITOR -> new BigDecimal(op1.toBigInteger().or(op2.toBigInteger()));
+            case BITAND -> new BigDecimal(op1.toBigInteger().and(op2.toBigInteger()), FunctionHelpers.DEFAULT_MATH_CONTEXT);
+            case BITOR -> new BigDecimal(op1.toBigInteger().or(op2.toBigInteger()), FunctionHelpers.DEFAULT_MATH_CONTEXT);
             // special case where only 1 op (~x) acts as NOT (op2 acts like ~0)
-            case BITXOR -> new BigDecimal(op2 == null ? op1.toBigInteger().not() : op1.toBigInteger().xor(op2.toBigInteger()));
-            case SHIFT_LEFT -> new BigDecimal(op1.toBigInteger().shiftLeft(op2.intValue()));
-            case SHIFT_RIGHT -> new BigDecimal(op1.toBigInteger().shiftRight(op2.intValue()));
+            case BITXOR -> new BigDecimal(op2 == null ? op1.toBigInteger().not() : op1.toBigInteger().xor(op2.toBigInteger()), FunctionHelpers.DEFAULT_MATH_CONTEXT);
+            case SHIFT_LEFT -> new BigDecimal(op1.toBigInteger().shiftLeft(op2.intValue()), FunctionHelpers.DEFAULT_MATH_CONTEXT);
+            case SHIFT_RIGHT -> new BigDecimal(op1.toBigInteger().shiftRight(op2.intValue()), FunctionHelpers.DEFAULT_MATH_CONTEXT);
 
             default -> null;
         };

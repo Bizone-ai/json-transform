@@ -5,6 +5,7 @@ import _at from "./examples/at.json";
 import _avg from "./examples/avg.json";
 import _base64 from "./examples/base64.json";
 import _boolean from "./examples/boolean.json";
+import _cidrtest from "./examples/cidrtest.json";
 import _coalesce from "./examples/coalesce.json";
 import _concat from "./examples/concat.json";
 import _csv from "./examples/csv.json";
@@ -62,6 +63,7 @@ import _or from "./examples/or.json";
 import _pad from "./examples/pad.json";
 import _partition from "./examples/partition.json";
 import _pathjoin from "./examples/pathjoin.json";
+import _random from "./examples/random.json";
 import _range from "./examples/range.json";
 import _raw from "./examples/raw.json";
 import _reduce from "./examples/reduce.json";
@@ -101,6 +103,7 @@ export default {
   avg: _avg,
   base64: _base64,
   boolean: _boolean,
+  cidrtest: _cidrtest,
   coalesce: _coalesce,
   concat: _concat,
   csv: _csv,
@@ -158,6 +161,7 @@ export default {
   pad: _pad,
   partition: _partition,
   pathjoin: _pathjoin,
+  random: _random,
   range: _range,
   raw: _raw,
   reduce: _reduce,

@@ -1,0 +1,172 @@
+[
+  {
+    "name": "true - Address is inside the subnet",
+    "given": {
+      "input": "192.168.1.5",
+      "definition": "$$cidrtest(192.168.1.0/24):$"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "true - Address is inside the subnet",
+    "given": {
+      "input": "10.0.0.1",
+      "definition": "$$cidrtest(10.0.0.1/32):$"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "true - Address is inside the subnet",
+    "given": {
+      "input": "172.16.0.0",
+      "definition": "$$cidrtest(172.16.0.0/16):$"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "true - Address is inside the subnet (private by RFC, list)",
+    "given": {
+      "input": "192.168.1.1",
+      "definition": "$$cidrtest('10.0.0.0/8,172.16.0.0/12,192.168.0.0/16'):$"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "true - Address is inside the subnet (private by RFC, predefined)",
+    "given": {
+      "input": "192.168.1.1",
+      "definition": "$$cidrtest(private):$"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "true - Address is inside the subnet",
+    "given": {
+      "input": "8.8.8.8",
+      "definition": "$$cidrtest(0.0.0.0/0):$"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "false - Address is outside the subnet",
+    "given": {
+      "input": "192.168.2.1",
+      "definition": "$$cidrtest(192.168.1.0/24):$"
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "false - Address is outside the subnet",
+    "given": {
+      "input": "10.0.0.2",
+      "definition": "$$cidrtest(10.0.0.1/32):$"
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "false - Address is outside the subnet",
+    "given": {
+      "input": "172.17.0.0",
+      "definition": "$$cidrtest(172.16.0.0/16):$"
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "false - Address is invalid",
+    "given": {
+      "input": "invalid.ip",
+      "definition": "$$cidrtest(192.168.1.0/24):$"
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "true - ipv6 - Address is inside the subnet",
+    "given": {
+      "input": "2001:db8:dead:beef:0123:4567:89ab:cdef",
+      "definition": "$$cidrtest(2001:db8::/32):$"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "false - ipv6 - Address is outside the subnet",
+    "given": {
+      "input": "2001:dc8:dead:beef:0123:4567:89ab:cdef",
+      "definition": "$$cidrtest(2001:db8::/32):$"
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "true - ipv6 - Address with compressed zeros is inside a more specific subnet",
+    "given": {
+      "input": "2a03:2880:f12f:83:face:b00c:0:25de",
+      "definition": "$$cidrtest(2a03:2880:f12f::/48):$"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "true - ipv6 - An address that is actually the network address",
+    "given": {
+      "input": "2001:db8:abcd::",
+      "definition": "$$cidrtest(2001:db8:abcd::/48):$"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "true - ipv6 - An address that is the last address in the range",
+    "given": {
+      "input": "2001:db8:abcd:ffff:ffff:ffff:ffff:ffff",
+      "definition": "$$cidrtest(2001:db8:abcd::/48):$"
+    },
+    "expect": {
+      "equal": true
+    }
+  },
+  {
+    "name": "false - ipv6 - Invalid IP address input",
+    "given": {
+      "input": "not-an-ip",
+      "definition": "$$cidrtest(2001:db8::/32):$"
+    },
+    "expect": {
+      "equal": false
+    }
+  },
+  {
+    "name": "false - ipv6 - Invalid CIDR subnet input",
+    "given": {
+      "input": "2001:db8::1",
+      "definition": "$$cidrtest(2001:db8::/129):$"
+    },
+    "expect": {
+      "equal": false
+    }
+  }
+]

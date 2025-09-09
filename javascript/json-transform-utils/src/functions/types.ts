@@ -6,6 +6,7 @@ export enum EmbeddedTransformerFunction {
   avg = "avg", // number
   base64 = "base64", // string
   boolean = "boolean", // boolean
+  cidrtest = "cidrtest", // boolean
   coalesce = "coalesce", // #SPECIAL
   concat = "concat", // #SPECIAL
   csv = "csv", // string
@@ -146,6 +147,10 @@ export type JsonTransformExample = {
   expect: {
     equal?: any;
     notEqual?: any;
+    lessThan?: number;
+    lessThanEqual?: number;
+    greaterThan?: number;
+    greaterThanEqual?: number;
     isNull?: boolean;
     length?: number;
     type?: "array" | "bigint" | "boolean" | "function" | "number" | "object" | "string" | "symbol" | "undefined";
@@ -153,6 +158,7 @@ export type JsonTransformExample = {
     // big-decimal means that 'equal' is written as string but should be parsed as big-decimal
     format?: "date-time" | "big-decimal" | "url-search-params" | "csv" | "xml" | "yaml";
   };
+  example?: any;
 };
 
 export type FunctionDefinition = {

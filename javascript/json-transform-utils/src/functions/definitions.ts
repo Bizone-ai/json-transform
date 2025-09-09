@@ -93,6 +93,20 @@ export default {
       },
     ],
   },
+  cidrtest: {
+    description: "Checks if an IPv4 or IPv6 address is contained in the list of given IPs or subnets",
+    inputSchema: { type: "string", required: true, description: "IP Address to test" },
+    outputSchema: { type: "boolean" },
+    arguments: [
+      {
+        name: "cidr",
+        description: "IP addresses or subnets given in CIDR notation separated by commas",
+        type: "string",
+        position: 0,
+        required: true,
+      },
+    ],
+  },
   coalesce: {
     aliases: ["first"],
     description: "Returns the first non-null value",
@@ -1265,7 +1279,7 @@ export default {
   normalize: {
     description: "Replace special characters forms with their simple form equivalent (removing marks by default)",
     notes:
-      '- Allows post-processing over Java\'s normalizer algorithm result\n#### Post Operations\n- `ROBUST` - Try to return the most of similar letters to latin, replaced to their latin equivalent, including:\n  - Removing combining diacritical marks (works with NFD/NFKD which leaves the characters decomposed)\n  - Stroked (and others which are not composed) (i.e. "ĐŁłŒ" -> "DLlOE")\n  - Replacing (with space) and trimming white-spaces\n',
+      '- Allows post-processing over Java\'s normalizer algorithm result\n#### Post Operations\n- `ROBUST` - Try to return the most of similar letters to latin, replaced to their latin equivalent, including:\n  - Removing combining diacritical marks (works with NFD/NFKD which leaves the characters decomposed)\n  - Stroked (and others which are not composed) (e.g. "ĐŁłŒ" -> "DLlOE")\n  - Replacing (with space) and trimming white-spaces\n',
     inputSchema: { type: "string", required: true, description: "String to normalize" },
     outputSchema: { type: "string" },
     arguments: [
@@ -1627,6 +1641,27 @@ export default {
         enum: ["POSIX", "WINDOWS", "URL"],
         position: 0,
         default: "POSIX",
+      },
+    ],
+  },
+  random: {
+    description: "Returns a pseudo-random number that is greater than `min` and less than `max`",
+    usageNotes:
+      ":::note\nAlternative form is available using \n```transformers \n{\n" +
+      '  "$$random": [ /* min */, /* max */ ]\n' +
+      "}\n```\nIf `min` is used, the input argument is ignored and can be of any value\n:::\n\n" +
+      ":::danger\nCaution\n" +
+      "This function does not generate cryptographically secure values, and must not be used for cryptographic purposes, or purposes that require returned values to be unguessable.\n:::",
+    argumentsAsInputSchema: true,
+    outputSchema: { type: "number", $comment: "BigDecimal" },
+    arguments: [
+      { name: "min", description: "The lowest value to return", type: "BigDecimal", position: 0, default: 0 },
+      {
+        name: "max",
+        description: "The upper bound (exclusive) for the returned value",
+        type: "BigDecimal",
+        position: 1,
+        default: 1,
       },
     ],
   },

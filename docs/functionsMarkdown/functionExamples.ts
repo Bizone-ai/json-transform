@@ -8,10 +8,13 @@ const isDifferentLang = (format: string) => {
 export default async function functionExamples(name: string) {
   const fExamples: JsonTransformExample[] = examples[name];
 
-  const examplesToShow = fExamples.filter(x => typeof x.expect.equal !== "undefined" || x.expect.isNull);
+  const examplesToShow = fExamples.filter(x => typeof x.expect.equal !== "undefined" || x.expect.isNull || x.example);
 
   for (let i = 0; i < examplesToShow.length; i++) {
-    (examplesToShow[i] as any).link = await shareLink(examplesToShow[i].given.input, examplesToShow[i].given.definition);
+    (examplesToShow[i] as any).link = await shareLink(
+      examplesToShow[i].given.input,
+      examplesToShow[i].given.definition,
+    );
   }
 
   const markdown = `
@@ -22,7 +25,8 @@ export default async function functionExamples(name: string) {
 
 **Output**
 
-${examplesToShow.map(
+${examplesToShow
+  .map(
     x => `
 \`\`\`${isDifferentLang(x.given.inputFormat) ? x.given.inputFormat : "json"}
 ${isDifferentLang(x.given.inputFormat) ? x.given.input : JSON.stringify(x.given.input, null, 2)}
@@ -32,7 +36,13 @@ ${JSON.stringify(x.given.definition, null, 2)}
 \`\`\`
 \`\`\`${isDifferentLang(x.expect.format) ? x.expect.format : "json"}
 ${
-  isDifferentLang(x.expect.format) ? x.expect.equal : x.expect.isNull ? "null" : JSON.stringify(x.expect.equal, null, 2)
+  typeof x.example !== "undefined"
+    ? JSON.stringify(x.example, null, 2)
+    : isDifferentLang(x.expect.format)
+      ? x.expect.equal
+      : x.expect.isNull
+        ? "null"
+        : JSON.stringify(x.expect.equal, null, 2)
 }
 \`\`\`
 
@@ -45,7 +55,8 @@ ${
 </div>
 
 <div class="action" />
-`)
+`,
+  )
   .join("\n")}
 `;
 
