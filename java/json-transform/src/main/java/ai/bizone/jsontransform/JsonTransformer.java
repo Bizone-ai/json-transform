@@ -82,6 +82,11 @@ public class JsonTransformer implements Transformer {
         if (definition == null) {
             return unwrap ? null : adapter.jsonNull();
         }
+        // short circuit raw transformers. no need for creating context
+        if (adapter.isJsonObject(definition) && adapter.has(definition, "$$raw")) {
+            var rawValue = adapter.get(definition, "$$raw");
+            return unwrap ? adapter.unwrap(rawValue) : rawValue;
+        }
         var resolver = adapter.createPayloadResolver(payload, additionalContext, false);
         var result = fromJsonElement("$", definition, resolver, false);
         return unwrap ? adapter.unwrap(result) : result;

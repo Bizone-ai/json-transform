@@ -37,6 +37,10 @@ export class JsonTransformer implements Transformer {
     if (isNullOrUndefined(this.definition)) {
       return null;
     }
+    // short circuit raw transformers. no need for creating context
+    if (typeof this.definition === "object" && Object.prototype.hasOwnProperty.call(this.definition, "$$raw")) {
+      return this.definition.$$raw;
+    }
     const resolver: ParameterResolver = createPayloadResolver(payload, additionalContext);
     return this.fromJsonElement("$", this.definition, resolver, false);
   }
