@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { mergeInto, merge } from "../JsonHelpers";
+import { mergeInto, merge, unwrapNumber } from "../JsonHelpers";
+import BigNumber from "bignumber.js";
 
 describe("JsonHelpers", () => {
   test("mergeInto - GivenMutuallyExclusiveKeysWithDot", () => {
@@ -193,5 +194,37 @@ describe("JsonHelpers", () => {
       },
       c: [1, 2, 3, 4],
     });
+  });
+
+  test("unwrapNumber - numbers", () => {
+    expect(unwrapNumber(1)).toEqual(1);
+    expect(unwrapNumber(Number.MIN_SAFE_INTEGER)).toEqual(Number.MIN_SAFE_INTEGER);
+    expect(unwrapNumber(Number.MIN_VALUE)).toEqual(Number.MIN_VALUE);
+    expect(unwrapNumber(Number.MAX_SAFE_INTEGER)).toEqual(Number.MAX_SAFE_INTEGER);
+    expect(unwrapNumber(Number.MAX_VALUE)).toEqual(Number.MAX_VALUE);
+  });
+
+  test("unwrapNumber - bigint", () => {
+    expect(unwrapNumber(BigInt(1))).toEqual(1);
+    expect(unwrapNumber(BigInt(Number.MAX_SAFE_INTEGER))).toEqual(Number.MAX_SAFE_INTEGER);
+  });
+
+  test("unwrapNumber - bigint (cant unwrap)", () => {
+    expect(unwrapNumber(BigInt(Number.MAX_VALUE))).not.toEqual(Number.MAX_VALUE);
+    const ban = BigInt("123456789012345678901234567890");
+    expect(unwrapNumber(ban)).toEqual(ban);
+  });
+
+  test("unwrapNumber - bignumber", () => {
+    const ban = BigInt("123456789012345678901234567890");
+    expect(unwrapNumber(BigNumber(1))).toEqual(1);
+    expect(unwrapNumber(BigNumber(Number.MAX_SAFE_INTEGER))).toEqual(Number.MAX_SAFE_INTEGER);
+    expect(unwrapNumber(BigNumber(1.456e-324))).toEqual(1.456e-324);
+    expect(unwrapNumber(BigNumber(ban.toString()))).toEqual(ban);
+  });
+
+  test("unwrapNumber - bignumber (cant unwrap)", () => {
+    const ban = BigNumber("987654321.23456789012345678901234567890");
+    expect(unwrapNumber(ban)).toEqual(ban);
   });
 });

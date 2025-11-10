@@ -3,6 +3,7 @@ import { ArgType } from "./common/ArgType";
 import FunctionContext from "./common/FunctionContext";
 import { BigDecimal, BigDecimal_ONE, BigDecimal_ZERO, MAX_SCALE, MAX_SCALE_ROUNDING } from "./common/FunctionHelpers";
 import BigNumber from "bignumber.js";
+import { unwrapNumber } from "../JsonHelpers";
 
 class TransformerFunctionRandom extends TransformerFunction {
   constructor() {
@@ -42,7 +43,7 @@ class TransformerFunctionRandom extends TransformerFunction {
     if ((result.decimalPlaces() ?? 0) > MAX_SCALE) {
       result = result.decimalPlaces(MAX_SCALE, MAX_SCALE_ROUNDING);
     }
-    return result;
+    return unwrapNumber(result);
   }
 }
 

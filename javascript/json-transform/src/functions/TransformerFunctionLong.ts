@@ -1,5 +1,6 @@
 import TransformerFunction from "./common/TransformerFunction";
 import FunctionContext from "./common/FunctionContext";
+import { unwrapNumber } from "../JsonHelpers";
 
 class TransformerFunctionLong extends TransformerFunction {
   constructor() {
@@ -7,7 +8,7 @@ class TransformerFunctionLong extends TransformerFunction {
   }
 
   override async apply(context: FunctionContext): Promise<any> {
-    return context.getLong(null);
+    return unwrapNumber(await context.getLong(null));
   }
 }
 

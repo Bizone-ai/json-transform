@@ -2,7 +2,7 @@ import BigNumber from "bignumber.js";
 import TransformerFunction from "./common/TransformerFunction";
 import { ArgType } from "./common/ArgType";
 import FunctionContext from "./common/FunctionContext";
-import { isNullOrUndefined } from "../JsonHelpers";
+import { isNullOrUndefined, unwrapNumber } from "../JsonHelpers";
 import { BigDecimal_ZERO, BigDecimal } from "./common/FunctionHelpers";
 
 class TransformerFunctionAvg extends TransformerFunction {
@@ -32,7 +32,7 @@ class TransformerFunctionAvg extends TransformerFunction {
         return isNullOrUndefined(res) ? _default : BigDecimal(res);
       })
       .reduce((a: BigNumber, c) => a.plus(c));
-    return sum.dividedBy(size);
+    return unwrapNumber(sum.dividedBy(size));
   }
 }
 

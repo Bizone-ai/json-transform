@@ -2,6 +2,7 @@ import TransformerFunction from "./common/TransformerFunction";
 import { ArgType } from "./common/ArgType";
 import FunctionContext from "./common/FunctionContext";
 import { MAX_SCALE, MAX_SCALE_ROUNDING, NO_SCALE, RoundingModes } from "./common/FunctionHelpers";
+import { unwrapNumber } from "../JsonHelpers";
 
 class TransformerFunctionDecimal extends TransformerFunction {
   constructor() {
@@ -25,7 +26,7 @@ class TransformerFunctionDecimal extends TransformerFunction {
       const rounding = RoundingModes[roundingMode ?? ""] ?? MAX_SCALE_ROUNDING;
       result = result.decimalPlaces(scale, rounding);
     }
-    return result;
+    return unwrapNumber(result);
   }
 }
 

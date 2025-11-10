@@ -2,7 +2,7 @@ import BigNumber from "bignumber.js";
 import TransformerFunction from "./common/TransformerFunction";
 import { ArgType } from "./common/ArgType";
 import FunctionContext from "./common/FunctionContext";
-import { getAsString, isNullOrUndefined } from "../JsonHelpers";
+import { getAsString, isNullOrUndefined, unwrapNumber } from "../JsonHelpers";
 import { BigDecimal, BigDecimal_ZERO, MAX_SCALE, MAX_SCALE_ROUNDING } from "./common/FunctionHelpers";
 
 enum MathOp {
@@ -116,7 +116,7 @@ class TransformerFunctionMath extends TransformerFunction {
     if ((result.decimalPlaces() ?? 0) > MAX_SCALE) {
       result = result.decimalPlaces(MAX_SCALE, MAX_SCALE_ROUNDING);
     }
-    return result;
+    return unwrapNumber(result);
   }
 
   static parseMathOp(value: string | null): MathOp {

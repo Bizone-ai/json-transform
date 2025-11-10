@@ -2,7 +2,7 @@ import BigNumber from "bignumber.js";
 import TransformerFunction from "./common/TransformerFunction";
 import { ArgType } from "./common/ArgType";
 import FunctionContext from "./common/FunctionContext";
-import { isNullOrUndefined } from "../JsonHelpers";
+import { isNullOrUndefined, unwrapNumber } from "../JsonHelpers";
 import { BigDecimal_ZERO, BigDecimal } from "./common/FunctionHelpers";
 
 class TransformerFunctionStddev extends TransformerFunction {
@@ -35,9 +35,9 @@ class TransformerFunctionStddev extends TransformerFunction {
       })
       .toList();
     const avg = values.reduce((a: BigNumber, c) => a.plus(c)).dividedBy(size);
-    const sumOfSquares = values.map((a: BigNumber, c) => a.minus(avg).pow(2)).reduce((a: BigNumber, c) => a.plus(c));
+    const sumOfSquares = values.map((a: BigNumber) => a.minus(avg).pow(2)).reduce((a: BigNumber, c) => a.plus(c));
     const variance = sumOfSquares.dividedBy(size - (population ? 0 : 1));
-    return variance.sqrt();
+    return unwrapNumber(variance.sqrt());
   }
 }
 

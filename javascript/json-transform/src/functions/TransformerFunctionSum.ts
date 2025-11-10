@@ -2,7 +2,7 @@ import BigNumber from "bignumber.js";
 import TransformerFunction from "./common/TransformerFunction";
 import { ArgType } from "./common/ArgType";
 import FunctionContext from "./common/FunctionContext";
-import { isNullOrUndefined } from "../JsonHelpers";
+import { isNullOrUndefined, unwrapNumber } from "../JsonHelpers";
 import { BigDecimal, BigDecimal_ZERO, MAX_SCALE, MAX_SCALE_ROUNDING } from "./common/FunctionHelpers";
 
 class TransformerFunctionSum extends TransformerFunction {
@@ -35,7 +35,7 @@ class TransformerFunctionSum extends TransformerFunction {
     if ((sum.decimalPlaces() ?? 0) > MAX_SCALE) {
       sum = sum.decimalPlaces(MAX_SCALE, MAX_SCALE_ROUNDING);
     }
-    return sum;
+    return unwrapNumber(sum);
   }
 }
 

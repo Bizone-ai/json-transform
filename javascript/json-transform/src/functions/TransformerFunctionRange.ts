@@ -5,6 +5,7 @@ import JsonElementStreamer from "../JsonElementStreamer";
 import { createAsyncSequence } from "@wortise/sequency";
 import { BigDecimal_ONE, RoundingModes } from "./common/FunctionHelpers";
 import BigNumber from "bignumber.js";
+import { unwrapNumber } from "../JsonHelpers";
 
 class TransformerFunctionRange extends TransformerFunction {
   constructor() {
@@ -53,7 +54,7 @@ class TransformerFunctionRange extends TransformerFunction {
         next: () => {
           const result = value;
           value = value.plus(step);
-          return Promise.resolve({ value: result });
+          return Promise.resolve({ value: unwrapNumber(result) });
         },
       }).take(size),
     );

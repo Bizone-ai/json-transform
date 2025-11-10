@@ -26,12 +26,10 @@ function getAsString(value: any): string | null {
   if (typeof value === "string") {
     return value;
   }
-  if (
-    typeof value === "number" ||
-    typeof value === "bigint" ||
-    value instanceof BigDecimal ||
-    value instanceof BigNumber
-  ) {
+  if (value instanceof BigDecimal || value instanceof BigNumber) {
+    return value.isInteger() ? value.toFixed(0) : value.toString();
+  }
+  if (typeof value === "number" || typeof value === "bigint") {
     return value.toString();
   }
   if (typeof value === "boolean") {
@@ -391,6 +389,40 @@ function toObjectFieldPath(key: string) {
   return VALID_ID_REGEXP.test(key) ? "." + key : "[" + JSON.stringify(key) + "]";
 }
 
+const BIGINT_MIN_INT = BigInt(Number.MIN_SAFE_INTEGER);
+const BIGINT_MAX_INT = BigInt(Number.MAX_SAFE_INTEGER);
+const BIG_DECIMAL_MIN_INT = new BigDecimal(Number.MIN_SAFE_INTEGER);
+const BIG_DECIMAL_MAX_INT = new BigDecimal(Number.MAX_SAFE_INTEGER);
+
+function unwrapNumber(n: any, reduceBigDecimals?: boolean) {
+  let unwrapped: any;
+
+  if (typeof n === "bigint") {
+    return n < BIGINT_MIN_INT || n > BIGINT_MAX_INT ? n : Number(n);
+  }
+
+  if (typeof n !== "number" || (reduceBigDecimals && BigNumber.isBigNumber(n))) {
+    const bigDecimal = BigNumber.isBigNumber(n) ? n : new BigNumber(n);
+    if (bigDecimal.isInteger()) {
+      if (bigDecimal.comparedTo(BIG_DECIMAL_MAX_INT) > 0 || bigDecimal.comparedTo(BIG_DECIMAL_MIN_INT) < 0) {
+        unwrapped = BigInt(getAsString(n));
+      } else {
+        unwrapped = bigDecimal.toNumber();
+      }
+    } else {
+      const doubleValue = bigDecimal.toNumber();
+      if (bigDecimal.comparedTo(doubleValue) != 0) {
+        unwrapped = bigDecimal;
+      } else {
+        unwrapped = doubleValue; // big decimal representation is the same as double
+      }
+    }
+  } else {
+    unwrapped = n;
+  }
+  return unwrapped;
+}
+
 export {
   isNullOrUndefined,
   isNullOrEmpty,
@@ -408,4 +440,5 @@ export {
   mergeInto,
   merge,
   toObjectFieldPath,
+  unwrapNumber,
 };
