@@ -1,7 +1,6 @@
 import TransformerFunction from "./common/TransformerFunction";
 import { ArgType } from "./common/ArgType";
 import FunctionContext from "./common/FunctionContext";
-import { isNullOrUndefined } from "../JsonHelpers";
 import JsonElementStreamer from "../JsonElementStreamer";
 import stableStringify from "fast-json-stable-stringify";
 

@@ -36,10 +36,10 @@
   },
   "homepage": "https://github.com/Bizone-ai/json-transform#readme",
   "dependencies": {
+    "@astronautlabs/jsonpath": "^1.1.2",
     "@wortise/sequency": "^0.20.0",
     "bignumber.js": "^9.1.2",
     "fast-json-stable-stringify": "^2.1.0",
-    "jsonpath": "^1.1.1",
     "lossless-json": "^4.0.2"
   },
   "peerDependencies": {
@@ -49,7 +49,7 @@
     "fast-json-patch": "^3.1.1",
     "js-yaml": "^4.1.0",
     "json-pointer": "^0.6.2",
-    "uuid": "^10.0.0",
+    "uuid": ">=8",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
@@ -67,15 +67,14 @@
     "date-fns": "^4.1.0",
     "fast-json-patch": "^3.1.1",
     "fast-json-stable-stringify": "^2.1.0",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "json-pointer": "^0.6.2",
-    "jsonpath": "^1.1.1",
     "lossless-json": "^4.0.2",
     "nodemon": "^3.1.7",
     "prettier": "3.1.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
-    "uuid": "^10.0.0",
+    "uuid": "^13.0.0",
     "vitest": "3.0.5",
     "xml2js": "^0.6.2"
   }

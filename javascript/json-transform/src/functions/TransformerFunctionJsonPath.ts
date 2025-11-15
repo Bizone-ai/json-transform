@@ -1,4 +1,4 @@
-import jp from "jsonpath";
+import { JSONPath } from "@astronautlabs/jsonpath";
 import TransformerFunction from "./common/TransformerFunction";
 import { ArgType } from "./common/ArgType";
 import FunctionContext from "./common/FunctionContext";
@@ -36,7 +36,7 @@ class TransformerFunctionJsonPath extends TransformerFunction {
 
       if (options.ALWAYS_RETURN_LIST) {
         try {
-          return jp.query(source, path);
+          return JSONPath.query(source, path);
         } catch (e: any) {
           if (options.SUPPRESS_EXCEPTIONS) {
             return [];

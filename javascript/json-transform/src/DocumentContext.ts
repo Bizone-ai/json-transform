@@ -1,7 +1,7 @@
-import jp from "jsonpath";
+import { JSONPath } from "@astronautlabs/jsonpath";
 
 function isIndefinitePath(path: string) {
-  const parsed = jp.parse(path);
+  const parsed = JSONPath.parse(path);
   return parsed.some((x: any) => {
     // deep scan (..)
     if (
@@ -29,7 +29,7 @@ class DocumentContext {
   }
   read(expression: string) {
     if (expression === "$") return this.value;
-    const result = jp.query(this.value, expression);
+    const result = JSONPath.query(this.value, expression);
     if (isIndefinitePath(expression)) {
       return result ?? [];
     }
