@@ -2090,6 +2090,11 @@ export default {
       },
     ],
   },
+  typeof: {
+    description: "Returns the JSON type of the input",
+    inputSchema: { type: "any", required: true, description: "Value to get type of" },
+    outputSchema: { type: "string", enum: ["string", "number", "boolean", "object", "array", "null"] },
+  },
   unflatten: {
     description: "Accepts an object with dot separated field names and merges them into an hierarchical object",
     inputSchema: { type: "object", required: true, description: "Object with dot separated field names" },

@@ -32,6 +32,9 @@ export default function functionReturns(func: FunctionDescriptor, sub?: number) 
       if (schema.description) {
         returns += ` - ${schema.description}`;
       }
+      if (schema.enum) {
+        returns += `, one of:\n- \`${schema.enum.map(x => JSON.stringify(x)).join("\`\n - \`")}\``;
+      }
     }
   }
 

@@ -81,6 +81,7 @@ import TransformerFunctionTemplate from "./TransformerFunctionTemplate";
 import TransformerFunctionTest from "./TransformerFunctionTest";
 import TransformerFunctionTransform from "./TransformerFunctionTransform";
 import TransformerFunctionTrim from "./TransformerFunctionTrim";
+import TransformerFunctionTypeOf from "./TransformerFunctionTypeOf";
 import TransformerFunctionUnflatten from "./TransformerFunctionUnflatten";
 import TransformerFunctionUpper from "./TransformerFunctionUpper";
 import TransformerFunctionUriParse from "./TransformerFunctionUriParse";
@@ -182,6 +183,7 @@ export default {
   test: new TransformerFunctionTest(),
   transform: new TransformerFunctionTransform(),
   trim: new TransformerFunctionTrim(),
+  typeof: new TransformerFunctionTypeOf(),
   unflatten: new TransformerFunctionUnflatten(),
   upper: new TransformerFunctionUpper(),
   uriparse: new TransformerFunctionUriParse(),

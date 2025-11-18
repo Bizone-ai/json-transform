@@ -1,0 +1,82 @@
+[
+  {
+    "name": "string",
+    "given": {
+      "input": "A",
+      "definition": "$$typeof:$"
+    },
+    "expect": {
+      "equal": "string"
+    }
+  },
+  {
+    "name": "number",
+    "given": {
+      "input": 1000,
+      "definition": "$$typeof:$"
+    },
+    "expect": {
+      "equal": "number"
+    }
+  },
+  {
+    "name": "boolean",
+    "given": {
+      "input": false,
+      "definition": { "$$typeof": "$" }
+    },
+    "expect": {
+      "equal": "boolean"
+    }
+  },
+  {
+    "name": "array",
+    "given": {
+      "input": [1, "true"],
+      "definition": { "$$typeof": "$" }
+    },
+    "expect": {
+      "equal": "array"
+    }
+  },
+  {
+    "name": "object",
+    "given": {
+      "input": {},
+      "definition": { "$$typeof": "$" }
+    },
+    "expect": {
+      "equal": "object"
+    }
+  },
+  {
+    "name": "number - decimal",
+    "given": {
+      "input": "3.14159265358979323846264338327950288419716939937510",
+      "inputFormat": "big-decimal",
+      "definition": { "$$typeof": "$" }
+    },
+    "expect": {
+      "equal": "number"
+    }
+  },
+  {
+    "name": "null",
+    "given": {
+      "input": null,
+      "definition": { "$$typeof": "$" }
+    },
+    "expect": {
+      "equal": "null"
+    }
+  },
+  {
+    "name": "undefined",
+    "given": {
+      "definition": { "$$typeof": "$" }
+    },
+    "expect": {
+      "equal": "null"
+    }
+  }
+]

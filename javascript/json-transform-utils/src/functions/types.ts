@@ -82,6 +82,7 @@ export enum EmbeddedTransformerFunction {
   test = "test", // boolean
   transform = "transform", // #SPECIAL
   trim = "trim", // string
+  typeof = "typeof", // string
   unflatten = "unflatten", // object ??
   upper = "upper", // string
   uriparse = "uriparse", // { ... }

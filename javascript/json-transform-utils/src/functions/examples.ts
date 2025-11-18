@@ -83,6 +83,7 @@ import _template from "./examples/template.json";
 import _test from "./examples/test.json";
 import _transform from "./examples/transform.json";
 import _trim from "./examples/trim.json";
+import _typeof from "./examples/typeof.json";
 import _unflatten from "./examples/unflatten.json";
 import _upper from "./examples/upper.json";
 import _uriparse from "./examples/uriparse.json";
@@ -181,6 +182,7 @@ export default {
   test: _test,
   transform: _transform,
   trim: _trim,
+  typeof: _typeof,
   unflatten: _unflatten,
   upper: _upper,
   uriparse: _uriparse,

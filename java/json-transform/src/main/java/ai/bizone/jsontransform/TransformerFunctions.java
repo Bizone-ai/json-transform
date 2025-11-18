@@ -110,6 +110,7 @@ public class TransformerFunctions implements TransformerFunctionsAdapter {
                 Map.entry("test", new TransformerFunctionTest()),
                 Map.entry("transform", new TransformerFunctionTransform()),
                 Map.entry("trim", new TransformerFunctionTrim()),
+                Map.entry("typeof", new TransformerFunctionTypeOf()),
                 Map.entry("unflatten",new TransformerFunctionUnflatten()),
                 Map.entry("upper", new TransformerFunctionUpper()),
                 Map.entry("uriparse", new TransformerFunctionUriParse()),
