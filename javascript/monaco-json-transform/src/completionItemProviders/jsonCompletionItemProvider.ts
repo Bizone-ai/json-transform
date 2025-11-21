@@ -96,7 +96,7 @@ export const jsonTransformerItemCompletionProvider: (
     provideCompletionItems: (model, position) => {
       //const path = model.uri.path.replace(/\.\w+$/, "");
       const typeMap = getTypeMap ? getTypeMap(model) : undefined;
-      const suggestions = getSuggestions ? getSuggestions(model) : undefined;
+      let suggestions = getSuggestions ? getSuggestions(model) : undefined;
       const word = model.getWordUntilPosition(position);
       const range = {
         startLineNumber: position.lineNumber,
@@ -113,10 +113,15 @@ export const jsonTransformerItemCompletionProvider: (
           .substring(0, position.column - 1)
           .match(/^"|[^\\]"/g)?.length ?? 0; // ignore escaped double quotes
       const inline = quotesCount % 2 !== 0; // if inside a string, suggest inline functions otherwise object functions
+      suggestions = (suggestions ?? []).concat(functionSuggestions);
+      // context suggestions may have included in the suggestion list, so don't add them if already exists
+      for (const s of contextSuggestions) {
+        if (!suggestions!.includes(s)) {
+          suggestions.push(s);
+        }
+      }
       return {
-        suggestions: (suggestions ?? [])
-          .concat(functionSuggestions, contextSuggestions)
-          .map(s => jsonVariableMapper(s, typeMap, range, inline)),
+        suggestions: suggestions.map(s => jsonVariableMapper(s, typeMap, range, inline)),
       };
     },
   };
