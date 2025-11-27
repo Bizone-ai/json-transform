@@ -2017,7 +2017,12 @@ export default {
   template: {
     description: "Renders a specified text template with the given input referencing a specified payload.",
     argumentsNotes:
-      "#### * Different Types of default parameter resolving options\n| Type               | Description                                                      |\n|--------------------|------------------------------------------------------------------|\n| `UNIQUE` (default) | Each instance of a parameter is resolved to its explicit default |\n| `FIRST_VALUE`      | The first default found for the parameter is used by all         |\n| `LAST_VALUE`       | The last default found is used by all                            |\n",
+      "#### * Different Types of default parameter resolving options\n" +
+      "| Type               | Description                                                      |\n" +
+      "|--------------------|------------------------------------------------------------------|\n" +
+      "| `UNIQUE` (default) | Each instance of a parameter is resolved to its explicit default |\n" +
+      "| `FIRST_VALUE`      | The first default found for the parameter is used by all         |\n" +
+      "| `LAST_VALUE`       | The last default found is used by all                            |",
     inputSchema: { type: "string", required: true, description: "The text template to render" },
     outputSchema: { type: "string" },
     arguments: [
@@ -2074,9 +2079,16 @@ export default {
     ],
   },
   trim: {
-    description: "Removes whitespaces from sides of string",
+    description: "Removes whitespaces (or other selected characters) from sides of string",
     argumentsNotes:
-      "#### * Different Types of trimming\n| Type             | Java equivalent function  |\n|------------------|---------------------------|\n| `BOTH` (default) | `String::strip()`         |\n| `START`          | `String::stripLeading()`  |\n| `END`            | `String::stripTrailing()` |\n| `INDENT`         | `String::stripIndent()`   |\n| `JAVA`           | `String::trim()`          |",
+      "#### * Different Types of trimming\n" +
+      "| Type             | Java equivalent function  | Python equivalent function |\n" +
+      "|------------------|---------------------------|----------------------------|\n" +
+      "| `BOTH` (default) | `String::strip()`         | `'...'.strip(what)`        |\n" +
+      "| `START`          | `String::stripLeading()`  | `'...'.lstrip(what)`       |\n" +
+      "| `END`            | `String::stripTrailing()` | `'...'.rstrip(what)`       |\n" +
+      "| `INDENT`         | `String::stripIndent()`   | N/A                        |\n" +
+      "| `JAVA`           | `String::trim()`          | N/A                        |",
     inputSchema: { type: "string", required: true, description: "String to trim" },
     outputSchema: { type: "string" },
     arguments: [
@@ -2087,6 +2099,12 @@ export default {
         enum: ["BOTH", "START", "END", "INDENT", "JAVA"],
         position: 0,
         default: "BOTH",
+      },
+      {
+        name: "what",
+        description: "Set of characters to trim (Applicable only for `START`, `END` and `BOTH`)",
+        type: "string",
+        position: 1,
       },
     ],
   },

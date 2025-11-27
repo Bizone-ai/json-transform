@@ -5,7 +5,10 @@ import { ArgType } from "./common/ArgType";
 class TransformerFunctionTrim extends TransformerFunction {
   constructor() {
     super({
-      argsSet: [{ name: "type", type: ArgType.String, defaultValue: "BOTH" }],
+      argsSet: [
+        { name: "type", type: ArgType.String, defaultValue: "BOTH" },
+        { name: "what", type: ArgType.String },
+      ],
     });
   }
 
@@ -111,12 +114,93 @@ class TransformerFunctionTrim extends TransformerFunction {
     );
   }
 
+  /**
+   * Finds the index of the first character in the input that is NOT present in badCharacters.
+   * Handles Unicode surrogate pairs (e.g., emojis) correctly.
+   */
+  static indexOfFirstGood(input: string, badCharacters: string): number {
+    let i = 0;
+    while (i < input.length) {
+      // Get the Unicode code point (integer value)
+      const cp = input.codePointAt(i);
+
+      // Safety check for undefined (though loop condition handles this)
+      if (cp === undefined) break;
+
+      // Convert code point back to string to check inclusion
+      const charStr = String.fromCodePoint(cp);
+
+      // If the character is NOT in the badCharacters string
+      if (!badCharacters.includes(charStr)) {
+        return i;
+      }
+
+      // Increment index by 2 for surrogate pairs (emojis), 1 otherwise
+      i += charStr.length;
+    }
+    return i;
+  }
+
+  /**
+   * Finds the index of the last character in the input that is NOT present in badCharacters.
+   * Iterates backward handling Unicode surrogate pairs correctly.
+   */
+  static indexOfLastGood(input: string, badCharacters: string): number {
+    // Array.from correctly splits a string by Code Points (keeping surrogates together)
+    // This mimics the Java `input.codePoints().toArray()` logic
+    const chars = Array.from(input);
+
+    let currentIndex = input.length;
+
+    // Iterate backwards through the actual characters
+    for (let j = chars.length - 1; j >= 0; j--) {
+      const charStr = chars[j];
+      const charLen = charStr.length;
+
+      // Check if current char is found in badCharacters
+      if (!badCharacters.includes(charStr)) {
+        return currentIndex - charLen;
+      }
+
+      // Decrement the actual string index
+      currentIndex -= charLen;
+    }
+
+    return -1;
+  }
+
   override async apply(context: FunctionContext): Promise<any> {
     const str = await context.getString(null);
     if (str == null) {
       return null;
     }
-    switch (await context.getEnum("type")) {
+    const type = await context.getEnum("type");
+    if (type === "JAVA") {
+      const firstIndex = TransformerFunctionTrim.indexOfJavaNonWhitespace(str);
+      const lastIndex = TransformerFunctionTrim.lastIndexOfJavaNonWhitespace(str);
+      return str.substring(firstIndex, lastIndex);
+    }
+    if (type === "INDENT") {
+      return TransformerFunctionTrim.stripIndent(str);
+    }
+
+    const what = await context.getString("what");
+    if (what) {
+      switch (type) {
+        case "START": {
+          return str.substring(TransformerFunctionTrim.indexOfFirstGood(str, what));
+        }
+        case "END": {
+          return str.substring(0, TransformerFunctionTrim.indexOfLastGood(str, what) + 1);
+        }
+        default: {
+          const firstIndex = TransformerFunctionTrim.indexOfFirstGood(str, what);
+          const lastIndex = TransformerFunctionTrim.indexOfLastGood(str, what) + 1;
+          return str.substring(firstIndex, lastIndex);
+        }
+      }
+    }
+    switch (type) {
       case "START": {
         const index = TransformerFunctionTrim.indexOfNonWhitespace(str);
         return str.substring(index);
@@ -124,13 +208,6 @@ class TransformerFunctionTrim extends TransformerFunction {
       case "END": {
         const index = TransformerFunctionTrim.lastIndexOfNonWhitespace(str);
         return str.substring(0, index);
-      }
-      case "INDENT":
-        return TransformerFunctionTrim.stripIndent(str);
-      case "JAVA": {
-        const firstIndex = TransformerFunctionTrim.indexOfJavaNonWhitespace(str);
-        const lastIndex = TransformerFunctionTrim.lastIndexOfJavaNonWhitespace(str);
-        return str.substring(firstIndex, lastIndex);
       }
       default: {
         const firstIndex = TransformerFunctionTrim.indexOfNonWhitespace(str);
