@@ -50,6 +50,21 @@
     }
   },
   {
+    "name": "object - simple template - non string values",
+    "given": {
+      "input": {
+        "num": 42.5,
+        "bool": false
+      },
+      "definition": {
+        "$$template": "Num: {$.num}, Bool: {$.bool}"
+      }
+    },
+    "expect": {
+      "equal": "Num: 42.5, Bool: false"
+    }
+  },
+  {
     "name": "object - use payload",
     "given": {
       "input": {

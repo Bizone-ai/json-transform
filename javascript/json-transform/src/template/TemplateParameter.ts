@@ -1,5 +1,6 @@
 import { ParameterResolver } from "../ParameterResolver";
 import { getCurrentJsonTransformFunction } from "./TextTemplateJsonTransformFunction";
+import { getAsString } from "../JsonHelpers";
 
 export default class TemplateParameter {
   private readonly name: string;
@@ -18,7 +19,9 @@ export default class TemplateParameter {
     this.mDefault = defaultValue == null ? "" : defaultValue;
   }
 
-  async getStringValue(resolver: ParameterResolver) {
+  async getStringValue(resolver: ParameterResolver): Promise<string>;
+  async getStringValue(resolver?: undefined): Promise<null>;
+  async getStringValue(resolver?: ParameterResolver) {
     if (resolver == null) {
       return null;
     }
@@ -28,6 +31,6 @@ export default class TemplateParameter {
       val = await getCurrentJsonTransformFunction().call(null, this.name, resolver);
     }
 
-    return val == null ? this.mDefault : val.replace(/\{/g, "\\{");
+    return val == null ? this.mDefault : getAsString(val)!.replace(/\{/g, "\\{");
   }
 }

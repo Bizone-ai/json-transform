@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 public class TextTemplateTests extends MultiAdapterBaseTest {
@@ -43,6 +44,29 @@ public class TextTemplateTests extends MultiAdapterBaseTest {
         Assertions.assertEquals("Hello $$xxx:$.n", def);
     }
 
+    @Test
+    void nonStringValues() {
+        var resolver = ParameterResolver.fromMap(Map.of(
+                "A", BigDecimal.valueOf(42.5),
+                "B", 42.5d,
+                "C", 42L,
+                "D", 42,
+                "E", true,
+                "F", false
+        ));
+        var def = new TextTemplate("a:{A} b:{B} c:{C} d:{D} e:{E} f:{F}").render(resolver);
+        Assertions.assertEquals("a:42.5 b:42.5 c:42 d:42 e:true f:false", def);
+    }
+
+    @ParameterizedTest()
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    void nonStringValuesUsingJSONValues(JsonAdapter<?,?,?> adapter) {
+        var resolver = adapter.createPayloadResolver(adapter.parse("""
+{ "A": 42.5, "B": 42, "C": true, "D": false }
+"""), null, true);
+        var def = new TextTemplate("a:{$.A} b:{$.B} c:{$.C} d:{$.D}").render(resolver);
+        Assertions.assertEquals("a:42.5 b:42 c:true d:false", def);
+    }
 
     @Test
     void recursiveWithDefaultValue() {

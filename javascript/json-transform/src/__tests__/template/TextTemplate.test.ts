@@ -1,6 +1,7 @@
 import { expect, describe, test } from "vitest";
 import { parameterResolverFromMap, TextTemplate } from "../..";
 import { createPayloadResolver } from "../../JsonHelpers";
+import { BigDecimal } from "../../functions/common/FunctionHelpers";
 
 describe("TextTemplate", () => {
   test("run json transformer function", async () => {
@@ -26,6 +27,18 @@ describe("TextTemplate", () => {
     });
     const def = await new TextTemplate("Hello {$$xxx:$.n}").render(resolver);
     expect(def).toEqual("Hello $$xxx:$.n");
+  });
+
+  test("non-string values", async () => {
+    const resolver = parameterResolverFromMap({
+      A: BigDecimal(42.5),
+      B: 42.5,
+      C: 42,
+      D: true,
+      E: false,
+    });
+    const def = await new TextTemplate("a:{A} b:{B} c:{C} d:{D} e:{E}").render(resolver);
+    expect(def).toEqual("a:42.5 b:42.5 c:42 d:true e:false");
   });
 
   test("recursiveWithDefaultValue", async () => {
