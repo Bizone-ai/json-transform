@@ -1,5 +1,13 @@
 rootProject.name = 'ai.bizone.json-transform'
 
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        google()
+    }
+}
+
 include ':java:json-transform'
 include ':java:playground'
 
