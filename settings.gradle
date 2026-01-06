@@ -1,5 +1,3 @@
-rootProject.name = 'ai.bizone.json-transform'
-
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -7,6 +5,8 @@ pluginManagement {
         google()
     }
 }
+
+rootProject.name = 'ai.bizone.json-transform'
 
 include ':java:json-transform'
 include ':java:playground'
