@@ -115,6 +115,44 @@ t",1
       `
       [{ "a": "A", "b": "  B" }]`,
     );
+    assertDeserializationOutputFrom(
+      'a,b\n ""  ,B',
+      `
+      [{ "a": "", "b": "B" }]`,
+    );
+    assertDeserializationOutputFrom(
+      "a,b\n,B",
+      `
+      [{ "a": "", "b": "B" }]`,
+    );
+    assertDeserializationOutputFrom(
+      "a,b\n ,B",
+      `
+      [{ "a": "", "b": "B" }]`,
+    );
+  });
+
+  test("testParseCSV_default_ignoreSpaces2", () => {
+    assertDeserializationOutputFrom(
+      "a,b\nA,A B",
+      `
+      [{ "a": "A", "b": "A B" }]`,
+    );
+    assertDeserializationOutputFrom(
+      "a,b\n  A B  ,C",
+      ` 
+      [{ "a": "A B", "b": "C" }]`,
+    );
+    assertDeserializationOutputFrom(
+      "a,b\nA,  A B  ",
+      ` 
+      [{ "a": "A", "b": "A B" }]`,
+    );
+    assertDeserializationOutputFrom(
+      'a,b\nA, " A B"  \t',
+      ` 
+      [{ "a": "A", "b": " A B" }]`,
+    );
   });
 
   test("testParseCSV_default_escapingComma", () => {

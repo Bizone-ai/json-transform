@@ -235,6 +235,8 @@ public class CsvFormat implements FormatSerializer, FormatDeserializer {
         var row = adapter.createArray();
         var cell = new StringBuilder();
         var offset = 0;
+        String quotedCellValue = null;
+        String prev = "";
 
         while (offset < len) {
             // always take current one and next one (offset may skip 1 or 2 depending on char sequence)
@@ -247,7 +249,17 @@ public class CsvFormat implements FormatSerializer, FormatDeserializer {
                 if (context.inQuotes) {
                     cell.append(separator);
                 } else {
-                    adapter.add(row, cell.toString());
+                    String cellValue;
+                    if (quotedCellValue != null) {
+                        cellValue = quotedCellValue;
+                    } else {
+                        cellValue = cell.toString();
+                        if (!prev.isEmpty() && !prev.startsWith("\"")) {
+                            cellValue = cellValue.trim();
+                        }
+                    }
+                    quotedCellValue = null;
+                    adapter.add(row, cellValue);
                     cell.setLength(0);
                 }
 
@@ -259,7 +271,17 @@ public class CsvFormat implements FormatSerializer, FormatDeserializer {
                     if (context.inQuotes) {
                         cell.append(unix ? NEW_LINE_UNIX : NEW_LINE_WINDOWS);
                     } else {
-                        adapter.add(row, cell.toString());
+                        String cellValue;
+                        if (quotedCellValue != null) {
+                            cellValue = quotedCellValue;
+                        } else {
+                            cellValue = cell.toString();
+                            if (!prev.isEmpty() && !prev.startsWith("\"")) {
+                                cellValue = cellValue.trim();
+                            }
+                        }
+                        quotedCellValue = null;
+                        adapter.add(row, cellValue);
                         cell.setLength(0);
                         accumulate(context, result, row);
                         row = adapter.createArray();
@@ -280,18 +302,37 @@ public class CsvFormat implements FormatSerializer, FormatDeserializer {
                 }
             } else if (cur == '"') { // span.startsWith(DOUBLE_QUOTES)) {
                 context.inQuotes = !context.inQuotes;
+                if (!context.inQuotes) {
+                    // transitioned out of quotes, save the cell value
+                    quotedCellValue = cell.toString();
+                }
                 offset += curSize;
-            } else if (!context.inQuotes && (cur == ' ' || cur == '\t')) { // (span.codePointAt(0) == ' ' || span.codePointAt(0) == '\t')) {
+            } else if (!context.inQuotes && cell.isEmpty() && (cur == ' ' || cur == '\t')) { // (span.codePointAt(0) == ' ' || span.codePointAt(0) == '\t')) {
                 // ignore
                 offset += curSize;
             } else {
                 cell.append(Character.toString(cur));
                 offset += curSize;
             }
+            if (cur != ' ' && cur != '\t') {
+                prev = Character.toString(cur);
+            } else {
+                prev += Character.toString(cur);
+            }
         }
 
         if (!adapter.isEmpty(result) || !cell.isEmpty()) {
-            adapter.add(row, cell.toString());
+            String cellValue;
+            if (quotedCellValue != null) {
+                cellValue = quotedCellValue;
+            } else {
+                cellValue = cell.toString();
+                if (!prev.isEmpty() && !prev.startsWith("\"")) {
+                    cellValue = cellValue.trim();
+                }
+            }
+            quotedCellValue = null;
+            adapter.add(row, cellValue);
             accumulate(context, result, row);
         }
         return result;

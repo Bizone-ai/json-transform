@@ -184,6 +184,8 @@ class CsvFormat implements FormatSerializer, FormatDeserializer {
     let row: any[] = [];
     const cell = new StringBuilder();
     let offset = 0;
+    let quotedCellValue: string | null = null;
+    let prev = "";
 
     while (offset < len) {
       // always take current one and next one (offset may skip 1 or 2 depending on char sequence)
@@ -196,7 +198,17 @@ class CsvFormat implements FormatSerializer, FormatDeserializer {
         if (context.inQuotes) {
           cell.append(this.separator);
         } else {
-          row.push(cell.toString());
+          let cellValue: string;
+          if (quotedCellValue !== null) {
+            cellValue = quotedCellValue;
+          } else {
+            cellValue = cell.toString();
+            if (prev.length && !prev.startsWith('"')) {
+              cellValue = cellValue.trim();
+            }
+          }
+          quotedCellValue = null;
+          row.push(cellValue);
           cell.clear();
         }
 
@@ -208,7 +220,17 @@ class CsvFormat implements FormatSerializer, FormatDeserializer {
           if (context.inQuotes) {
             cell.append(unix ? CsvFormat.NEW_LINE_UNIX : CsvFormat.NEW_LINE_WINDOWS);
           } else {
-            row.push(cell.toString());
+            let cellValue: string;
+            if (quotedCellValue !== null) {
+              cellValue = quotedCellValue;
+            } else {
+              cellValue = cell.toString();
+              if (prev.length && !prev.startsWith('"')) {
+                cellValue = cellValue.trim();
+              }
+            }
+            quotedCellValue = null;
+            row.push(cellValue);
             cell.clear();
             this.accumulate(context, result, row);
             row = [];
@@ -229,18 +251,37 @@ class CsvFormat implements FormatSerializer, FormatDeserializer {
         }
       } else if (cur === 34) {
         context.inQuotes = !context.inQuotes;
+        if (!context.inQuotes) {
+          // transitioned out of quotes, save the cell value
+          quotedCellValue = cell.toString();
+        }
         offset += curSize;
-      } else if (!context.inQuotes && (cur === 32 || cur === 9)) {
+      } else if (!context.inQuotes && cell.length === 0 && (cur === 32 || cur === 9)) {
         // ignore
         offset += curSize;
       } else {
         cell.append(String.fromCodePoint(cur));
         offset += curSize;
       }
+      if (cur !== 32 && cur !== 9) {
+        prev = String.fromCodePoint(cur);
+      } else {
+        prev += String.fromCodePoint(cur);
+      }
     }
 
     if (result.length || cell.length > 0) {
-      row.push(cell.toString());
+      let cellValue: string;
+      if (quotedCellValue !== null) {
+        cellValue = quotedCellValue;
+      } else {
+        cellValue = cell.toString();
+        if (prev.length && !prev.startsWith('"')) {
+          cellValue = cellValue.trim();
+        }
+      }
+      quotedCellValue = null;
+      row.push(cellValue);
       this.accumulate(context, result, row);
     }
     return result as any;

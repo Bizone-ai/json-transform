@@ -146,6 +146,25 @@ t",1
 [{ "a": "A", "b": "B" }]""");
         assertDeserializationOutputFrom(adapter, "a,b\nA,\"  B\"", """
 [{ "a": "A", "b": "  B" }]""");
+        assertDeserializationOutputFrom(adapter, "a,b\n \"\"  ,B", """
+[{ "a": "", "b": "B" }]""");
+        assertDeserializationOutputFrom(adapter, "a,b\n,B", """
+[{ "a": "", "b": "B" }]""");
+        assertDeserializationOutputFrom(adapter, "a,b\n ,B", """
+[{ "a": "", "b": "B" }]""");
+    }
+
+    @ParameterizedTest()
+    @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
+    void testParseCSV_default_ignoreSpaces2(JsonAdapter<?,?,?> adapter) {
+        assertDeserializationOutputFrom(adapter, "a,b\nA,A B", """
+[{ "a": "A", "b": "A B" }]""");
+        assertDeserializationOutputFrom(adapter, "a,b\n  A B  ,C", """
+[{ "a": "A B", "b": "C" }]""");
+        assertDeserializationOutputFrom(adapter, "a,b\nA,  A B  ", """
+[{ "a": "A", "b": "A B" }]""");
+        assertDeserializationOutputFrom(adapter, "a,b\nA, \" A B\"  \t", """
+[{ "a": "A", "b": " A B" }]""");
     }
 
 
