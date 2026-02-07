@@ -10,20 +10,21 @@ const icon = "🪄";
 const LOGO = `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${icon}</text></svg>`;
 
 const config: Config = {
-  title: "JSON Transform",
-  tagline: "JSON transformation library",
+  title: "JSOT",
+  tagline: "JSON Transform library",
   favicon: LOGO,
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
     v4: true,
-    experimental_faster: true
+    experimental_faster: true,
   },
 
-  url: "https://nligthen-oss.github.io",
+  url: "https://jsot.io",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: "/json-transform/",
+  // baseUrl: "/json-transform/",
+  baseUrl: "/", // jsot.io
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -61,7 +62,8 @@ const config: Config = {
             },
             plugins: [
               new MonacoWebpackPlugin({
-                publicPath: "/json-transform",
+                // publicPath: "/json-transform",
+                publicPath: "/",
               }),
               generateLanguageFile(),
               generateLanguageFile({
@@ -128,11 +130,13 @@ const config: Config = {
           items: [
             {
               label: "Documentation",
-              to: "/json-transform",
+              // to: "/json-transform",
+              to: "/",
             },
             {
               label: "Playground",
-              to: "/json-transform/playground",
+              //to: "/json-transform/playground",
+              to: "/playground",
             },
           ],
         },
