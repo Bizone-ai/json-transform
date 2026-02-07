@@ -5,7 +5,7 @@ import {assertTransformation, JSONBig} from "./assertTransformation";
 import {ImplsByLang} from "./implementations";
 import { examples, JsonTransformExample, EmbeddedTransformerFunction } from "@bizone-ai/json-transform-utils"
 
-const language = process.env.IMPL_LANG ?? "javascript";
+const language = process.env.IMPL_LANG ?? "java";
 
 const testsFolder = __dirname + "/../tests";
 const EXAMPLES_FOLDER = "functions";

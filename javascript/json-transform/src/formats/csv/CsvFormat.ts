@@ -184,6 +184,10 @@ class CsvFormat implements FormatSerializer, FormatDeserializer {
     let row: any[] = [];
     const cell = new StringBuilder();
     let offset = 0;
+    if (input.startsWith("\uFEFF")) {
+      offset++;
+    }
+
     let quotedCellValue: string | null = null;
     let prev = "";
 

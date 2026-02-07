@@ -1,7 +1,7 @@
 {
   "name": "@bizone-ai/json-transform-utils",
   "description": "Utilities for handling JSON transformers",
-  "version": "1.13.2",
+  "version": "1.13.4",
   "main": "./dist/index.js",
   "source": "src/index.ts",
   "exports": "./dist/index.js",

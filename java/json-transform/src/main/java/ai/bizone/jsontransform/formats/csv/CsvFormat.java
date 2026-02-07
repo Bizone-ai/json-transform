@@ -221,6 +221,7 @@ public class CsvFormat implements FormatSerializer, FormatDeserializer {
             adapter.add(results, item);
         }
     }
+
     @Override
     public Object deserialize(String input) {
         var result = adapter.createArray();
@@ -235,6 +236,10 @@ public class CsvFormat implements FormatSerializer, FormatDeserializer {
         var row = adapter.createArray();
         var cell = new StringBuilder();
         var offset = 0;
+        if (input.startsWith("\uFEFF")) {
+            offset++;
+        }
+
         String quotedCellValue = null;
         String prev = "";
 

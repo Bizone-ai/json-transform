@@ -1,5 +1,37 @@
 [
   {
+    "name": "Inline - parse CSV",
+    "given": {
+      "input": "a,b\nA,B",
+      "inputFormat": "csv",
+      "definition": "$$csvparse:$"
+    },
+    "expect": {
+      "equal": [
+        {
+          "a": "A",
+          "b": "B"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Inline - parse CSV (with BOM)",
+    "given": {
+      "input": "\uFEFFa,b\nA,B",
+      "inputFormat": "csv",
+      "definition": "$$csvparse:$"
+    },
+    "expect": {
+      "equal": [
+        {
+          "a": "A",
+          "b": "B"
+        }
+      ]
+    }
+  },
+  {
     "name": "Inline - parse CSV with comma as a value",
     "given": {
       "input": "a\n\",\"",
@@ -89,8 +121,8 @@
     },
     "expect": {
       "equal": [
-        ["1","2"],
-        ["3","4"]
+        ["1", "2"],
+        ["3", "4"]
       ]
     }
   }

@@ -91,7 +91,7 @@
           "$$math": [
             {
               "$$math": [
-                "$$date(EPOCH):#now",
+                "$$date(EPOCH):2025-01-01",
                 "-",
                 "$$date(EPOCH):$.date_of_birth"
               ]
