@@ -13,7 +13,7 @@ public class ApplicationConfiguration {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins( "http://localhost:10001", "https://Bizone-ai.github.io");
+                        .allowedOrigins( "http://localhost:10001", "https://Bizone-ai.github.io", "https://jsot.io");
             }
         };
     }

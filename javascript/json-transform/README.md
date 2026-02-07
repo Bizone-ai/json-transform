@@ -2,7 +2,7 @@
 
 ![](https://img.shields.io/npm/v/@bizone-ai/json-transform.svg)
 
-[JSON transformers](https://Bizone-ai.github.io/json-transform/) JavaScript implementation (~20kB)
+[JSON transformers](https://jsot.io) JavaScript implementation (~20kB)
 
 # Installation
 

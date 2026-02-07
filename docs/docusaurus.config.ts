@@ -103,7 +103,7 @@ const config: Config = {
       },
     },
     navbar: {
-      title: "JSON Transform",
+      title: "JSOT",
       logo: {
         alt: "logo",
         src: LOGO,
