@@ -8,7 +8,7 @@ export type Bundle = {
   d: any;
 };
 
-const BASE_URL = "/json-transform/playground";
+const BASE_URL = "/playground";
 
 export const shareLink = async (input: any, definition: any) => {
   const jsonValue = JSON.stringify({ i: input, d: definition });
