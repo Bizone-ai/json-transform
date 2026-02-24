@@ -4,26 +4,24 @@ import ai.bizone.jsontransform.functions.common.*;
 import ai.bizone.jsontransform.functions.common.*;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class TransformerFunctionIndexOf extends TransformerFunction {
     public TransformerFunctionIndexOf() {
         super(FunctionDescription.of(
             Map.of(
-            "of", ArgumentType.of(ArgType.Any).position(0)
+            "substring", ArgumentType.of(ArgType.String).position(0),
+            "from", ArgumentType.of(ArgType.Number).position(1)
             )));
     }
     @Override
     public Object apply(FunctionContext context) {
-        var streamer = context.getJsonElementStreamer(null);
-        if (streamer == null)
-            return null;
-        var of = context.getJsonElement("of");
-        var index = new AtomicInteger(0);
-        var adapter = context.getAdapter();
-        return streamer.stream()
-                .sequential()
-                .peek(item -> index.incrementAndGet())
-                .anyMatch(item -> adapter.areEqual(item, of)) ? index.get() - 1 : -1;
+        var str = context.getString(null);
+        var of = context.getString("substring");
+        var from = context.getInteger("from");
+        if (str == null || of == null) {
+            return -1;
+        }
+
+        return from != null ? str.indexOf(of, from) : str.indexOf(of);
     }
 }

@@ -2,10 +2,10 @@
   {
     "name": "object - found",
     "given": {
-      "input": ["A", "B", "C"],
+      "input": "ABC",
       "definition": {
         "$$indexof": "$",
-        "of": "B"
+        "substring": "BC"
       }
     },
     "expect": {
@@ -13,12 +13,26 @@
     }
   },
   {
-    "name": "object - not found",
+    "name": "object - from index",
     "given": {
-      "input": ["A", "B", "C"],
+      "input": "ABCABC",
       "definition": {
         "$$indexof": "$",
-        "of": "D"
+        "substring": "B",
+        "from": 2
+      }
+    },
+    "expect": {
+      "equal": 4
+    }
+  },
+  {
+    "name": "object - not found",
+    "given": {
+      "input": "ABC",
+      "definition": {
+        "$$indexof": "$",
+        "substring": "D"
       }
     },
     "expect": {
@@ -28,8 +42,8 @@
   {
     "name": "inline - found",
     "given": {
-      "input": ["A", "B", "C"],
-      "definition": "$$indexof(B):$"
+      "input": "ABC",
+      "definition": "$$indexof(BC):$"
     },
     "expect": {
       "equal": 1
@@ -38,7 +52,7 @@
   {
     "name": "inline - not found",
     "given": {
-      "input": ["A", "B", "C"],
+      "input": "ABC",
       "definition": "$$indexof(D):$"
     },
     "expect": {

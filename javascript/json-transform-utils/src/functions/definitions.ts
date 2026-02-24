@@ -793,16 +793,23 @@ export default {
     arguments: [{ name: "value", description: "Value to check against", type: "any", position: 0, required: true }],
   },
   indexof: {
-    description: "Find the index of the first element that matches the specified value.",
-    inputSchema: { type: "array", required: true, description: "Array of elements" },
+    description:
+      "Finds the index of the first occurrence of the specified substring with optional from index (returns -1 if not found)",
+    inputSchema: { type: "string", required: true, description: "The string to search in" },
     outputSchema: { type: "number" },
     arguments: [
       {
-        name: "of",
-        description: "The value to look for",
-        type: "any",
+        name: "substring",
+        description: "The substring to look for",
+        type: "string",
         position: 0,
         required: true,
+      },
+      {
+        name: "from",
+        description: "From which index to look for",
+        type: "integer",
+        position: 1,
       },
     ],
   },
