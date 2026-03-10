@@ -17,6 +17,7 @@ class TransformerFunctionDigest extends TransformerFunction {
       argsSet: [
         { name: "algorithm", type: ArgType.String, defaultValue: "SHA-1" },
         { name: "format", type: ArgType.String, defaultValue: "BASE64" },
+        { name: "charset", type: ArgType.String, defaultValue: "ISO-8859-1" },
       ],
     });
   }
@@ -29,10 +30,12 @@ class TransformerFunctionDigest extends TransformerFunction {
     const algorithm = await context.getEnum("algorithm");
     if (!algorithm) return null;
 
+    const charset = await context.getEnum("charset");
+
     const digest =
       algorithm === "MD5"
         ? md5(str)
-        : await globalCrypto.subtle.digest({ name: algorithm }, TextEncoding.encode(str, "ISO-8859-1"));
+        : await globalCrypto.subtle.digest({ name: algorithm }, TextEncoding.encode(str, charset ?? "ISO-8859-1"));
     switch (await context.getEnum("format")) {
       case "BASE64":
         return Base64.encode(new Uint8Array(digest), "basic");

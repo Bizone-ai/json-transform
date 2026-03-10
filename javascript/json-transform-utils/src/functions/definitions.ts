@@ -114,6 +114,21 @@ export default {
     inputSchema: { type: "array", required: true, description: "Array of elements (may include nulls)" },
     outputSchemaTemplate: { type: "object", description: "Same as first non-null value" },
   },
+  compress: {
+    description: "Compress using GZip",
+    inputSchema: { type: "string", required: true, description: "String to compress" },
+    outputSchema: { type: "string" },
+    arguments: [
+      {
+        name: "charset",
+        description: "Character encoding of input",
+        type: "enum",
+        enum: ["UTF-8", "UTF-16", "ISO-8859-1"],
+        position: 0,
+        default: "UTF-8",
+      },
+    ],
+  },
   concat: {
     description: "Concatenates input array with elements or other arrays of elements",
     notes: ":::note\nElements which are `null` on the input will be ignored.\n:::",
@@ -498,6 +513,29 @@ export default {
       },
     ],
   },
+  decompress: {
+    description: "Decompresses an encoded string using GZip",
+    inputSchema: { type: "string", required: true, description: "Compressed encoded string" },
+    outputSchema: { type: "string" },
+    arguments: [
+      {
+        name: "charset",
+        description: "Character encoding of input",
+        type: "enum",
+        enum: ["UTF-8", "UTF-16", "ISO-8859-1"],
+        position: 0,
+        default: "ISO-8859-1",
+      },
+      {
+        name: "format",
+        description: "Desired character encoding of output",
+        type: "enum",
+        enum: ["UTF-8", "UTF-16", "ISO-8859-1"],
+        position: 1,
+        default: "UTF-8",
+      },
+    ],
+  },
   digest: {
     description: "Creates a message digest based on a supported algorithm",
     inputSchema: { type: "string" },
@@ -519,6 +557,14 @@ export default {
         enum: ["BASE64", "BASE64URL", "HEX"],
         position: 1,
         default: "BASE64",
+      },
+      {
+        name: "charset",
+        description: "Character encoding of input",
+        type: "enum",
+        enum: ["UTF-8", "UTF-16", "ISO-8859-1"],
+        position: 2,
+        default: "UTF-8",
       },
     ],
   },

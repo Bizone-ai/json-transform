@@ -112,9 +112,13 @@ export default function () {
     if (func.outputSchemaTemplate) {
       f.outputSchemaTemplate = fixType(func.outputSchemaTemplate);
     }
-    f.examples = examples[key].filter(
-      (x: any) => x.given.definition["$$" + key] && (!varKey || x.given.definition[varKey] === varVal),
-    );
+    if (!examples[key]) {
+      console.warn(`No examples for ${key}`);
+    } else {
+      f.examples = examples[key].filter(
+        (x: any) => x.given.definition["$$" + key] && (!varKey || x.given.definition[varKey] === varVal),
+      );
+    }
     language.functions.push(f);
   };
   for (const key in functions) {

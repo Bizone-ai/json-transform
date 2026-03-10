@@ -5,12 +5,14 @@ import TransformerFunctionBase64 from "./TransformerFunctionBase64";
 import TransformerFunctionBoolean from "./TransformerFunctionBoolean";
 import TransformerFunctionCidrTest from "./TransformerFunctionCidrTest";
 import TransformerFunctionCoalesce from "./TransformerFunctionCoalesce";
+import TransformerFunctionCompress from "./TransformerFunctionCompress";
 import TransformerFunctionConcat from "./TransformerFunctionConcat";
 import TransformerFunctionIn from "./TransformerFunctionIn";
 import TransformerFunctionCsv from "./TransformerFunctionCsv";
 import TransformerFunctionCsvParse from "./TransformerFunctionCsvParse";
 import TransformerFunctionDate from "./TransformerFunctionDate";
 import TransformerFunctionDecimal from "./TransformerFunctionDecimal";
+import TransformerFunctionDecompress from "./TransformerFunctionDecompress";
 import TransformerFunctionDigest from "./TransformerFunctionDigest";
 import TransformerFunctionDistinct from "./TransformerFunctionDistinct";
 import TransformerFunctionEntries from "./TransformerFunctionEntries";
@@ -106,11 +108,13 @@ export default {
   boolean: new TransformerFunctionBoolean(),
   cidrtest: new TransformerFunctionCidrTest(),
   coalesce: new TransformerFunctionCoalesce(),
+  compress: new TransformerFunctionCompress(),
   concat: new TransformerFunctionConcat(),
   csv: new TransformerFunctionCsv(),
   csvparse: new TransformerFunctionCsvParse(),
   date: new TransformerFunctionDate(),
   decimal: new TransformerFunctionDecimal(),
+  decompress: new TransformerFunctionDecompress(),
   digest: new TransformerFunctionDigest(),
   distinct: new TransformerFunctionDistinct(),
   eq: new TransformerFunctionEq(),

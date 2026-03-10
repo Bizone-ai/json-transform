@@ -7,11 +7,13 @@ import _base64 from "./examples/base64.json";
 import _boolean from "./examples/boolean.json";
 import _cidrtest from "./examples/cidrtest.json";
 import _coalesce from "./examples/coalesce.json";
+import _compress from "./examples/compress.json";
 import _concat from "./examples/concat.json";
 import _csv from "./examples/csv.json";
 import _csvparse from "./examples/csvparse.json";
 import _date from "./examples/date.json";
 import _decimal from "./examples/decimal.json";
+import _decompress from "./examples/decompress.json";
 import _digest from "./examples/digest.json";
 import _distinct from "./examples/distinct.json";
 import _entries from "./examples/entries.json";
@@ -106,11 +108,13 @@ export default {
   boolean: _boolean,
   cidrtest: _cidrtest,
   coalesce: _coalesce,
+  compress: _compress,
   concat: _concat,
   csv: _csv,
   csvparse: _csvparse,
   date: _date,
   decimal: _decimal,
+  decompress: _decompress,
   digest: _digest,
   distinct: _distinct,
   entries: _entries,

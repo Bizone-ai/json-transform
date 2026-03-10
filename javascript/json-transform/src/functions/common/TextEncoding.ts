@@ -15,7 +15,10 @@ const u16Encoder = {
     return u8;
   },
 };
-const iso88591Encoder = {
+
+const iso88591Supported =
+  new TextDecoder("iso_8859-1", { ignoreBOM: false }).decode(new Uint8Array([139]).buffer).charCodeAt(0) == 139;
+const iso88591 = {
   encode: function (input: string) {
     const u8 = new Uint8Array(input.length);
     for (let i = 0; i < input.length; i++) {
@@ -23,31 +26,34 @@ const iso88591Encoder = {
     }
     return u8;
   },
+  decode: function (input: Uint8Array) {
+    let result = "";
+    for (let i = 0; i < input.length; i++) {
+      result += String.fromCharCode(input[i]);
+    }
+    return result;
+  },
 };
 
 const TextEncoding = {
   encode: function (input: string, charset: string | null = "UTF-8") {
+    if (charset === "ISO-8859-1") {
+      return iso88591.encode(input);
+    }
     if (charset === "UTF-16") {
       return u16Encoder.encode(input);
-    }
-    if (charset === "ISO-8859-1") {
-      return iso88591Encoder.encode(input);
     }
     return u8Encoder.encode(input);
   },
   decode: function (input: Uint8Array, charset: string | null = "UTF-8") {
     let cs = charset?.toLowerCase();
-    if (cs === "utf-16") {
-      if (input[0] === 0xfe && input[1] === 0xff) {
-        // BE BOM
-        cs = "utf-16be";
-      } else if (input[0] === 0xff && input[1] === 0xfe) {
-        // LE BOM
-        cs = "utf-16le";
-      } else {
-        // if BOM is missing, assume BE
-        cs = "utf-16be";
-      }
+    if (cs === "iso-8859-1" && !iso88591Supported) {
+      // browsers treat iso-8859-1 as windows-1252, so we need to decode it ourselves
+      return iso88591.decode(input);
+    }
+    if (cs === "utf-16" && !(input[0] === 0xff && input[1] === 0xfe)) {
+      // if BOM is missing, assume BE
+      cs = "utf-16be";
     }
     return new TextDecoder(cs, {
       ignoreBOM: false /* don't include BOM in output */,

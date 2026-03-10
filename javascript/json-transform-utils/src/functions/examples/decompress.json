@@ -1,0 +1,14 @@
+[
+  {
+    "name": "object",
+    "given": {
+      "input": "\u001f\b\u0000\u0000\u0000\u0000\u0000\u0000ÿóHÍÉÉW\bÏ/ÊIQø0¿§\u000f\u0000ýIë\u0010\u0000\u0000\u0000",
+      "definition": {
+        "$$decompress": "$"
+      }
+    },
+    "expect": {
+      "equal": "Hello World 🌎"
+    }
+  }
+]
