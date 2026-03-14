@@ -60,7 +60,6 @@
     "@types/json-pointer": "^1.0.34",
     "@types/jsonpath": "^0.2.4",
     "@types/uuid": "^10.0.0",
-    "@types/xml2js": "^0.4.14",
     "@types/yamljs": "^0.2.34",
     "@wortise/sequency": "^0.20.0",
     "bignumber.js": "^9.1.2",
