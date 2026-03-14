@@ -156,8 +156,13 @@ export type JsonTransformExample = {
     length?: number;
     type?: "array" | "bigint" | "boolean" | "function" | "number" | "object" | "string" | "symbol" | "undefined";
     ignoreOrder?: boolean;
-    // big-decimal means that 'equal' is written as string but should be parsed as big-decimal
-    format?: "date-time" | "big-decimal" | "url-search-params" | "csv" | "xml" | "yaml";
+    format?:
+      | "date-time"
+      | "big-decimal" // big-decimal means that 'equal' is written as string but should be parsed as big-decimal
+      | "url-search-params"
+      | "csv"
+      | "xml" // if 'equal' is written as an array, it is all possible values
+      | "yaml";
   };
   example?: any;
 };

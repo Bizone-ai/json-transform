@@ -1,4 +1,4 @@
-import xml2js from "xml2js";
+import { X2jOptions, XMLParser } from "fast-xml-parser";
 import TransformerFunction from "./common/TransformerFunction";
 import FunctionContext from "./common/FunctionContext";
 import { ArgType } from "./common/ArgType";
@@ -8,9 +8,9 @@ class TransformerFunctionXmlParse extends TransformerFunction {
     super({
       argsSet: [
         { name: "keep_strings", type: ArgType.Boolean, defaultValue: false },
-        { name: "cdata_tag_name", type: ArgType.String, defaultValue: "$content" },
-        { name: "convert_nil_to_null", type: ArgType.Boolean, defaultValue: false },
-        { name: "force_list", type: ArgType.Array },
+        { name: "attr_prefix", type: ArgType.String, defaultValue: "@" },
+        { name: "cdata_prop_name", type: ArgType.String, defaultValue: "#text" },
+        { name: "array_tags", type: ArgType.Array },
       ],
     });
   }
@@ -20,19 +20,33 @@ class TransformerFunctionXmlParse extends TransformerFunction {
     if (xml == null) return null;
     try {
       const keepStrings = (await context.getBoolean("keep_strings")) ?? undefined;
-      const cDataTagName = (await context.getString("cdata_tag_name")) ?? undefined;
-      const convertNilAttributeToNull = (await context.getBoolean("convert_nil_to_null")) ?? undefined;
-      const forceList = (await context.getJsonArray("force_list")) ?? undefined;
+      const attrPrefix = (await context.getString("attr_prefix")) ?? undefined;
+      const cDataTagName = (await context.getString("cdata_prop_name")) ?? undefined;
+      const arrayTags = (await context.getJsonArray("array_tags")) ?? undefined;
 
-      const parser = new xml2js.Parser({
-        charkey: cDataTagName,
-        ignoreAttrs: convertNilAttributeToNull,
-        explicitArray: Boolean(forceList?.length),
-        attrValueProcessors: keepStrings
-          ? undefined
-          : [xml2js.processors.parseNumbers, xml2js.processors.parseBooleans],
-      });
-      return parser.parseStringPromise(xml);
+      const options = {
+        attributeNamePrefix: attrPrefix,
+        allowBooleanAttributes: true,
+        ignoreAttributes: false,
+        textNodeName: cDataTagName,
+        parseTagValue: !keepStrings,
+        parseAttributeValue: !keepStrings,
+        maxNestedTags: 256,
+      } as X2jOptions;
+      if (arrayTags?.length) {
+        const tagsSet = new Set(arrayTags);
+        options.isArray = x => tagsSet.has(x);
+      }
+      // if (!keepStrings) {
+      //   options.attributeValueProcessor = (_attrName, attrValue) => {
+      //     console.log("attrValue", attrValue);
+      //     if (attrValue === "true") return true;
+      //     if (attrValue === "false") return false;
+      //     return attrValue;
+      //   };
+      // }
+
+      return new XMLParser(options).parse(xml);
     } catch (e: any) {
       console.warn(context.getAlias() + " failed", e);
       return null;

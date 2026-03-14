@@ -422,7 +422,7 @@ describe("JsonTransformer", () => {
         date_of_birth: "1980-01-01",
       },
       "$$math('$$math(\\'$$date(EPOCH):#now\\',-,\\'$$date(EPOCH):$.date_of_birth\\')',//,'$$math(365,*,\\'$$math(24,*,3600)\\')')",
-      45,
+      46,
     );
   });
 });

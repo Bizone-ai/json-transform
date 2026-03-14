@@ -1,12 +1,12 @@
 package ai.bizone.jsontransform.functions;
 
 import ai.bizone.jsontransform.functions.common.*;
-import ai.bizone.jsontransform.functions.common.*;
 import ai.bizone.jsontransform.formats.xml.XmlFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TransformerFunctionXml extends TransformerFunction {
     static final Logger logger = LoggerFactory.getLogger(TransformerFunctionXml.class);
@@ -15,8 +15,9 @@ public class TransformerFunctionXml extends TransformerFunction {
         super(FunctionDescription.of(
                 Map.of(
                         "root", ArgumentType.of(ArgType.String).position(0),
-                        "xslt", ArgumentType.of(ArgType.String).position(1),
-                        "indent", ArgumentType.of(ArgType.Boolean).position(2).defaultValue(false)
+                        "indent", ArgumentType.of(ArgType.Boolean).position(1).defaultValue(false),
+                        "attr_prefix", ArgumentType.of(ArgType.String).position(2).defaultValue("@"),
+                        "cdata_prop_name", ArgumentType.of(ArgType.String).position(3).defaultValue("#text")
                 )
         ));
     }
@@ -28,17 +29,18 @@ public class TransformerFunctionXml extends TransformerFunction {
             return null;
         try {
             var rootName = context.getString("root");
-            // TODO: how to create the format once?
-            var xml = new XmlFormat(context.getAdapter()).obj2xml(obj, rootName);
-            var xslt = context.getString("xslt");
-            if (xslt != null && !xslt.isBlank()) {
-                var transformer = XmlFormat.createXSLTTransformer(xslt);
-                xml = XmlFormat.xmlTransform(xml, transformer);
-            }
-            if (context.getBoolean("indent")) {
-                xml = XmlFormat.indentXml(xml);
-            }
-            return xml;
+            var indent = context.getBoolean("indent");
+            var attrPrefix = context.getString("attr_prefix");
+            var cDataPropName = context.getString("cdata_prop_name");
+            return new XmlFormat(context.getAdapter(),
+                null,
+                rootName,
+                indent,
+                attrPrefix,
+                cDataPropName,
+                null,
+                null
+            ).serialize(obj);
         } catch (Exception e) {
             logger.warn(context.getAlias() + " failed", e);
             return null;

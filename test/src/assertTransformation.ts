@@ -88,7 +88,9 @@ export const assertTransformation = async (t: JsonTransformExample, impl: Implem
         } else if (t.expect.format === "big-decimal" && typeof t.expect.equal === "string") {
           const expectedValue = BigNumber(t.expect.equal);
           expect(data.result, message).toEqual(expectedValue);
-        } else{
+        } else if (t.expect.format === "xml" && Array.isArray(t.expect.equal)) {
+          expect(data.result, message).to.be.oneOf(t.expect.equal);
+        } else {
           expect(data.result, message).toEqual(t.expect.equal);
         }
       } else if (typeof t.expect.format !== 'undefined') {

@@ -15,7 +15,7 @@ public class XmlFormatTest extends MultiAdapterBaseTest {
     @ParameterizedTest()
     @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testJSON2XML(JsonAdapter<?,?,?> adapter) {
-        var xbt = new XmlFormat(adapter, """
+        var xbt = new XmlFormat(adapter, "root", """
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -64,7 +64,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     @ParameterizedTest()
     @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testJSON2XMLUglify(JsonAdapter<?,?,?> adapter) {
-        var xbt = new XmlFormat(adapter, """
+        var xbt = new XmlFormat(adapter, "root", """
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -99,28 +99,28 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     @MethodSource("ai.bizone.jsontransform.MultiAdapterBaseTest#provideJsonAdapters")
     void testParseXML(JsonAdapter<?,?,?> adapter) {
         var result = new XmlFormat(adapter).deserialize("""
-                                                   <root>
-                                                   </root>""");
+           <root>
+           </root>""");
         assertEquals(adapter, adapter.parse("""
-                                                             {
-                                                               "root": ""
-                                                             }"""), result);
+             {
+               "root": ""
+             }"""), result);
 
         var result2 = new XmlFormat(adapter).deserialize("""
-                                                    <root>
-                                                      <hello to="world">
-                                                        <hi />
-                                                        <hi />
-                                                      </hello>
-                                                    </root>""");
+            <root>
+              <hello to="world">
+                <hi />
+                <hi />
+              </hello>
+            </root>""");
         assertEquals(adapter, adapter.parse("""
-                                                             {
-                                                               "root": {
-                                                                 "hello": {
-                                                                   "hi": ["", ""],
-                                                                   "to": "world"
-                                                                 }
-                                                               }
-                                                             }"""), result2);
+             {
+               "root": {
+                 "hello": {
+                   "hi": ["", ""],
+                   "@to": "world"
+                 }
+               }
+             }"""), result2);
     }
 }

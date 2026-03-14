@@ -24,9 +24,9 @@
 # Peer dependencies
 Notice the following peer dependencies that are required by some of the functions:
  - fast-json-patch
+ - fast-xml-parser
  - js-yaml
  - json-pointer
- - xml2js
 
 # License
 [MIT](./LICENSE)

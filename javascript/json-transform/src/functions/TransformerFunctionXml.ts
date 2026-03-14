@@ -1,16 +1,16 @@
-import xml2js from "xml2js";
+import XMLBuilder from "fast-xml-builder";
 import TransformerFunction from "./common/TransformerFunction";
 import FunctionContext from "./common/FunctionContext";
 import { ArgType } from "./common/ArgType";
 
-const DUMMY_ROOT = "R__O__O__T";
 class TransformerFunctionXml extends TransformerFunction {
   constructor() {
     super({
       argsSet: [
         { name: "root", type: ArgType.String },
-        { name: "xslt", type: ArgType.String },
         { name: "indent", type: ArgType.Boolean, defaultValue: false },
+        { name: "attr_prefix", type: ArgType.String, defaultValue: "@" },
+        { name: "cdata_prop_name", type: ArgType.String, defaultValue: "#text" },
       ],
     });
   }
@@ -19,32 +19,19 @@ class TransformerFunctionXml extends TransformerFunction {
     const obj = await context.getJsonElement(null);
     if (obj == null) return null;
     try {
-      const rootName = (await context.getString("root")) ?? DUMMY_ROOT;
+      const rootName = (await context.getString("root")) ?? undefined;
       const indent = (await context.getBoolean("indent")) ?? undefined;
-      const builder = new xml2js.Builder({
-        headless: !indent,
-        rootName,
-        charkey: "$content",
-        renderOpts: { pretty: indent },
-        xmldec: {
-          version: "1.0",
-          encoding: "UTF-8",
-          standalone: undefined,
-        },
+      const attrPrefix = (await context.getString("attr_prefix")) ?? undefined;
+      const cDataPropName = (await context.getString("cdata_prop_name")) ?? undefined;
+      const builder = new XMLBuilder({
+        arrayNodeName: rootName,
+        attributeNamePrefix: attrPrefix,
+        ignoreAttributes: false,
+        cdataPropName: cDataPropName,
+        format: indent,
+        suppressEmptyNode: true,
       });
-      let xml = builder.buildObject(obj);
-      if (rootName === DUMMY_ROOT) {
-        xml = xml.slice(DUMMY_ROOT.length + 2, -DUMMY_ROOT.length - 3);
-      }
-      if (indent) {
-        // remove new line after xmldec
-        xml = xml.replace("?>\n", "?>") + "\n";
-      }
-      const xslt = await context.getString("xslt");
-      if (xslt != null && xslt !== "") {
-        throw new Error("XSLT not supported"); // TODO: add XSLT support
-      }
-      return xml;
+      return builder.build(rootName ? [obj] : obj);
     } catch (e: any) {
       console.warn(context.getAlias() + " failed", e);
       return null;

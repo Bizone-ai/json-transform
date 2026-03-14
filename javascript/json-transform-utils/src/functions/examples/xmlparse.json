@@ -14,7 +14,6 @@
   },
   {
     "name": "Inline - nested elements with attributes",
-    "skip": ["javascript"],
     "given": {
       "input": "<root><hello to=\"world\"><hi /><hi /></hello></root>",
       "inputFormat": "xml",
@@ -25,7 +24,7 @@
         "root": {
           "hello": {
             "hi": ["", ""],
-            "to": "world"
+            "@to": "world"
           }
         }
       }
@@ -48,7 +47,6 @@
   },
   {
     "name": "Object - nested elements with attributes",
-    "skip": ["javascript"],
     "given": {
       "input": "<root><hello to=\"world\"><hi /><hi /></hello></root>",
       "inputFormat": "xml",
@@ -61,21 +59,42 @@
         "root": {
           "hello": {
             "hi": ["", ""],
-            "to": "world"
+            "@to": "world"
           }
         }
       }
     }
   },
   {
-    "name": "TestObject - force list on nested elements",
-    "skip": ["javascript"],
+    "name": "TestObject - nested single element",
+    "given": {
+      "input": "<root><hello to=\"world\"><hi><test>X</test></hi></hello></root>",
+      "inputFormat": "xml",
+      "definition": {
+        "$$xmlparse": "$"
+      }
+    },
+    "expect": {
+      "equal": {
+        "root": {
+          "hello": {
+            "hi": {
+              "test": "X"
+            },
+            "@to": "world"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "TestObject - force list on nested single element",
     "given": {
       "input": "<root><hello to=\"world\"><hi><test>X</test></hi></hello></root>",
       "inputFormat": "xml",
       "definition": {
         "$$xmlparse": "$",
-        "force_list": ["hi"]
+        "array_tags": ["hi"]
       }
     },
     "expect": {
@@ -87,7 +106,7 @@
                 "test": "X"
               }
             ],
-            "to": "world"
+            "@to": "world"
           }
         }
       }
@@ -95,21 +114,20 @@
   },
   {
     "name": "TestObject - force list empty",
-    "skip": ["javascript"],
     "given": {
       "input": "<root><hello to=\"world\"><hi /><hi /></hello></root>",
       "inputFormat": "xml",
       "definition": {
         "$$xmlparse": "$",
-        "force_list": ["hi"]
+        "array_tags": ["hi"]
       }
     },
     "expect": {
       "equal": {
         "root": {
           "hello": {
-            "hi": [],
-            "to": "world"
+            "hi": ["", ""],
+            "@to": "world"
           }
         }
       }
@@ -117,7 +135,6 @@
   },
   {
     "name": "TestObject - keep strings as is",
-    "skip": ["javascript"],
     "given": {
       "input": "<root><hello to=\"2\"><hi>true</hi></hello></root>",
       "inputFormat": "xml",
@@ -131,7 +148,7 @@
         "root": {
           "hello": {
             "hi": "true",
-            "to": "2"
+            "@to": "2"
           }
         }
       }
@@ -139,7 +156,6 @@
   },
   {
     "name": "TestObject - automatic type parsing",
-    "skip": ["javascript"],
     "given": {
       "input": "<root><hello to=\"2\"><hi>true</hi></hello></root>",
       "inputFormat": "xml",
@@ -152,7 +168,7 @@
         "root": {
           "hello": {
             "hi": true,
-            "to": 2
+            "@to": 2
           }
         }
       }

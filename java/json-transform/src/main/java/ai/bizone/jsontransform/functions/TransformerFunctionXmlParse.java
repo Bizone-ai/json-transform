@@ -15,9 +15,9 @@ public class TransformerFunctionXmlParse extends TransformerFunction {
         super(FunctionDescription.of(
             Map.of(
             "keep_strings", ArgumentType.of(ArgType.Boolean).position(0).defaultValue(false),
-            "cdata_tag_name", ArgumentType.of(ArgType.String).position(1).defaultValue("$content"),
-            "convert_nil_to_null", ArgumentType.of(ArgType.Boolean).position(2).defaultValue(false),
-            "force_list", ArgumentType.of(ArgType.Array).position(3)
+            "attr_prefix", ArgumentType.of(ArgType.String).position(1).defaultValue("@"),
+            "cdata_prop_name", ArgumentType.of(ArgType.String).position(2).defaultValue("#text"),
+            "array_tags", ArgumentType.of(ArgType.Array).position(3)
             )
         ));
     }
@@ -28,22 +28,19 @@ public class TransformerFunctionXmlParse extends TransformerFunction {
             return null;
         try {
             var keepStrings = context.getBoolean("keep_strings");
-            var cDataTagName = context.getString("cdata_tag_name");
-            var convertNilAttributeToNull = context.getBoolean("convert_nil_to_null");
-            var forceList = context.getJsonArray("force_list");
+            var attrPrefix = context.getString("attr_prefix");
+            var cDataPropName = context.getString("cdata_prop_name");
+            var arrayTags = context.getJsonArray("array_tags");
             var adapter = context.getAdapter();
             return new XmlFormat(adapter,
-                                 null,
-                                 keepStrings,
-                                 cDataTagName,
-                                 convertNilAttributeToNull,
-                                 null,
-                                 forceList == null
-                                 ? null
-                                 : adapter.stream(forceList)
-                                         .map(context::getAsString)
-                                         .collect(Collectors.toSet())
-                                                       ).deserialize(xml);
+                null,
+                null,
+                null,
+                attrPrefix,
+                cDataPropName,
+                keepStrings,
+                arrayTags == null ? null : adapter.stream(arrayTags).map(context::getAsString).collect(Collectors.toSet())
+            ).deserialize(xml);
         } catch (Exception e) {
             logger.warn(context.getAlias() + " failed", e);
             return null;

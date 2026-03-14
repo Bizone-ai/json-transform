@@ -29,6 +29,7 @@
     "crypto-browserify": "^3.12.1",
     "docusaurus-lunr-search": "3.6.0",
     "fast-json-patch": "^3.1.1",
+    "fast-xml-parser": "^5.5.5",
     "js-yaml": "^4.1.0",
     "json-pointer": "^0.6.2",
     "markmap-lib": "^0.18.12",
@@ -37,8 +38,7 @@
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "stream-browserify": "^3.0.0",
-    "timers-browserify": "^2.0.12",
-    "xml2js": "^0.6.2"
+    "timers-browserify": "^2.0.12"
   },
   "devDependencies": {
     "@bizone-ai/json-schema-utils": "^1.1.0",
