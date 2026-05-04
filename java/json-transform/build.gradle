@@ -12,16 +12,16 @@ group 'ai.bizone'
 version = System.getenv("VERSION")
 
 ext {
-    gsonVersion = "2.10.1"
-    jsonVersion = '20240303'
-    jsonPathVersion = "2.9.0"
+    gsonVersion = "2.13.2"
+    jsonVersion = '20250517'
+    jsonPathVersion = "2.10.0"
     jmhVersion = "1.36"
-    jacksonBindVersion = "2.17.1"
-    jsonSmartVersion = "2.5.2"
-    tapestryVersion = "5.8.3"
+    jacksonBindVersion = "2.19.2"
+    jsonSmartVersion = "2.6.0"
+    tapestryVersion = "5.9.0"
     snakeYamlVersion = "2.9"
     aiBizoneShortUuidVersion = "1.0.0"
-    slf4jVersion = "2.0.11"
+    slf4jVersion = "2.0.17"
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -43,8 +43,8 @@ dependencies {
     compileOnly "com.fasterxml.jackson.core:jackson-databind:${jacksonBindVersion}"
     compileOnly "net.minidev:json-smart:${jsonSmartVersion}"
     compileOnly "org.apache.tapestry:tapestry-json:${tapestryVersion}"
+    compileOnly "org.json:json:${jsonVersion}"
 
-    implementation "org.json:json:${jsonVersion}" // for XML conversion
     implementation "com.jayway.jsonpath:json-path:${jsonPathVersion}"
 
     /* YAML */

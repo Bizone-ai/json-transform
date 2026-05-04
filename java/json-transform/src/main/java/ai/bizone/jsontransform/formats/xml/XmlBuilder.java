@@ -1,7 +1,6 @@
 package ai.bizone.jsontransform.formats.xml;
 
 import ai.bizone.jsontransform.adapters.JsonAdapter;
-import org.json.JSONException;
 
 import java.util.Iterator;
 
@@ -38,8 +37,6 @@ public class XmlBuilder {
      *            The number of spaces to add to each level of indentation.
      * @param indent
      *            The current ident level in spaces.
-     * @return
-     * @throws JSONException
      */
     private String toString(final Object object, final String tagName, int indentFactor, int indent) {
         StringBuilder sb = new StringBuilder();

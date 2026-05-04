@@ -1,7 +1,6 @@
 package ai.bizone.jsontransform.adapters.tapestry;
 
 import ai.bizone.jsontransform.adapters.JsonAdapter;
-import ai.bizone.jsontransform.adapters.jsonorg.JsonOrgHelpers;
 import ai.bizone.jsontransform.adapters.pojo.PojoJsonTransformer;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.spi.mapper.MappingException;

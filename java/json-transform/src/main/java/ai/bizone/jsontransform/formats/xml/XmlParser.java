@@ -1,7 +1,10 @@
 package ai.bizone.jsontransform.formats.xml;
 
 import ai.bizone.jsontransform.adapters.JsonAdapter;
-import org.json.*;
+
+import ai.bizone.jsontransform.formats.xml.jsonorg.XML;
+import ai.bizone.jsontransform.formats.xml.jsonorg.XMLParserConfiguration;
+import ai.bizone.jsontransform.formats.xml.jsonorg.XMLTokener;
 
 import java.io.Reader;
 import java.io.StringReader;
@@ -191,8 +194,14 @@ public class XmlParser {
                             append(context, tagName, adapter.jsonNull());
                         } else if (adapter.size(jsonObject) > 0) {
                             append(context, tagName, jsonObject);
-                        } else {
+                        } else if (adapter.size(context) == 0) { //avoids resetting the array in case of an empty tag in the middle or end
                             adapter.add(context, tagName, adapter.createArray());
+                            // context.put(tagName, new JSONArray());
+                            if (adapter.size(jsonObject) == 0){
+                                append(context, tagName, "");
+                            }
+                        } else {
+                            append(context, tagName, "");
                         }
                     } else {
                         if (nilAttributeFound) {
@@ -231,7 +240,11 @@ public class XmlParser {
                                 if (config.arrayTags().contains(tagName)) {
                                     // Force the value to be an array
                                     if (adapter.size(jsonObject) == 0) {
-                                        adapter.add(context, tagName, adapter.createArray());
+                                        //avoids resetting the array in case of an empty element in the middle or end
+                                        if(adapter.size(context) == 0) {
+                                            adapter.add(context, tagName, adapter.createArray());
+                                        }
+                                        append(context, tagName, "");
                                     } else if (adapter.size(jsonObject) == 1
                                             && adapter.get(jsonObject, config.cDataPropName()) != null) {
                                         append(context, tagName, adapter.get(jsonObject, config.cDataPropName()));

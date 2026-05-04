@@ -8,7 +8,7 @@ import com.jayway.jsonpath.spi.json.TapestryJsonProvider;
 import com.jayway.jsonpath.spi.mapper.TapestryMappingProvider;
 import org.apache.tapestry5.json.JSONArray;
 import org.apache.tapestry5.json.JSONObject;
-import org.json.JSONString;
+import org.apache.tapestry5.json.JSONString;
 
 import java.lang.reflect.Array;
 import java.util.*;
