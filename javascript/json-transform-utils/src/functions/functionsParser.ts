@@ -95,7 +95,7 @@ export class FunctionsParser {
         return url;
       }
     }
-    return `https://jsot.io/functions/${name}`;
+    return `https://jsontransform.bizone.ai/functions/${name}`;
   }
 
   matchInline(
