@@ -1,6 +1,6 @@
 # json-transform
 
-- [Documentation](https://jsot.io)
+- [Documentation](https://jsontransform.bizone.ai)
 
 ## Packages
 

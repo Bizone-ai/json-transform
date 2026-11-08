@@ -20,11 +20,11 @@ const config: Config = {
     experimental_faster: true,
   },
 
-  url: "https://jsot.io",
+  url: "https://jsontransform.bizone.ai",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   // baseUrl: "/json-transform/",
-  baseUrl: "/", // jsot.io
+  baseUrl: "/", // jsontransform.bizone.ai
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
