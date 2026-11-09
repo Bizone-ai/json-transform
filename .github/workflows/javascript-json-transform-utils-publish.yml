@@ -12,13 +12,13 @@ jobs:
       contents: read
       id-token: write # required for oidc
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
         # -- json-transform build
       - name: setup json-transform build
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
           cache-dependency-path: ./javascript/json-transform/package-lock.json
       - name: install json-transform dependencies
@@ -30,9 +30,9 @@ jobs:
 
         # -- json-transform-utils build
       - name: setup json-transform-utils build
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           registry-url: 'https://registry.npmjs.org'
           cache: npm
           cache-dependency-path: ./javascript/json-transform-utils/package-lock.json
